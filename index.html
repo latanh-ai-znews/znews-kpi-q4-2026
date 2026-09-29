@@ -465,6 +465,11 @@ html {
   border-bottom: 2px solid #3b56e0;
 }
 
+.container_AI tr.hidden_element,
+.container_AI .hidden_element {
+  display: none !important;
+}
+
 .container_AI .cell_num {
   text-align: right;
   font-family: 'Manrope', sans-serif;
@@ -741,6 +746,8 @@ html {
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .container_AI .dep_name {
