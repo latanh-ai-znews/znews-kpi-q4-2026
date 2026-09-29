@@ -10,6 +10,7 @@ Production-grade generator for Znews Q4 2026 Static Dashboard.
 - Full-bleed 100vw layout scoped in .container_AI
 - Numbers formatted in Vietnamese locale (1.000,00)
 - Emphasis on monthly and Q4 KPI for every department
+- Section 03 fixed: clear column layout, zero text-chart overlap
 """
 import json
 import re
@@ -273,41 +274,65 @@ def build_t7_dumbbell_svg():
     return "\n".join(svg)
 
 
+# =========================================================================
+# SECTION 03: MỨC ĐỘ SỤT GIẢM T8-T9/2026 (FIXED: NO TEXT OVERLAP)
+# =========================================================================
 def build_drop_t8t9_svg():
-    sorted_by_drop = sorted(all_deps, key=lambda d: growth_dict[d]["pct_T8T9_2026_vs_cung_ky"], reverse=True)
-    W, H = 960, 480
-    top_offset = 40
-    row_h = 28
-    x_zero = 860
-    scale = 9.8
+    # Sort from deepest drop to least drop
+    sorted_by_drop = sorted(all_deps, key=lambda d: growth_dict[d]["pct_T8T9_2026_vs_cung_ky"])
+    
+    W, H = 960, 520
+    top_offset = 55
+    row_h = 31
+    x_zero = 240
+    scale = 7.5  # 1% = 7.5px -> 80% = 600px -> x = 840
     
     svg = []
     svg.append(f'<svg class="chart_svg" viewBox="0 0 {W} {H}" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">')
-    svg.append(f'<line x1="{x_zero}" y1="{top_offset-15}" x2="{x_zero}" y2="{top_offset + 14 * row_h}" stroke="#14161c" stroke-width="1.5"/>')
-    svg.append(f'<text x="{x_zero}" y="{top_offset-20}" text-anchor="middle" fill="#6c7280" font-size="12" font-weight="700" font-family="Manrope">0%</text>')
+    
+    # Axis line at 0%
+    svg.append(f'<line x1="{x_zero}" y1="{top_offset-20}" x2="{x_zero}" y2="{top_offset + 14 * row_h}" stroke="#14161c" stroke-width="1.5"/>')
+    svg.append(f'<text x="{x_zero}" y="{top_offset-28}" text-anchor="middle" fill="#14161c" font-size="12" font-weight="700" font-family="Manrope">0%</text>')
 
-    for ref_pct in [-25, -50, -75]:
-        rx = x_zero + ref_pct * scale
-        svg.append(f'<line x1="{rx:.1f}" y1="{top_offset-10}" x2="{rx:.1f}" y2="{top_offset + 14 * row_h}" stroke="#e9ebf1" stroke-width="1" stroke-dasharray="3,3"/>')
-        svg.append(f'<text x="{rx:.1f}" y="{top_offset-20}" text-anchor="middle" fill="#9ca3af" font-size="11" font-family="Manrope">{ref_pct}%</text>')
+    # Reference grid at -20%, -40%, -60%, -80%
+    for ref_pct in [-20, -40, -60, -80]:
+        rx = x_zero + abs(ref_pct) * scale
+        svg.append(f'<line x1="{rx:.1f}" y1="{top_offset-15}" x2="{rx:.1f}" y2="{top_offset + 14 * row_h}" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3,3"/>')
+        svg.append(f'<text x="{rx:.1f}" y="{top_offset-28}" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600" font-family="Manrope">{ref_pct}%</text>')
+
+    # Benchmark Line: Toàn Znews (-58,1%)
+    site_avg_pct = 58.1
+    rx_avg = x_zero + site_avg_pct * scale
+    svg.append(f'<line x1="{rx_avg:.1f}" y1="{top_offset-15}" x2="{rx_avg:.1f}" y2="{top_offset + 14 * row_h}" stroke="#c2410c" stroke-width="1.5" stroke-dasharray="4,3"/>')
+    svg.append(f'<rect x="{rx_avg-65:.1f}" y="{top_offset-48}" width="130" height="20" fill="#fff1f2" stroke="#fecdd3" stroke-width="1" rx="4"/>')
+    svg.append(f'<text x="{rx_avg:.1f}" y="{top_offset-34}" text-anchor="middle" fill="#c2410c" font-size="10.5" font-weight="700" font-family="Be Vietnam Pro">TB Toàn trang: -58,1%</text>')
 
     for i, name in enumerate(sorted_by_drop):
         y = top_offset + i * row_h
         item = growth_dict[name]
         pct = item["pct_T8T9_2026_vs_cung_ky"]
         blk = dep_block_map[name]
+        blk_short = blk.replace("Khối ", "")
         
+        # Alternating background
         if i % 2 == 1:
-            svg.append(f'<rect x="10" y="{y-12}" width="{W-20}" height="{row_h}" fill="#fcfdfe" rx="4"/>')
+            svg.append(f'<rect x="10" y="{y-14}" width="{W-20}" height="{row_h}" fill="#f8fafc" rx="4"/>')
             
-        bar_len = abs(pct) * scale
-        bx = x_zero - bar_len
-        fill_col = "#f97316" if pct > -45 else ("#ea580c" if pct > -60 else "#c2410c")
+        # Department name: clean column on the left (x=20)
+        svg.append(f'<text x="20" y="{y+4}" fill="#14161c" font-size="13" font-weight="700" font-family="Be Vietnam Pro">{name}</text>')
         
-        svg.append(f'<text x="15" y="{y+6}" fill="#14161c" font-size="13" font-weight="600" font-family="Be Vietnam Pro">{name}</text>')
-        svg.append(f'<text x="120" y="{y+6}" fill="#6c7280" font-size="11" font-family="Be Vietnam Pro">({blk})</text>')
-        svg.append(f'<rect x="{bx:.1f}" y="{y-7}" width="{bar_len:.1f}" height="15" fill="{fill_col}" rx="3"/>')
-        svg.append(f'<text x="{bx-10:.1f}" y="{y+5}" text-anchor="end" fill="{fill_col}" font-size="12" font-weight="700" font-family="Manrope">{fmt_pct(pct)}</text>')
+        # Block pill badge: placed between x=135 and x=220
+        svg.append(f'<rect x="135" y="{y-9}" width="85" height="19" fill="#eef2f6" rx="5"/>')
+        svg.append(f'<text x="177" y="{y+4}" text-anchor="middle" fill="#64748b" font-size="11" font-weight="600" font-family="Be Vietnam Pro">{blk_short}</text>')
+        
+        # Bar extends from x_zero (240) to the right
+        bar_len = abs(pct) * scale
+        fill_col = "#fb923c" if pct > -45 else ("#ea580c" if pct > -60 else "#c2410c")
+        svg.append(f'<rect x="{x_zero}" y="{y-8}" width="{bar_len:.1f}" height="16" fill="{fill_col}" rx="3"/>')
+        
+        # Value label placed cleanly to the right of the bar (x >= 270)
+        val_x = x_zero + bar_len + 8
+        svg.append(f'<text x="{val_x:.1f}" y="{y+4}" text-anchor="start" fill="{fill_col}" font-size="12" font-weight="800" font-family="Manrope">{fmt_pct(pct)}</text>')
 
     svg.append('</svg>')
     return "\n".join(svg)
@@ -1145,7 +1170,7 @@ html.append('        </div>')
 html.append('      </div>')
 html.append('    </section>')
 
-# SECTION 03: T8-T9 DROP
+# SECTION 03: T8-T9 DROP (UPGRADED LAYOUT: ZERO TEXT OVERLAP)
 html.append('    <section class="section_block">')
 html.append('      <div class="section_header">')
 html.append('        <div class="section_title_wrap">')
@@ -1195,7 +1220,6 @@ html.append('          <div>')
 html.append('            <h3>Bảng phân bổ KPI Quý 4/2026 chi tiết 19 đơn vị</h3>')
 html.append('            <p>Nhóm theo từng Khối và Toàn Znews (số liệu gốc: nghìn lượt truy cập)</p>')
 html.append('          </div>')
-# Mode Switcher Chips
 html.append('          <div class="controls_bar" id="kpi_tier_chips">')
 html.append('            <div class="chip active" data-tier="both">Xem cả 2 mức</div>')
 html.append('            <div class="chip" data-tier="10">Mức +10% (Cơ sở)</div>')
@@ -1220,7 +1244,6 @@ html.append('              </tr>')
 html.append('            </thead>')
 html.append('            <tbody>')
 
-# Populate Table by Blocks
 for blk in all_blocks:
     blk_item = kpi_dict[blk]
     html.append('              <tr class="row_block">')
@@ -1249,7 +1272,6 @@ for blk in all_blocks:
         html.append(f'                <td class="cell_num">{fmt_tr(d_item["muc_10"]["ca_nam_2026"], 1)} tr (<strong class="{yr_pct_class}">{fmt_pct(d_item["muc_10"]["pct_ca_nam_vs_2025"])}</strong>)</td>')
         html.append('              </tr>')
 
-# Total Row
 html.append('              <tr class="row_total">')
 html.append('                <td><strong>TOÀN ZNEWS</strong></td>')
 html.append(f'                <td class="cell_num">{fmt_tr(toan_kpi["tb_thang_T8T9_2026"], 2)} tr</td>')
@@ -1419,7 +1441,7 @@ html.append('    </footer>')
 html.append('  </div>') # wrap
 html.append('</article>') # container_AI
 
-# EMBEDDED JAVASCRIPT FOR INTERACTIVITY (USES NO STYLE ATTRIBUTES)
+# EMBEDDED JAVASCRIPT FOR INTERACTIVITY (NO INLINE STYLE ATTRIBUTES)
 client_data_json = json.dumps({
     "monthly": monthly_series,
     "kpi": {k: {"tb": v["tb_thang_T8T9_2026"], "m10": v["muc_10"]["kpi_moi_thang"], "m15": v["muc_15"]["kpi_moi_thang"]} for k, v in kpi_dict.items()}
@@ -1550,7 +1572,7 @@ js_script = f"""
     }});
   }});
 
-  // 2. Department cards filter using class hidden_element (no style attribute)
+  // 2. Department cards filter
   const filterChips = document.querySelectorAll('#dep_filter_chips .chip');
   const depCards = document.querySelectorAll('.dep_kpi_card');
   filterChips.forEach(chip => {{
@@ -1613,22 +1635,17 @@ full_html = "\n".join(html)
 # ==========================================
 print("Validating constraints strictly...")
 
-# 1. No inline style="" anywhere in HTML
 style_matches = re.findall(r'\bstyle\s*=', full_html)
 assert len(style_matches) == 0, f"Found inline style attributes: {style_matches}"
 
-# 2. No <span> or </span>
 span_matches = re.findall(r'<\/?span\b', full_html)
 assert len(span_matches) == 0, f"Found span tags: {span_matches}"
 
-# 3. No <button> or </button>
 btn_matches = re.findall(r'<\/?button\b', full_html)
 assert len(btn_matches) == 0, f"Found button tags: {btn_matches}"
 
-# 4. No base64 image
 assert "data:image" not in full_html, "Found base64 images!"
 
-# 5. Must wrap in <article class="container_AI"><div class="wrap">
 assert '<article class="container_AI">' in full_html, "Missing <article class=\"container_AI\">"
 assert '<div class="wrap">' in full_html, "Missing <div class=\"wrap\">"
 
