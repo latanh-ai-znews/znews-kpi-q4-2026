@@ -310,17 +310,29 @@ def build_monthly_chart_svg():
 
 def build_t7_growth_bar_svg():
     sorted_deps = sorted(all_deps, key=lambda d: growth_dict[d]["pct_7t"], reverse=True)
-    W, H = 510, 520
+    W, H = 560, 530
     row_h = 32
-    top_offset = 45
-    x_zero = 205
-    scale = 2.45
+    top_offset = 48
+    x_zero = 315
+    scale = 1.9
     
     svg = []
     svg.append(f'<svg class="chart_svg" viewBox="0 0 {W} {H}" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">')
-    svg.append(f'<line x1="{x_zero}" y1="{top_offset-15}" x2="{x_zero}" y2="{top_offset + 14 * row_h}" stroke="#14161c" stroke-width="1.5"/>')
-    svg.append(f'<text x="{x_zero}" y="{top_offset-22}" text-anchor="middle" fill="#6c7280" font-size="11" font-weight="700" font-family="Manrope">0%</text>')
     
+    # Headers
+    svg.append(f'<text x="16" y="24" fill="#64748b" font-size="11" font-weight="700" font-family="Be Vietnam Pro">ĐƠN VỊ</text>')
+    svg.append(f'<text x="145" y="24" text-anchor="end" fill="#64748b" font-size="11" font-weight="700" font-family="Be Vietnam Pro">% 7T</text>')
+    svg.append(f'<text x="505" y="24" text-anchor="middle" fill="#64748b" font-size="11" font-weight="700" font-family="Be Vietnam Pro">ĐÁNH GIÁ</text>')
+
+    for ref_pct in [-40, -20, 20, 40, 60]:
+        rx = x_zero + ref_pct * scale
+        svg.append(f'<line x1="{rx:.1f}" y1="36" x2="{rx:.1f}" y2="{top_offset + 14 * row_h}" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="2,2"/>')
+        ref_txt = f"+{ref_pct}%" if ref_pct > 0 else f"{ref_pct}%"
+        svg.append(f'<text x="{rx:.1f}" y="24" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="600" font-family="Manrope">{ref_txt}</text>')
+
+    svg.append(f'<line x1="{x_zero}" y1="34" x2="{x_zero}" y2="{top_offset + 14 * row_h}" stroke="#94a3b8" stroke-width="1.5"/>')
+    svg.append(f'<text x="{x_zero}" y="24" text-anchor="middle" fill="#14161c" font-size="11" font-weight="800" font-family="Manrope">0%</text>')
+
     for i, name in enumerate(sorted_deps):
         y = top_offset + i * row_h
         item = growth_dict[name]
@@ -328,31 +340,32 @@ def build_t7_growth_bar_svg():
         danh_gia = item["danh_gia"]
         bar_len = abs(pct) * scale
         
+        # Row zebra background
+        if i % 2 == 1:
+            svg.append(f'<rect x="8" y="{y-14}" width="{W-16}" height="{row_h}" fill="#f8fafc" rx="4"/>')
+            
+        # 1. Department name (Column 1: x=16..90)
+        weight = "700" if pct > 0 else "600"
+        svg.append(f'<text x="16" y="{y+4}" fill="#14161c" font-size="12.5" font-weight="{weight}" font-family="Be Vietnam Pro">{name}</text>')
+        
+        # 2. Percentage text (Column 2: x=100..145)
+        val_col = "#15803d" if pct > 10 else ("#3b56e0" if pct > 0 else "#c2410c")
+        svg.append(f'<text x="145" y="{y+4}" text-anchor="end" fill="{val_col}" font-size="11.5" font-weight="700" font-family="Manrope">{fmt_pct(pct)}</text>')
+
+        # 3. Bar in dedicated region (Column 3: x=219..436)
         if pct >= 0:
             fill_col = "#16a34a" if pct > 10 else "#3b56e0"
             bx = x_zero
-            val_x = x_zero + bar_len + 6
-            val_anchor = "start"
-            val_col = fill_col
         else:
-            fill_col = "#c2410c"
+            fill_col = "#c2410c" if pct < -20 else "#ea580c"
             bx = x_zero - bar_len
-            val_x = x_zero - bar_len - 6
-            val_anchor = "end"
-            val_col = "#c2410c"
-            
-        if i % 2 == 1:
-            svg.append(f'<rect x="10" y="{y-14}" width="{W-20}" height="{row_h}" fill="#fbfcfe" rx="4"/>')
-            
-        weight = "700" if pct > 0 else "500"
-        svg.append(f'<text x="10" y="{y+4}" fill="#14161c" font-size="13" font-weight="{weight}" font-family="Be Vietnam Pro">{name}</text>')
-        svg.append(f'<rect x="{bx:.1f}" y="{y-8}" width="{bar_len:.1f}" height="16" fill="{fill_col}" rx="3"/>')
-        svg.append(f'<text x="{val_x:.1f}" y="{y+4}" text-anchor="{val_anchor}" fill="{val_col}" font-size="12" font-weight="700" font-family="Manrope">{fmt_pct(pct)}</text>')
-        
+        svg.append(f'<rect x="{bx:.1f}" y="{y-7}" width="{bar_len:.1f}" height="14" fill="{fill_col}" rx="3"/>')
+
+        # 4. Badge in dedicated column (Column 4: x=460..550)
         badge_bg = "#ecfdf5" if "Vượt" in danh_gia else ("#eff6ff" if "Đạt" in danh_gia else ("#fffbeb" if "dưới" in danh_gia else "#fef2f2"))
         badge_fg = "#15803d" if "Vượt" in danh_gia else ("#1d4ed8" if "Đạt" in danh_gia else ("#b45309" if "dưới" in danh_gia else "#991b1b"))
-        svg.append(f'<rect x="420" y="{y-10}" width="78" height="20" fill="{badge_bg}" rx="10"/>')
-        svg.append(f'<text x="459" y="{y+4}" text-anchor="middle" fill="{badge_fg}" font-size="10" font-weight="700" font-family="Be Vietnam Pro">{danh_gia}</text>')
+        svg.append(f'<rect x="460" y="{y-10}" width="90" height="20" fill="{badge_bg}" rx="10"/>')
+        svg.append(f'<text x="505" y="{y+4}" text-anchor="middle" fill="{badge_fg}" font-size="10.5" font-weight="700" font-family="Be Vietnam Pro">{danh_gia}</text>')
 
     svg.append('</svg>')
     return "\n".join(svg)
@@ -594,55 +607,75 @@ def build_year_dumbbell_svg():
 
 def build_year_growth_bar_svg():
     sorted_deps_yr = sorted(all_deps, key=lambda d: kpi_4tiers[d]["m10"]["pct_yr"], reverse=True)
-    W, H = 510, 520
+    W, H = 560, 530
     row_h = 32
-    top_offset = 45
-    x_zero = 190
-    scale = 2.6
+    top_offset = 48
+    x_zero = 485
+    scale = 3.5
     
     svg = []
     svg.append(f'<svg class="chart_svg" viewBox="0 0 {W} {H}" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">')
-    svg.append(f'<line x1="{x_zero}" y1="{top_offset-15}" x2="{x_zero}" y2="{top_offset + 14 * row_h}" stroke="#14161c" stroke-width="1.5"/>')
-    svg.append(f'<text x="{x_zero}" y="{top_offset-22}" text-anchor="middle" fill="#6c7280" font-size="11" font-weight="700" font-family="Manrope">0%</text>')
+    
+    # Headers and Legends
+    svg.append(f'<text x="16" y="24" fill="#64748b" font-size="11" font-weight="700" font-family="Be Vietnam Pro">ĐƠN VỊ</text>')
+    svg.append(f'<text x="156" y="24" text-anchor="middle" fill="#64748b" font-size="11" font-weight="700" font-family="Be Vietnam Pro">MỐC +10% → +50%</text>')
+
+    # Grid lines
+    for ref_pct in [-60, -40, -20, 15]:
+        rx = x_zero + ref_pct * scale
+        svg.append(f'<line x1="{rx:.1f}" y1="36" x2="{rx:.1f}" y2="{top_offset + 14 * row_h}" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="2,2"/>')
+        ref_txt = f"+{ref_pct}%" if ref_pct > 0 else f"{ref_pct}%"
+        svg.append(f'<text x="{rx:.1f}" y="24" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="600" font-family="Manrope">{ref_txt}</text>')
+
+    svg.append(f'<line x1="{x_zero}" y1="34" x2="{x_zero}" y2="{top_offset + 14 * row_h}" stroke="#94a3b8" stroke-width="1.5"/>')
+    svg.append(f'<text x="{x_zero}" y="24" text-anchor="middle" fill="#14161c" font-size="11" font-weight="800" font-family="Manrope">0%</text>')
+
+    # Legend indicator for bars
+    svg.append(f'<rect x="250" y="15" width="9" height="9" fill="#fca5a5" rx="2"/>')
+    svg.append(f'<text x="263" y="23" fill="#64748b" font-size="10" font-weight="600" font-family="Be Vietnam Pro">Mức giảm</text>')
+    svg.append(f'<rect x="340" y="15" width="9" height="9" fill="#10b981" rx="2"/>')
+    svg.append(f'<text x="353" y="23" fill="#047857" font-size="10" font-weight="700" font-family="Be Vietnam Pro">Thu hẹp nhờ +50%</text>')
 
     for i, name in enumerate(sorted_deps_yr):
         y = top_offset + i * row_h
         item = kpi_4tiers[name]
-        pct = item["m10"]["pct_yr"]
+        pct10 = item["m10"]["pct_yr"]
         pct50 = item["m50"]["pct_yr"]
         is_the_gioi = (name == "Thế giới")
         is_xuat_ban = (name == "Xuất bản")
         
-        row_bg = "#ecfdf5" if is_the_gioi else ("#fefce8" if is_xuat_ban else ("#fbfcfe" if i % 2 == 1 else "#ffffff"))
-        svg.append(f'<rect x="10" y="{y-14}" width="{W-20}" height="{row_h}" fill="{row_bg}" rx="4"/>')
-        
-        bar_len = abs(pct) * scale
-        if pct >= 0:
-            fill_col = "#16a34a"
-            bx = x_zero
-            val_x = x_zero + bar_len + 6
-            val_anchor = "start"
-            val_col = "#16a34a"
-        else:
-            fill_col = "#ca8a04" if is_xuat_ban else "#c2410c"
-            bx = x_zero - bar_len
-            val_x = x_zero - bar_len - 6
-            val_anchor = "end"
-            val_col = fill_col
+        row_bg = "#ecfdf5" if is_the_gioi else ("#fefce8" if is_xuat_ban else ("#f8fafc" if i % 2 == 1 else "#ffffff"))
+        svg.append(f'<rect x="8" y="{y-14}" width="{W-16}" height="{row_h}" fill="{row_bg}" rx="4"/>')
 
-        weight = "800" if (is_the_gioi or is_xuat_ban) else "500"
-        svg.append(f'<text x="15" y="{y+4}" fill="#14161c" font-size="13" font-weight="{weight}" font-family="Be Vietnam Pro">{name}</text>')
-        svg.append(f'<rect x="{bx:.1f}" y="{y-8}" width="{bar_len:.1f}" height="16" fill="{fill_col}" rx="3"/>')
-        
-        val_txt = f"{fmt_pct(pct)} → {fmt_pct(pct50)}"
-        svg.append(f'<text x="{val_x:.1f}" y="{y+4}" text-anchor="{val_anchor}" fill="{val_col}" font-size="11.5" font-weight="700" font-family="Manrope">{val_txt}</text>')
-        
+        # 1. Department name (Column 1: x=16..88)
+        weight = "800" if (is_the_gioi or is_xuat_ban) else "600"
+        svg.append(f'<text x="16" y="{y+4}" fill="#14161c" font-size="12.5" font-weight="{weight}" font-family="Be Vietnam Pro">{name}</text>')
+
+        # 2. Percentage range pill (Column 2: x=96..216)
+        pill_bg = "#dcfce7" if is_the_gioi else ("#fef08a" if is_xuat_ban else "#f1f5f9")
+        pill_fg = "#15803d" if is_the_gioi else ("#854d0e" if is_xuat_ban else "#c2410c")
+        svg.append(f'<rect x="96" y="{y-9}" width="120" height="19" fill="{pill_bg}" rx="5"/>')
+        val_txt = f"{fmt_pct(pct10)} → {fmt_pct(pct50)}"
+        svg.append(f'<text x="156" y="{y+4}" text-anchor="middle" fill="{pill_fg}" font-size="11" font-weight="700" font-family="Manrope">{val_txt}</text>')
+
+        # 3. Bar in Column 3 (x=230..545)
+        x10 = x_zero + pct10 * scale
+        x50 = x_zero + pct50 * scale
+
         if is_the_gioi:
-            svg.append(f'<rect x="400" y="{y-10}" width="98" height="20" fill="#d1fae5" rx="10"/>')
-            svg.append(f'<text x="449" y="{y+4}" text-anchor="middle" fill="#065f46" font-size="10" font-weight="800" font-family="Be Vietnam Pro">★ Tăng mạnh</text>')
+            # Positive: base bar + extra
+            svg.append(f'<rect x="{x_zero}" y="{y-7}" width="{x10 - x_zero:.1f}" height="14" fill="#16a34a" rx="3"/>')
+            svg.append(f'<rect x="{x10:.1f}" y="{y-7}" width="{x50 - x10:.1f}" height="14" fill="#059669" rx="3"/>')
         elif is_xuat_ban:
-            svg.append(f'<rect x="400" y="{y-10}" width="98" height="20" fill="#fef08a" rx="10"/>')
-            svg.append(f'<text x="449" y="{y+4}" text-anchor="middle" fill="#854d0e" font-size="10" font-weight="700" font-family="Be Vietnam Pro">Tiệm cận 2025</text>')
+            # Crosses zero: pct10 is -1.7%, pct50 is +8.3%
+            svg.append(f'<rect x="{x10:.1f}" y="{y-7}" width="{x_zero - x10:.1f}" height="14" fill="#fed7aa" rx="3"/>')
+            svg.append(f'<rect x="{x_zero}" y="{y-7}" width="{x50 - x_zero:.1f}" height="14" fill="#16a34a" rx="3"/>')
+        else:
+            # Negative:
+            # Residual deficit bar (+50% level to 0):
+            svg.append(f'<rect x="{x50:.1f}" y="{y-7}" width="{x_zero - x50:.1f}" height="14" fill="#fca5a5" rx="3"/>')
+            # Recovery gain bar (+10% to +50%):
+            svg.append(f'<rect x="{x10:.1f}" y="{y-7}" width="{x50 - x10:.1f}" height="14" fill="#10b981" rx="3"/>')
 
     svg.append('</svg>')
     return "\n".join(svg)
