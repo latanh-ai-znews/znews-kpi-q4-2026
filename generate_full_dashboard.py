@@ -1,20 +1,24 @@
 # -*- coding: utf-8 -*-
 """
-Production-grade generator for Znews Q4 2026 Static Dashboard with 4 KPI Tiers:
-- +10% (Cơ sở)
-- +15% (Phấn đấu)
-- +20% (Thử thách)
-- +50% (Cần thiết để lấy lại truy cập)
+Production-grade generator for Znews Q4 2026 Static Dashboard:
+- 3-Part Architecture with Sticky Navigation Tabs (#part1, #part2, #part3)
+- Section 01: Diễn biến truy cập theo tháng (2025–2026)
+- Section 02: Tăng trưởng 7 tháng đầu năm (Giai đoạn trước biến động)
+- Section 03: Mức độ sụt giảm T8–T9/2026 sau biến động
+- Section 04: Tiến độ thực hiện KPI năm 2026 theo ban & Cú sốc tháng 8 (MỚI)
+- Section 05: Đề xuất 4 mức KPI Quý 4/2026 (Cơ sở, Phấn đấu, Thử thách, Lấy lại truy cập)
+- Section 06: Kịch bản cả năm 2026 so với 2025 (4 Mức KPI)
+- Section 07: Cơ sở & Lý do đề xuất KPI mới (Thực trạng hụt hơi, Đòn bẩy Zalo OA, Tín hiệu hồi phục Google)
 
 100% compliance with Znews CMS:
 - No inline style="" anywhere in HTML or JS
 - No <span> tags anywhere (div/em/strong/b/small used instead)
-- No <button> tags anywhere (div.chip / a.chip used instead)
+- No <button> tags anywhere (div.chip / a.chip / a.nav_tab used instead)
 - No base64 images (pure inline SVG)
 - Fully responsive, mobile font size increased ~15%
 - Full-bleed 100vw layout scoped in .container_AI
 - Numbers formatted in Vietnamese locale (1.000,00)
-- Section 03: zero text-bar overlap
+- Section 03, Section 02, Section 06: zero text-bar overlap
 """
 import json
 import re
@@ -27,6 +31,8 @@ meta = data["meta"]
 kpi_c = data["kpi_phuong_an_C"]
 t7_growth = data["tang_truong_7_thang_dau_nam"]
 monthly = data["truy_cap_theo_thang"]
+tien_do_kpi = data.get("tien_do_kpi_2026", [])
+benchmarks = meta.get("tien_do_chuan", {"7t": 58.3, "8t": 66.7, "9t": 75.0})
 
 def fmt_tr(val_k, dec=2):
     v = val_k / 1000.0
@@ -41,6 +47,7 @@ def fmt_pct_nosign(p, dec=1):
 
 kpi_dict = {item["ten"]: item for item in kpi_c}
 growth_dict = {item["ten"]: item for item in t7_growth}
+tien_do_dict = {item["ten"]: item for item in tien_do_kpi}
 
 deps_by_block = {
     "Khối Uy tín": ["Xã hội", "Pháp luật", "Thế giới", "Xuất bản"],
@@ -64,7 +71,6 @@ all_deps = [
 all_blocks = ["Khối Uy tín", "Khối Kinh doanh", "Khối Lifestyle", "Khối Truy cập"]
 
 # Compute 4 Tiers (+10%, +15%, +20%, +50%)
-# For departments:
 kpi_4tiers = {}
 for dep in all_deps:
     raw = kpi_dict[dep]
@@ -203,6 +209,24 @@ for name in monthly["cot"][1:]:
     }
 
 # ==========================================
+# MINI PROGRESS BAR SVG (ZERO INLINE STYLES)
+# ==========================================
+def build_mini_progress_svg(pct, bench):
+    W, H = 84, 6
+    pct_w = max(0.0, min(float(W), (pct / 100.0) * W))
+    bench_x = min(float(W), (bench / 100.0) * W)
+    
+    if pct >= bench:
+        fill_col = "#16a34a"  # green: on track
+    elif pct >= bench - 8.0:
+        fill_col = "#ca8a04"  # amber: slight lag
+    else:
+        fill_col = "#dc2626"  # red: heavy lag
+        
+    return f'<svg class="prog_svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}"><rect x="0" y="0" width="{W}" height="{H}" fill="#e2e8f0" rx="3"/><rect x="0" y="0" width="{pct_w:.1f}" height="{H}" fill="{fill_col}" rx="3"/><line x1="{bench_x:.1f}" y1="0" x2="{bench_x:.1f}" y2="{H}" stroke="#0f172a" stroke-width="1.5"/></svg>'
+
+
+# ==========================================
 # SVG CHARTS BUILDERS (4 TIERS AWARE)
 # ==========================================
 
@@ -250,53 +274,42 @@ def build_monthly_chart_svg():
     svg.append(f'<text class="event_label" x="{xs[7] + (PW/22.0):.1f}" y="{T+22}" text-anchor="middle" fill="#c2410c" font-size="12" font-weight="700" font-family="Be Vietnam Pro">⚡ Biến động từ T8/2026</text>')
 
     for i in range(12):
-        x = xs[i]
-        svg.append(f'<line class="axis_tick" x1="{x:.1f}" y1="{T+PH}" x2="{x:.1f}" y2="{T+PH+6}" stroke="#c7cdda" stroke-width="1.5"/>')
-        thang_lbl = f"T{i+1}"
-        svg.append(f'<text class="axis_label_x" x="{x:.1f}" y="{T+PH+24}" text-anchor="middle" fill="#14161c" font-size="13" font-weight="600" font-family="Manrope">{thang_lbl}</text>')
+        svg.append(f'<text class="axis_label_x" x="{xs[i]:.1f}" y="{H-22}" text-anchor="middle" fill="#14161c" font-size="12" font-weight="600" font-family="Be Vietnam Pro">T{i+1}</text>')
+
+    pts_25 = " ".join([f"{xs[i]:.1f},{get_y(s25[i]):.1f}" for i in range(12)])
+    svg.append(f'<path id="path_2025" d="M {pts_25.replace(" ", " L ")}" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="5,4" stroke-linecap="round"/>')
+
+    pts_26 = " ".join([f"{xs[i]:.1f},{get_y(s26[i]):.1f}" for i in range(9)])
+    svg.append(f'<path id="path_2026" d="M {pts_26.replace(" ", " L ")}" fill="none" stroke="#3b56e0" stroke-width="3.5" stroke-linecap="round"/>')
 
     y_t9 = get_y(s26[8])
     y_m10 = get_y(m10_val)
-    y_m15 = get_y(m15_val)
     y_m20 = get_y(m20_val)
     y_m50 = get_y(m50_val)
-    
-    # Target polygon from m10 to m50
-    target_poly = f"{xs[8]:.1f},{y_t9:.1f} {xs[9]:.1f},{y_m50:.1f} {xs[10]:.1f},{y_m50:.1f} {xs[11]:.1f},{y_m50:.1f} {xs[11]:.1f},{y_m10:.1f} {xs[10]:.1f},{y_m10:.1f} {xs[9]:.1f},{y_m10:.1f} {xs[8]:.1f},{y_t9:.1f}"
-    svg.append(f'<polygon id="poly_target" points="{target_poly}" fill="url(#targetGrad)"/>')
 
-    # Path 2025
-    pts_2025 = [f"{xs[i]:.1f},{get_y(s25[i]):.1f}" for i in range(12)]
-    d_2025 = "M " + " L ".join(pts_2025)
-    svg.append(f'<path id="path_2025" d="{d_2025}" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>')
+    pts_poly = f"{xs[8]:.1f},{y_t9:.1f} {xs[9]:.1f},{y_m50:.1f} {xs[10]:.1f},{y_m50:.1f} {xs[11]:.1f},{y_m50:.1f} {xs[11]:.1f},{y_m10:.1f} {xs[10]:.1f},{y_m10:.1f} {xs[9]:.1f},{y_m10:.1f} {xs[8]:.1f},{y_t9:.1f}"
+    svg.append(f'<polygon id="poly_target" points="{pts_poly}" fill="url(#targetGrad)"/>')
+
+    path_target_m10 = f"M {xs[8]:.1f},{y_t9:.1f} L {xs[9]:.1f},{y_m10:.1f} L {xs[10]:.1f},{y_m10:.1f} L {xs[11]:.1f},{y_m10:.1f}"
+    svg.append(f'<path id="path_target_m10" d="{path_target_m10}" fill="none" stroke="#3b56e0" stroke-width="2" stroke-dasharray="4,4" stroke-linecap="round"/>')
+
+    path_target_m20 = f"M {xs[8]:.1f},{y_t9:.1f} L {xs[9]:.1f},{y_m20:.1f} L {xs[10]:.1f},{y_m20:.1f} L {xs[11]:.1f},{y_m20:.1f}"
+    svg.append(f'<path id="path_target_m20" d="{path_target_m20}" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="3,3" stroke-linecap="round"/>')
+
+    path_target_m50 = f"M {xs[8]:.1f},{y_t9:.1f} L {xs[9]:.1f},{y_m50:.1f} L {xs[10]:.1f},{y_m50:.1f} L {xs[11]:.1f},{y_m50:.1f}"
+    svg.append(f'<path id="path_target_m50" d="{path_target_m50}" fill="none" stroke="#1e1b4b" stroke-width="2.5" stroke-dasharray="5,4" stroke-linecap="round"/>')
 
     for i in range(12):
-        svg.append(f'<circle class="dot_2025" cx="{xs[i]:.1f}" cy="{get_y(s25[i]):.1f}" r="3.5" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>')
-
-    # Path 2026
-    pts_2026 = [f"{xs[i]:.1f},{get_y(s26[i]):.1f}" for i in range(9)]
-    d_2026 = "M " + " L ".join(pts_2026)
-    svg.append(f'<path id="path_2026" d="{d_2026}" fill="none" stroke="#3b56e0" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>')
+        svg.append(f'<circle class="dot_2025" cx="{xs[i]:.1f}" cy="{get_y(s25[i]):.1f}" r="4" fill="#94a3b8" stroke="#ffffff" stroke-width="1.5"/>')
 
     for i in range(9):
-        svg.append(f'<circle class="dot_2026" cx="{xs[i]:.1f}" cy="{get_y(s26[i]):.1f}" r="4.5" fill="#3b56e0" stroke="#ffffff" stroke-width="2"/>')
-
-    # Dashed paths for 4 Tiers
-    # +10%
-    pts_m10 = [f"{xs[8]:.1f},{y_t9:.1f}"] + [f"{xs[i]:.1f},{y_m10:.1f}" for i in range(9, 12)]
-    svg.append(f'<path id="path_target_m10" d="M {" L ".join(pts_m10)}" fill="none" stroke="#98a6ee" stroke-width="2" stroke-dasharray="5,4" stroke-linecap="round"/>')
-
-    # +20% (Thử thách)
-    pts_m20 = [f"{xs[8]:.1f},{y_t9:.1f}"] + [f"{xs[i]:.1f},{y_m20:.1f}" for i in range(9, 12)]
-    svg.append(f'<path id="path_target_m20" d="M {" L ".join(pts_m20)}" fill="none" stroke="#3b56e0" stroke-width="2.5" stroke-dasharray="5,4" stroke-linecap="round"/>')
-
-    # +50% (Lấy lại truy cập)
-    pts_m50 = [f"{xs[8]:.1f},{y_t9:.1f}"] + [f"{xs[i]:.1f},{y_m50:.1f}" for i in range(9, 12)]
-    svg.append(f'<path id="path_target_m50" d="M {" L ".join(pts_m50)}" fill="none" stroke="#1e1b4b" stroke-width="3" stroke-dasharray="7,4" stroke-linecap="round"/>')
+        col = "#c2410c" if i >= 7 else "#3b56e0"
+        r_size = 5.5 if i >= 7 else 4.5
+        svg.append(f'<circle class="dot_2026" cx="{xs[i]:.1f}" cy="{get_y(s26[i]):.1f}" r="{r_size}" fill="{col}" stroke="#ffffff" stroke-width="2"/>')
 
     for i in range(9, 12):
-        svg.append(f'<circle class="dot_target_10" cx="{xs[i]:.1f}" cy="{y_m10:.1f}" r="3.5" fill="#ffffff" stroke="#98a6ee" stroke-width="2"/>')
-        svg.append(f'<circle class="dot_target_20" cx="{xs[i]:.1f}" cy="{y_m20:.1f}" r="4" fill="#ffffff" stroke="#3b56e0" stroke-width="2"/>')
+        svg.append(f'<circle class="dot_target_10" cx="{xs[i]:.1f}" cy="{y_m10:.1f}" r="4" fill="#3b56e0" stroke="#ffffff" stroke-width="1.5"/>')
+        svg.append(f'<circle class="dot_target_20" cx="{xs[i]:.1f}" cy="{y_m20:.1f}" r="3.5" fill="#6366f1" stroke="#ffffff" stroke-width="1.5"/>')
         svg.append(f'<circle class="dot_target_50" cx="{xs[i]:.1f}" cy="{y_m50:.1f}" r="4.5" fill="#1e1b4b" stroke="#ffffff" stroke-width="2"/>')
 
     svg.append(f'<text id="lbl_t1" class="chart_val_lbl" x="{xs[0]:.1f}" y="{get_y(s26[0])-12:.1f}" text-anchor="middle" fill="#3b56e0" font-size="12" font-weight="700" font-family="Manrope">{fmt_tr(s26[0], 1)} tr</text>')
@@ -384,12 +397,15 @@ def build_t7_dumbbell_svg():
         {"name": "Toàn Znews", "t7_25": 470714, "t7_26": 439901, "pct": -6.5}
     ]
     
+    max_val = 500000
+    scale = (W - 170) / max_val
+    
     svg = []
     svg.append(f'<svg class="chart_svg" viewBox="0 0 {W} {H}" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">')
     svg.append('<circle cx="150" cy="22" r="5" fill="#94a3b8"/>')
     svg.append('<text x="162" y="26" fill="#6c7280" font-size="12" font-family="Be Vietnam Pro">7T/2025</text>')
-    svg.append('<circle cx="240" cy="22" r="5" fill="#3b56e0"/>')
-    svg.append('<text x="252" y="26" fill="#14161c" font-size="12" font-weight="700" font-family="Be Vietnam Pro">7T/2026</text>')
+    svg.append('<circle cx="250" cy="22" r="5" fill="#3b56e0"/>')
+    svg.append('<text x="262" y="26" fill="#3b56e0" font-size="12" font-weight="700" font-family="Be Vietnam Pro">7T/2026</text>')
 
     for i, r in enumerate(rows):
         y = top_offset + i * row_h
@@ -399,22 +415,14 @@ def build_t7_dumbbell_svg():
         svg.append(f'<rect x="10" y="{y-18}" width="{W-20}" height="{row_h-8}" fill="{bg_col}" stroke="{stroke_col}" stroke-width="1" rx="10"/>')
         
         font_weight = "800" if is_total else "700"
-        text_color = "#3b56e0" if is_total else "#14161c"
-        svg.append(f'<text x="24" y="{y+6}" fill="{text_color}" font-size="14" font-weight="{font_weight}" font-family="Be Vietnam Pro">{r["name"]}</text>')
+        title_fill = "#3b56e0" if is_total else "#14161c"
+        title_size = "14" if is_total else "13"
+        svg.append(f'<text x="24" y="{y+6}" fill="{title_fill}" font-size="{title_size}" font-weight="{font_weight}" font-family="Be Vietnam Pro">{r["name"]}</text>')
         
-        if is_total:
-            x_min, x_max = 400000.0, 500000.0
-        else:
-            x_min, x_max = 50000.0, 200000.0
-            
-        def get_db_x(val):
-            clamp_val = max(x_min, min(x_max, val))
-            return 175.0 + ((clamp_val - x_min) / (x_max - x_min)) * 230.0
-
-        x25 = get_db_x(r["t7_25"])
-        x26 = get_db_x(r["t7_26"])
-        bar_col = "#16a34a" if r["pct"] > 0 else "#f87171"
-        svg.append(f'<line x1="{x25:.1f}" y1="{y+6}" x2="{x26:.1f}" y2="{y+6}" stroke="{bar_col}" stroke-width="4" stroke-linecap="round"/>')
+        x25 = 140 + r["t7_25"] * scale
+        x26 = 140 + r["t7_26"] * scale
+        line_col = "#22c55e" if r["pct"] > 0 else "#f87171"
+        svg.append(f'<line x1="{x25:.1f}" y1="{y+6}" x2="{x26:.1f}" y2="{y+6}" stroke="{line_col}" stroke-width="4" stroke-linecap="round"/>')
         svg.append(f'<circle cx="{x25:.1f}" cy="{y+6}" r="6.5" fill="#94a3b8" stroke="#ffffff" stroke-width="1.5"/>')
         svg.append(f'<circle cx="{x26:.1f}" cy="{y+6}" r="7.5" fill="#3b56e0" stroke="#ffffff" stroke-width="2"/>')
         
@@ -422,7 +430,7 @@ def build_t7_dumbbell_svg():
         svg.append(f'<text x="{x26:.1f}" y="{y-6}" text-anchor="middle" fill="#3b56e0" font-size="12" font-weight="800" font-family="Manrope">{fmt_tr(r["t7_26"], 1)} tr</text>')
 
         badge_bg = "#ecfdf5" if r["pct"] > 0 else "#fef2f2"
-        badge_fg = "#16a34a" if r["pct"] > 0 else "#c2410c"
+        badge_fg = "#15803d" if r["pct"] > 0 else "#c2410c"
         svg.append(f'<rect x="425" y="{y-7}" width="65" height="24" fill="{badge_bg}" rx="12"/>')
         svg.append(f'<text x="457" y="{y+9}" text-anchor="middle" fill="{badge_fg}" font-size="12" font-weight="800" font-family="Manrope">{fmt_pct(r["pct"])}</text>')
 
@@ -484,54 +492,49 @@ def build_drop_t8t9_svg():
 
 
 # =========================================================================
-# SECTION 04: GROUPED BAR CHART (TB vs +10% vs +20% vs +50%)
+# SECTION 05 (OLD 04): GROUPED BAR CHART (TB vs +10% vs +20% vs +50%)
 # =========================================================================
 def build_kpi_comparison_svg():
-    W, H = 960, 470
-    PW = 860
-    L, T = 60, 45
-    row_h = 28
-    # Max value among 14 deps is Thể thao: TB 8.258k, m50 12.387k. Max scale = 14.000k
-    max_k = 13500.0
-    scale = (PW - 170) / max_k
+    W, H = 960, 520
+    top_offset = 40
+    row_h = 32
+    scale = 35.0
+    bx = 180
     
     svg = []
     svg.append(f'<svg class="chart_svg" viewBox="0 0 {W} {H}" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">')
     
-    # Legend for 4 Tiers
-    svg.append('<rect x="130" y="12" width="12" height="10" fill="#c9d0f6" rx="2"/>')
-    svg.append('<text x="148" y="21" fill="#6c7280" font-size="11.5" font-family="Be Vietnam Pro">TB T8–T9</text>')
-    svg.append('<rect x="250" y="12" width="12" height="10" fill="#98a6ee" rx="2"/>')
-    svg.append('<text x="268" y="21" fill="#475569" font-size="11.5" font-family="Be Vietnam Pro">+10% Cơ sở</text>')
-    svg.append('<rect x="385" y="12" width="12" height="10" fill="#3b56e0" rx="2"/>')
+    svg.append('<rect x="180" y="10" width="12" height="12" fill="#cbd5e1" rx="2"/>')
+    svg.append('<text x="198" y="21" fill="#64748b" font-size="11.5" font-weight="600" font-family="Be Vietnam Pro">TB T8–T9 (Mốc so sánh)</text>')
+    
+    svg.append('<rect x="385" y="10" width="12" height="12" fill="#3b56e0" rx="2"/>')
     svg.append('<text x="403" y="21" fill="#1e293b" font-size="11.5" font-weight="600" font-family="Be Vietnam Pro">+20% Thử thách</text>')
-    svg.append('<rect x="545" y="12" width="12" height="10" fill="#1e1b4b" rx="2"/>')
-    svg.append('<text x="563" y="21" fill="#0f172a" font-size="11.5" font-weight="700" font-family="Be Vietnam Pro">+50% Lấy lại truy cập</text>')
+
+    svg.append('<rect x="525" y="10" width="12" height="12" fill="#1e1b4b" rx="2"/>')
+    svg.append('<text x="543" y="21" fill="#1e1b4b" font-size="11.5" font-weight="800" font-family="Be Vietnam Pro">+50% Lấy lại truy cập</text>')
 
     for i, name in enumerate(all_deps):
-        y = T + 20 + i * row_h
+        y = top_offset + i * row_h
         item = kpi_4tiers[name]
-        tb = item["tb"]
-        m10 = item["m10"]["th"]
-        m20 = item["m20"]["th"]
-        m50 = item["m50"]["th"]
+        tb = item["tb"] / 1000.0
+        m10 = item["m10"]["th"] / 1000.0
+        m20 = item["m20"]["th"] / 1000.0
+        m50 = item["m50"]["th"] / 1000.0
         
-        if i % 2 == 1:
-            svg.append(f'<rect x="10" y="{y-12}" width="{W-20}" height="{row_h}" fill="#f8f9fe" rx="4"/>')
-            
-        svg.append(f'<text x="20" y="{y+5}" fill="#14161c" font-size="13" font-weight="600" font-family="Be Vietnam Pro">{name}</text>')
-        
-        bx = 135
         w_tb = tb * scale
         w_m10 = m10 * scale
         w_m20 = m20 * scale
         w_m50 = m50 * scale
-        bar_h = 4.5
         
-        svg.append(f'<rect x="{bx}" y="{y-9}" width="{w_tb:.1f}" height="{bar_h}" fill="#c9d0f6" rx="2"/>')
-        svg.append(f'<rect x="{bx}" y="{y-3}" width="{w_m10:.1f}" height="{bar_h}" fill="#98a6ee" rx="2"/>')
-        svg.append(f'<rect x="{bx}" y="{y+3}" width="{w_m20:.1f}" height="{bar_h}" fill="#3b56e0" rx="2"/>')
-        svg.append(f'<rect x="{bx}" y="{y+9}" width="{w_m50:.1f}" height="{bar_h}" fill="#1e1b4b" rx="2"/>')
+        if i % 2 == 1:
+            svg.append(f'<rect x="10" y="{y-14}" width="{W-20}" height="{row_h}" fill="#f8fafc" rx="4"/>')
+            
+        svg.append(f'<text x="20" y="{y+4}" fill="#14161c" font-size="13" font-weight="700" font-family="Be Vietnam Pro">{name}</text>')
+        
+        svg.append(f'<rect x="{bx}" y="{y-8}" width="{w_m50:.1f}" height="17" fill="#1e1b4b" rx="3"/>')
+        svg.append(f'<rect x="{bx}" y="{y-8}" width="{w_m20:.1f}" height="17" fill="#3b56e0" rx="3"/>')
+        svg.append(f'<rect x="{bx}" y="{y-8}" width="{w_m10:.1f}" height="17" fill="#818cf8" rx="3"/>')
+        svg.append(f'<rect x="{bx}" y="{y-8}" width="{w_tb:.1f}" height="17" fill="#cbd5e1" rx="3"/>')
         
         val_txt = f"{fmt_tr(tb, 2)} → {fmt_tr(m10, 2)} | {fmt_tr(m20, 2)} | {fmt_tr(m50, 2)} tr"
         svg.append(f'<text x="{bx + w_m50 + 10:.1f}" y="{y+5}" fill="#14161c" font-size="11" font-weight="700" font-family="Manrope">{val_txt}</text>')
@@ -541,7 +544,7 @@ def build_kpi_comparison_svg():
 
 
 # =========================================================================
-# SECTION 05: YEAR DUMBBELL & GROWTH
+# SECTION 06 (OLD 05): YEAR DUMBBELL & GROWTH
 # =========================================================================
 def build_year_dumbbell_svg():
     W, H = 510, 480
@@ -555,6 +558,9 @@ def build_year_dumbbell_svg():
         {"name": "Khối Kinh doanh", "y25": kpi_4tiers["Khối Kinh doanh"]["yr_25"], "y26_10": kpi_4tiers["Khối Kinh doanh"]["m10"]["yr"], "y26_50": kpi_4tiers["Khối Kinh doanh"]["m50"]["yr"], "pct_10": kpi_4tiers["Khối Kinh doanh"]["m10"]["pct_yr"], "pct_50": kpi_4tiers["Khối Kinh doanh"]["m50"]["pct_yr"]},
         {"name": "Toàn Znews", "y25": kpi_4tiers["Toàn Znews"]["yr_25"], "y26_10": kpi_4tiers["Toàn Znews"]["m10"]["yr"], "y26_50": kpi_4tiers["Toàn Znews"]["m50"]["yr"], "pct_10": kpi_4tiers["Toàn Znews"]["m10"]["pct_yr"], "pct_50": kpi_4tiers["Toàn Znews"]["m50"]["pct_yr"]}
     ]
+    
+    max_val = 850000
+    scale = (W - 180) / max_val
     
     svg = []
     svg.append(f'<svg class="chart_svg" viewBox="0 0 {W} {H}" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">')
@@ -573,23 +579,17 @@ def build_year_dumbbell_svg():
         svg.append(f'<rect x="10" y="{y-18}" width="{W-20}" height="{row_h-8}" fill="{bg_col}" stroke="{stroke_col}" stroke-width="1" rx="10"/>')
         
         font_weight = "800" if is_total else "700"
-        text_color = "#3b56e0" if is_total else "#14161c"
-        svg.append(f'<text x="24" y="{y+6}" fill="{text_color}" font-size="14" font-weight="{font_weight}" font-family="Be Vietnam Pro">{r["name"]}</text>')
+        title_fill = "#3b56e0" if is_total else "#14161c"
+        title_size = "14" if is_total else "13"
+        svg.append(f'<text x="24" y="{y+6}" fill="{title_fill}" font-size="{title_size}" font-weight="{font_weight}" font-family="Be Vietnam Pro">{r["name"]}</text>')
         
-        if is_total:
-            x_min, x_max = 500000.0, 850000.0
-        else:
-            x_min, x_max = 80000.0, 320000.0
-            
-        def get_db_x(val):
-            clamp_val = max(x_min, min(x_max, val))
-            return 175.0 + ((clamp_val - x_min) / (x_max - x_min)) * 230.0
+        x25 = 140 + r["y25"] * scale
+        x26_10 = 140 + r["y26_10"] * scale
+        x26_50 = 140 + r["y26_50"] * scale
 
-        x25 = get_db_x(r["y25"])
-        x26_10 = get_db_x(r["y26_10"])
-        x26_50 = get_db_x(r["y26_50"])
-        
         svg.append(f'<line x1="{x25:.1f}" y1="{y+6}" x2="{x26_10:.1f}" y2="{y+6}" stroke="#f87171" stroke-width="4" stroke-linecap="round"/>')
+        svg.append(f'<line x1="{x26_10:.1f}" y1="{y+6}" x2="{x26_50:.1f}" y2="{y+6}" stroke="#10b981" stroke-width="4" stroke-linecap="round"/>')
+
         svg.append(f'<circle cx="{x25:.1f}" cy="{y+6}" r="6.5" fill="#94a3b8" stroke="#ffffff" stroke-width="1.5"/>')
         svg.append(f'<circle cx="{x26_10:.1f}" cy="{y+6}" r="6.5" fill="#3b56e0" stroke="#ffffff" stroke-width="1.5"/>')
         svg.append(f'<circle cx="{x26_50:.1f}" cy="{y+6}" r="7.5" fill="#1e1b4b" stroke="#ffffff" stroke-width="2"/>')
@@ -688,6 +688,10 @@ def build_year_growth_bar_svg():
 css_scoped = """
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@500;600;700;800&display=swap');
 
+html {
+  scroll-behavior: smooth;
+}
+
 .container_AI {
   width: 100vw;
   margin-left: calc(50% - 50vw);
@@ -740,13 +744,8 @@ css_scoped = """
   color: #14161c;
 }
 
-.container_AI p {
-  color: #525866;
-  font-size: 14.5px;
-}
-
 .container_AI .page_header {
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .container_AI .badge_bar {
@@ -758,129 +757,205 @@ css_scoped = """
 }
 
 .container_AI .meta_badge {
-  background-color: #e0e7ff;
-  color: #3730a3;
-  font-size: 11px;
+  display: inline-block;
+  background-color: #eef2ff;
+  color: #3b56e0;
+  font-size: 12px;
   font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding: 4px 12px;
-  border-radius: 9999px;
-  display: inline-block;
 }
 
 .container_AI .meta_subtext {
-  font-size: 13px;
   color: #64748b;
-  font-weight: 500;
+  font-size: 13px;
 }
 
 .container_AI .page_desc {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #475569;
   margin-top: 10px;
+  color: #475569;
+  font-size: 15px;
   max-width: 900px;
 }
 
-.container_AI .card {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
-}
-
-.container_AI .card_hero {
-  background-color: #ffffff;
-  border: 2px solid #3b56e0;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 4px 14px rgba(59, 86, 224, 0.08);
-  margin-bottom: 24px;
-}
-
-.container_AI .card_hero_inner {
-  margin-top: 18px;
-}
-
-.container_AI .section_block {
-  margin-bottom: 48px;
-}
-
-.container_AI .section_header {
-  border-top: 2px solid #3b56e0;
-  padding-top: 14px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  flex-wrap: wrap;
+/* =======================================================
+   STICKY 3-PART NAVIGATION BAR
+   ======================================================= */
+.container_AI .main_nav_tabs {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
+  padding: 14px 20px;
+  background: rgba(248, 250, 252, 0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1.5px solid #e2e8f0;
+  margin: 24px -20px 36px -20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
-.container_AI .section_title_wrap {
+.container_AI .nav_tab {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
+  flex-direction: column;
+  padding: 12px 16px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #1e293b;
+  transition: all 0.2s ease;
+  cursor: pointer;
 }
 
-.container_AI .section_num {
-  font-family: 'Manrope', sans-serif;
+.container_AI .nav_tab:hover {
+  border-color: #94a3b8;
+  background: #f8fafc;
+  transform: translateY(-1px);
+}
+
+.container_AI .nav_tab.active {
+  background: #eff6ff;
+  border-color: #3b56e0;
+  box-shadow: 0 4px 14px rgba(59, 86, 224, 0.12);
+}
+
+.container_AI .nav_tab_badge {
+  font-size: 11px;
   font-weight: 800;
-  font-size: 20px;
   color: #3b56e0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
 }
 
-.container_AI .section_title {
-  font-size: 20px;
+.container_AI .nav_tab_title {
+  font-size: 14px;
   font-weight: 700;
-  color: #14161c;
+  color: #0f172a;
+  margin-bottom: 2px;
+  line-height: 1.3;
 }
 
-.container_AI .section_sub {
-  font-size: 13px;
+.container_AI .nav_tab_desc {
+  font-size: 11px;
   color: #64748b;
-  margin-top: 4px;
+  line-height: 1.3;
 }
 
+/* =======================================================
+   DASHBOARD PARTS & BANNERS
+   ======================================================= */
+.container_AI .dashboard_part {
+  scroll-margin-top: 130px;
+  margin-bottom: 56px;
+}
+
+.container_AI .part_banner {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-left: 6px solid #3b56e0;
+  border-radius: 14px;
+  padding: 22px 28px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.container_AI .part_banner.part2_banner {
+  border-left-color: #4f46e5;
+}
+
+.container_AI .part_banner.part3_banner {
+  border-left-color: #059669;
+}
+
+.container_AI .part_badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: #eff6ff;
+  color: #3b56e0;
+  margin-bottom: 8px;
+}
+
+.container_AI .part2_banner .part_badge {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.container_AI .part3_banner .part_badge {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.container_AI .part_title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.container_AI .part_desc {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* =======================================================
+   GRIDS & CARDS
+   ======================================================= */
 .container_AI .grid_4col {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
-  margin-bottom: 36px;
+  margin-bottom: 24px;
 }
 
 .container_AI .grid_2col {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
-}
-
-.container_AI .grid_3col {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .container_AI .kpi_card_head {
-  background-color: #ffffff;
+  background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 14px;
+  border-radius: 12px;
   padding: 18px 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .container_AI .kpi_card_head.highlight {
-  border-color: #3b56e0;
-  background-color: #f7f8fe;
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  border-width: 2px;
+}
+
+.container_AI .kpi_card_head.warn_card {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
+.container_AI .kpi_card_head.alert_card {
+  background: #fef2f2;
+  border-color: #fecdd3;
 }
 
 .container_AI .kpi_label {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -891,8 +966,9 @@ css_scoped = """
   font-family: 'Manrope', sans-serif;
   font-size: 24px;
   font-weight: 800;
-  line-height: 1.15;
-  color: #14161c;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .container_AI .kpi_value_huge.accent {
@@ -903,249 +979,171 @@ css_scoped = """
   color: #c2410c;
 }
 
+.container_AI .kpi_value_huge.warning_val {
+  color: #b45309;
+}
+
 .container_AI .kpi_sub {
-  font-size: 12px;
-  color: #64748b;
   margin-top: 8px;
-  font-weight: 500;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.container_AI .card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+  margin-bottom: 24px;
+}
+
+.container_AI .card h3 {
+  margin-bottom: 4px;
+}
+
+.container_AI .card p {
+  color: #64748b;
+  font-size: 13.5px;
+  margin-bottom: 16px;
+}
+
+/* =======================================================
+   SECTION HEADERS & CONTROLS
+   ======================================================= */
+.container_AI .section_block {
+  margin-bottom: 28px;
+}
+
+.container_AI .section_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.container_AI .section_title_wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.container_AI .section_num {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: #ffffff;
+  background-color: #3b56e0;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container_AI .section_title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.container_AI .section_sub {
+  color: #64748b;
+  font-size: 13px;
 }
 
 .container_AI .controls_bar {
   display: flex;
   gap: 8px;
-  align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 18px;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
 .container_AI .chip {
-  padding: 7px 14px;
-  border-radius: 8px;
-  background-color: #ffffff;
-  border: 1px solid #cbd5e1;
-  color: #475569;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.15s ease;
   display: inline-block;
-  text-decoration: none;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
 }
 
 .container_AI .chip:hover {
-  background-color: #f1f5f9;
-  border-color: #94a3b8;
-  color: #1e293b;
+  background: #e2e8f0;
+  color: #0f172a;
 }
 
 .container_AI .chip.active {
-  background-color: #3b56e0;
-  border-color: #3b56e0;
+  background: #3b56e0;
   color: #ffffff;
-  font-weight: 700;
+  border-color: #3b56e0;
 }
 
 .container_AI .chip_sm {
-  padding: 5px 10px;
-  font-size: 12px;
-  border-radius: 6px;
-}
-
-/* Department Showcase Cards */
-.container_AI .dep_kpi_card {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.container_AI .dep_kpi_card:hover {
-  border-color: #94a3b8;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.container_AI .dep_card_header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #f1f5f9;
-}
-
-.container_AI .dep_name {
-  font-size: 17px;
-  font-weight: 800;
-  color: #14161c;
-}
-
-.container_AI .dep_block_tag {
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 6px;
-  background-color: #f1f5f9;
-  color: #475569;
-}
-
-.container_AI .dep_baseline {
-  background-color: #f8fafc;
-  border-radius: 8px;
-  padding: 8px 12px;
-  margin-bottom: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 12.5px;
-}
-
-.container_AI .dep_kpi_box_highlight {
-  background-color: #f0f3fe;
-  border: 1.5px solid #c7d2fe;
-  border-radius: 10px;
-  padding: 12px 14px;
-  margin-bottom: 10px;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.container_AI .dep_kpi_box_highlight.q4_box {
-  background-color: #ffffff;
-  border: 1.5px solid #3b56e0;
-}
-
-.container_AI .kpi_box_title {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: #3b56e0;
-  margin-bottom: 8px;
-}
-
-.container_AI .kpi_target_row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 4px;
-  padding: 3px 6px;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.container_AI .kpi_target_row.tier_focus {
-  background-color: #e0e7ff;
-}
-
-.container_AI .kpi_target_row.tier_focus_50 {
-  background-color: #fef3c7;
-}
-
-.container_AI .target_tier {
   font-size: 11.5px;
-  font-weight: 600;
-  color: #475569;
+  padding: 4px 10px;
 }
 
-.container_AI .target_tier.accent_recover {
-  color: #0f172a;
-  font-weight: 700;
-}
-
-.container_AI .target_number {
-  font-family: 'Manrope', sans-serif;
-  font-size: 15.5px;
-  font-weight: 800;
-  color: #14161c;
-}
-
-.container_AI .target_number.primary {
-  color: #3b56e0;
-}
-
-.container_AI .target_number.challenge {
-  color: #4f46e5;
-  font-weight: 800;
-}
-
-.container_AI .target_number.recover {
-  color: #065f46;
-  font-weight: 800;
-}
-
-.container_AI .target_number.q4_val {
-  color: #1e1b4b;
-}
-
-.container_AI .dep_card_footer {
-  font-size: 12px;
-  color: #64748b;
-  border-top: 1px solid #f1f5f9;
-  padding-top: 10px;
-  display: flex;
-  justify-content: space-between;
-}
-
-/* Master Data Table */
+/* =======================================================
+   TABLE STYLES & KPI PROGRESS SECTION
+   ======================================================= */
 .container_AI .table_responsive {
   width: 100%;
   overflow-x: auto;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
-  background-color: #ffffff;
-  margin-top: 14px;
-  margin-bottom: 24px;
 }
 
 .container_AI .kpi_table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 13.5px;
   text-align: left;
-  font-size: 13px;
 }
 
 .container_AI .kpi_table th {
-  background-color: #f8fafc;
+  background: #f8fafc;
   color: #475569;
+  font-size: 12px;
   font-weight: 700;
-  padding: 10px 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 12px 14px;
   border-bottom: 2px solid #e2e8f0;
   white-space: nowrap;
 }
 
 .container_AI .kpi_table td {
-  padding: 10px 12px;
+  padding: 12px 14px;
   border-bottom: 1px solid #f1f5f9;
   color: #1e293b;
-  white-space: nowrap;
 }
 
-.container_AI .kpi_table tr.row_block {
-  background-color: #f7f8fe;
+.container_AI .kpi_table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.container_AI .kpi_table .row_block {
+  background-color: #f1f5f9;
   font-weight: 700;
+  border-top: 1.5px solid #e2e8f0;
+  border-bottom: 1.5px solid #e2e8f0;
 }
 
-.container_AI .kpi_table tr.row_block td {
-  color: #1e293b;
-  border-bottom: 1px solid #e2e8f0;
-  border-top: 1px solid #e2e8f0;
-}
-
-.container_AI .kpi_table tr.row_total {
-  background-color: #3b56e0;
-  color: #ffffff;
+.container_AI .kpi_table .row_total {
+  background-color: #eff6ff;
   font-weight: 800;
-  font-size: 13.5px;
-}
-
-.container_AI .kpi_table tr.row_total td {
-  color: #ffffff;
-  border-bottom: none;
+  border-top: 2px solid #3b56e0;
+  border-bottom: 2px solid #3b56e0;
 }
 
 .container_AI .cell_num {
@@ -1154,8 +1152,8 @@ css_scoped = """
   font-feature-settings: 'tnum' 1;
 }
 
-.container_AI .cell_bold {
-  font-weight: 700;
+.container_AI .cell_center {
+  text-align: center;
 }
 
 .container_AI .cell_primary {
@@ -1164,93 +1162,352 @@ css_scoped = """
 }
 
 .container_AI .cell_challenge {
-  color: #4f46e5;
+  color: #4338ca;
   font-weight: 700;
 }
 
 .container_AI .cell_recover {
   color: #065f46;
   font-weight: 800;
+  background: #ecfdf5;
+}
+
+.container_AI .cell_bold {
+  font-weight: 700;
 }
 
 .container_AI .cell_neg {
   color: #c2410c;
-  font-weight: 600;
+  font-weight: 700;
 }
 
-.container_AI .cell_pos {
-  color: #16a34a;
-  font-weight: 600;
+/* Progress Table Cells */
+.container_AI .prog_cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-end;
+}
+
+.container_AI .prog_val_line {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.container_AI .prog_pct {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Manrope', sans-serif;
+}
+
+.container_AI .pct_good {
+  color: #15803d;
+}
+
+.container_AI .pct_warn {
+  color: #b45309;
+}
+
+.container_AI .pct_bad {
+  color: #b91c1c;
+}
+
+.container_AI .badge_critical {
+  display: inline-block;
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecdd3;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 800;
+  font-size: 11.5px;
+  font-family: 'Manrope', sans-serif;
+  white-space: nowrap;
+}
+
+.container_AI .badge_warning {
+  display: inline-block;
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 11.5px;
+  font-family: 'Manrope', sans-serif;
+  white-space: nowrap;
+}
+
+.container_AI .badge_success {
+  display: inline-block;
+  background: #ecfdf5;
+  color: #15803d;
+  border: 1px solid #a7f3d0;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 11.5px;
+  font-family: 'Manrope', sans-serif;
+  white-space: nowrap;
 }
 
 .container_AI .table_col_highlight {
-  background-color: #e0e7ff;
+  background-color: #f0f7ff;
 }
 
 .container_AI .table_col_highlight_gold {
-  background-color: #fef3c7;
+  background-color: #fefce8;
 }
 
-/* Strategic Insights Box (Section 06) */
-.container_AI .insights_box {
-  background-color: #f7f8fe;
-  border: 1px solid #e0e7ff;
-  border-radius: 16px;
-  padding: 28px;
+.container_AI .tier_focus {
+  background-color: #eff6ff !important;
+  font-weight: 800;
 }
 
-.container_AI .insight_item {
-  margin-bottom: 18px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid #eef2ff;
+.container_AI .tier_focus_50 {
+  background-color: #ecfdf5 !important;
+  font-weight: 800;
+}
+
+/* =======================================================
+   REASON & STRATEGY SECTION (PART 3)
+   ======================================================= */
+.container_AI .reason_grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 16px;
+}
+
+.container_AI .reason_card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 24px;
   display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.container_AI .reason_header {
+  display: flex;
+  align-items: center;
   gap: 14px;
-  align-items: flex-start;
 }
 
-.container_AI .insight_item:last-child {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: none;
-}
-
-.container_AI .insight_num {
-  width: 26px;
-  height: 26px;
-  background-color: #3b56e0;
-  color: #ffffff;
-  border-radius: 50%;
+.container_AI .reason_icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Manrope', sans-serif;
-  font-size: 12px;
+  font-size: 22px;
   font-weight: 800;
   flex-shrink: 0;
-  margin-top: 2px;
 }
 
-.container_AI .insight_text {
-  font-size: 14.5px;
+.container_AI .icon_shock {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.container_AI .icon_zalo {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.container_AI .icon_google {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.container_AI .reason_title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.35;
+}
+
+.container_AI .reason_body {
+  font-size: 14px;
+  color: #475569;
   line-height: 1.6;
-  color: #334155;
 }
 
-.container_AI .insight_text strong {
+.container_AI .reason_bullets {
+  margin: 8px 0 0 0;
+  padding-left: 18px;
+}
+
+.container_AI .reason_bullets li {
+  margin-bottom: 8px;
+}
+
+.container_AI .matrix_grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.container_AI .matrix_card {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.container_AI .matrix_title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.container_AI .matrix_sub {
+  font-size: 12.5px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.container_AI .callout_banner {
+  background: #eff6ff;
+  border: 1.5px solid #bfdbfe;
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-top: 20px;
+}
+
+.container_AI .callout_title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #1e40af;
+  margin-bottom: 6px;
+}
+
+.container_AI .callout_text {
+  font-size: 13.5px;
+  color: #1e3a8a;
+  line-height: 1.55;
+}
+
+/* =======================================================
+   DEP CARDS & CHARTS
+   ======================================================= */
+.container_AI .dep_grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.container_AI .dep_card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.container_AI .dep_card_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.container_AI .dep_name {
+  font-size: 17px;
+  font-weight: 800;
   color: #0f172a;
 }
 
-.container_AI .page_footer {
-  margin-top: 56px;
-  padding-top: 24px;
-  border-top: 1px solid #e2e8f0;
+.container_AI .dep_block_tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.container_AI .dep_stat_row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.container_AI .stat_box {
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.container_AI .stat_box_label {
+  font-size: 11px;
+  color: #64748b;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.container_AI .stat_box_val {
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.container_AI .target_row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.container_AI .target_row.gold {
+  background: #fefce8;
+  border: 1px solid #fef08a;
+}
+
+.container_AI .target_tier {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.container_AI .target_val {
+  font-family: 'Manrope', sans-serif;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #3b56e0;
+  text-align: right;
+}
+
+.container_AI .target_val.gold {
+  color: #854d0e;
+}
+
+.container_AI .dep_footer_row {
+  margin-top: 8px;
+  padding-top: 10px;
+  border-top: 1px dashed #e2e8f0;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  font-size: 12px;
   color: #64748b;
-  font-size: 13px;
-  flex-wrap: wrap;
-  gap: 12px;
 }
 
 .container_AI .chart_svg {
@@ -1258,17 +1515,49 @@ css_scoped = """
   overflow: visible;
 }
 
-.container_AI .card_spaced {
-  margin-top: 24px;
+.container_AI .page_footer {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  color: #64748b;
+  font-size: 13px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
-.container_AI .hidden_element {
-  display: none !important;
+/* =======================================================
+   RESPONSIVE DESIGN (MOBILE FONT +15%)
+   ======================================================= */
+@media (max-width: 900px) {
+  .container_AI .main_nav_tabs {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px 14px;
+    position: relative;
+    margin: 20px 0 28px 0;
+  }
+  .container_AI .grid_4col {
+    grid-template-columns: 1fr 1fr;
+  }
+  .container_AI .grid_2col {
+    grid-template-columns: 1fr;
+  }
+  .container_AI .dep_grid {
+    grid-template-columns: 1fr;
+  }
+  .container_AI .reason_grid {
+    grid-template-columns: 1fr;
+  }
+  .container_AI .matrix_grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 640px) {
   .container_AI {
-    font-size: 17px;
+    font-size: 16.5px;
   }
   .container_AI .wrap {
     padding: 20px 14px 60px 14px;
@@ -1276,15 +1565,17 @@ css_scoped = """
   .container_AI h1 {
     font-size: 24px;
   }
-  .container_AI .grid_4col, .container_AI .grid_2col, .container_AI .grid_3col {
+  .container_AI .grid_4col {
     grid-template-columns: 1fr;
-    gap: 14px;
   }
-  .container_AI .kpi_value_huge {
-    font-size: 21px;
+  .container_AI .matrix_grid {
+    grid-template-columns: 1fr;
   }
-  .container_AI .card {
-    padding: 16px;
+  .container_AI .part_title {
+    font-size: 19px;
+  }
+  .container_AI .part_banner {
+    padding: 16px 18px;
   }
 }
 """
@@ -1295,7 +1586,7 @@ html.append('<html lang="vi">')
 html.append('<head>')
 html.append('  <meta charset="UTF-8">')
 html.append('  <meta name="viewport" content="width=device-width, initial-scale=1.0">')
-html.append('  <title>Truy cập Znews 2025–2026 & 4 Kịch bản KPI Quý 4/2026</title>')
+html.append('  <title>Truy cập Znews 2025–2026 & Báo cáo KPI Quý 4/2026</title>')
 html.append(f'  <style>{css_scoped}</style>')
 html.append('</head>')
 html.append('<body>')
@@ -1306,10 +1597,10 @@ html.append('  <div class="wrap">')
 html.append('    <header class="page_header">')
 html.append('      <div class="badge_bar">')
 html.append('        <div class="meta_badge">Báo cáo dữ liệu Ban biên tập</div>')
-html.append('        <div class="meta_subtext">Dữ liệu đến ngày 29/09/2026 • Đơn vị: Triệu lượt truy cập</div>')
+html.append('        <div class="meta_subtext">Dữ liệu chốt đến 29/09/2026 • Đơn vị: Triệu lượt truy cập</div>')
 html.append('      </div>')
 html.append('      <h1>Truy cập Znews 2025–2026 & Mục tiêu KPI Quý 4/2026</h1>')
-html.append('      <p class="page_desc">Đánh giá toàn cảnh tăng trưởng 7 tháng đầu năm, phân tích mức độ sụt giảm sâu sau biến động T8–T9/2026 và chi tiết <strong>4 kịch bản KPI Quý 4/2026</strong>: Mức +10% (Cơ sở), Mức +15% (Phấn đấu), Mức +20% (Thử thách) và Mức +50% (Cần thiết để lấy lại truy cập, tiệm cận kế hoạch đầu năm).</p>')
+html.append('      <p class="page_desc">Đánh giá toàn cảnh tăng trưởng 7 tháng đầu năm, phân tích mức độ sụt giảm sâu sau biến động T8–T9/2026, đối chiếu tiến độ KPI 9 tháng và chi tiết <strong>4 kịch bản KPI Quý 4/2026</strong> cùng các động lực tăng trưởng cốt lõi.</p>')
 html.append('    </header>')
 
 # 4 HEADLINE KPI CARDS
@@ -1321,7 +1612,7 @@ html.append(f'        <div class="kpi_value_huge negative">{fmt_pct(toan_t7["pct
 html.append(f'        <div class="kpi_sub">Đạt <strong class="num">{fmt_tr(toan_t7["t7_2026"], 2)} tr</strong> (vs {fmt_tr(toan_t7["t7_2025"], 2)} tr 2025)</div>')
 html.append('      </div>')
 # Card 2: T8-T9 Drop
-html.append('      <div class="kpi_card_head">')
+html.append('      <div class="kpi_card_head alert_card">')
 html.append('        <div class="kpi_label">Biến Động T8–T9/2026</div>')
 html.append(f'        <div class="kpi_value_huge negative">{fmt_pct(toan_t7["pct_T8T9_2026_vs_cung_ky"])}</div>')
 html.append(f'        <div class="kpi_sub">Trung bình đạt <strong class="num">{fmt_tr(toan_tb, 2)} tr</strong>/tháng</div>')
@@ -1340,342 +1631,591 @@ html.append(f'        <div class="kpi_sub">{fmt_pct(toan_m10_pct_yr)} – {fmt_p
 html.append('      </div>')
 html.append('    </section>')
 
+# =======================================================
+# STICKY 3-PART NAVIGATION TABS
+# =======================================================
+html.append('    <nav class="main_nav_tabs" id="page_nav">')
+html.append('      <a href="#part1" class="nav_tab active" data-part="part1">')
+html.append('        <div class="nav_tab_badge">PHẦN 1</div>')
+html.append('        <div class="nav_tab_title">Ảnh hưởng truy cập sau biến động T8</div>')
+html.append('        <div class="nav_tab_desc">Diễn biến 2025–2026 • Tăng trưởng 7T • Sụt giảm T8–T9 • Tiến độ KPI 9T</div>')
+html.append('      </a>')
+html.append('      <a href="#part2" class="nav_tab" data-part="part2">')
+html.append('        <div class="nav_tab_badge">PHẦN 2</div>')
+html.append('        <div class="nav_tab_title">Đề xuất mức KPI mới cho Q4 & Cả năm</div>')
+html.append('        <div class="nav_tab_desc">4 Mốc kịch bản (+10%, +15%, +20%, +50%) • Kế hoạch cả năm 2026</div>')
+html.append('      </a>')
+html.append('      <a href="#part3" class="nav_tab" data-part="part3">')
+html.append('        <div class="nav_tab_badge">PHẦN 3</div>')
+html.append('        <div class="nav_tab_title">Cơ sở & Lý do đề xuất KPI mới</div>')
+html.append('        <div class="nav_tab_desc">Thực trạng hụt hơi • Đòn bẩy Zalo OA • Tín hiệu hồi phục Google</div>')
+html.append('      </a>')
+html.append('    </nav>')
+
+# =======================================================
+# PART 1: ẢNH HƯỞNG VỀ TRUY CẬP SAU THAY ĐỔI VÀO THÁNG 8
+# =======================================================
+html.append('    <div class="dashboard_part" id="part1">')
+html.append('      <div class="part_banner part1_banner">')
+html.append('        <div class="part_badge">PHẦN I</div>')
+html.append('        <h2 class="part_title">Ảnh hưởng về truy cập sau thay đổi vào tháng 8</h2>')
+html.append('        <p class="part_desc">Đánh giá toàn cảnh từ giai đoạn tăng trưởng ổn định 7 tháng đầu năm đến cú sốc sụt giảm sâu trong tháng 8–9/2026 và mức độ hụt hơi so với tiến độ KPI năm 2026.</p>')
+html.append('      </div>')
+
 # SECTION 01: MONTHLY TRENDS
-html.append('    <section class="section_block">')
-html.append('      <div class="section_header">')
-html.append('        <div class="section_title_wrap">')
-html.append('          <div class="section_num">01</div>')
-html.append('          <div>')
-html.append('            <div class="section_title">Diễn biến truy cập theo tháng (2025–2026)</div>')
-html.append('            <div class="section_sub">Đường nét liền xanh: thực tế 2026; đường xám: 2025; dải nét đứt: dải 4 mục tiêu KPI Quý 4 từ +10% đến +50%</div>')
+html.append('      <section class="section_block" id="sec01">')
+html.append('        <div class="section_header">')
+html.append('          <div class="section_title_wrap">')
+html.append('            <div class="section_num">01</div>')
+html.append('            <div>')
+html.append('              <div class="section_title">Diễn biến truy cập theo tháng (2025–2026)</div>')
+html.append('              <div class="section_sub">So sánh cùng kỳ 2025 vs 2026 và dải mục tiêu Quý 4/2026 (+10% đến +50%)</div>')
+html.append('            </div>')
 html.append('          </div>')
 html.append('        </div>')
-html.append('      </div>')
-html.append('      <div class="card">')
-html.append('        <div class="controls_bar" id="monthly_chips">')
-html.append('          <div class="chip active" data-entity="Toàn Znews">Toàn Znews</div>')
-for blk in all_blocks:
-    html.append(f'          <div class="chip" data-entity="{blk}">{blk}</div>')
-html.append('        </div>')
-html.append('        <div class="controls_bar" id="monthly_dep_chips">')
-for dep in all_deps:
-    html.append(f'          <div class="chip chip_sm" data-entity="{dep}">{dep}</div>')
-html.append('        </div>')
+html.append('        <div class="card">')
+html.append('          <div class="controls_bar" id="monthly_block_chips">')
+html.append('            <div class="chip active" data-entity="Toàn Znews">Toàn Znews</div>')
+html.append('            <div class="chip" data-entity="Khối Uy tín">Khối Uy tín</div>')
+html.append('            <div class="chip" data-entity="Khối Kinh doanh">Khối Kinh doanh</div>')
+html.append('            <div class="chip" data-entity="Khối Lifestyle">Khối Lifestyle</div>')
+html.append('            <div class="chip" data-entity="Khối Truy cập">Khối Truy cập</div>')
+html.append('          </div>')
+html.append('          <div class="controls_bar" id="monthly_dep_chips">')
+for d in all_deps:
+    html.append(f'            <div class="chip chip_sm" data-entity="{d}">{d}</div>')
+html.append('          </div>')
 html.append(build_monthly_chart_svg())
-html.append('      </div>')
-html.append('    </section>')
+html.append('        </div>')
+html.append('      </section>')
 
 # SECTION 02: 7-MONTH GROWTH
-html.append('    <section class="section_block">')
-html.append('      <div class="section_header">')
-html.append('        <div class="section_title_wrap">')
-html.append('          <div class="section_num">02</div>')
-html.append('          <div>')
-html.append('            <div class="section_title">Tăng trưởng 7 tháng đầu năm (Giai đoạn trước biến động)</div>')
-html.append('            <div class="section_sub">So sánh 7T/2026 vs 7T/2025: Toàn trang giảm 6,5%; chỉ 4/14 chuyên mục tăng trưởng dương; Khối Truy cập là khối duy nhất tăng</div>')
+html.append('      <section class="section_block" id="sec02">')
+html.append('        <div class="section_header">')
+html.append('          <div class="section_title_wrap">')
+html.append('            <div class="section_num">02</div>')
+html.append('            <div>')
+html.append('              <div class="section_title">Tăng trưởng 7 tháng đầu năm (Giai đoạn trước biến động)</div>')
+html.append('              <div class="section_sub">Toàn trang giảm nhẹ -6,5% vs cùng kỳ 2025; Khối Truy cập là khối duy nhất tăng trưởng (+2,4%)</div>')
+html.append('            </div>')
 html.append('          </div>')
 html.append('        </div>')
-html.append('      </div>')
-html.append('      <div class="grid_2col">')
-html.append('        <div class="card">')
-html.append('          <h3>Tăng trưởng 14 chuyên mục (7T/2026 vs 7T/2025)</h3>')
-html.append('          <p>Xếp hạng theo % tăng/giảm cùng đánh giá mục tiêu</p>')
+html.append('        <div class="grid_2col">')
+html.append('          <div class="card">')
+html.append('            <h3>Tăng trưởng 14 chuyên mục (7T/2026 vs 7T/2025)</h3>')
+html.append('            <p>Xếp hạng theo % tăng/giảm cùng đánh giá mục tiêu</p>')
 html.append(build_t7_growth_bar_svg())
-html.append('        </div>')
-html.append('        <div class="card">')
-html.append('          <h3>Quy mô truy cập 4 Khối & Toàn trang (7T/2025 vs 7T/2026)</h3>')
-html.append('          <p>Điểm xám: 7T/2025 | Điểm xanh: 7T/2026 (đơn vị: triệu lượt)</p>')
+html.append('          </div>')
+html.append('          <div class="card">')
+html.append('            <h3>Quy mô truy cập 4 Khối & Toàn trang (7T/2025 vs 7T/2026)</h3>')
+html.append('            <p>Điểm xám: 7T/2025 | Điểm xanh: 7T/2026 (triệu lượt)</p>')
 html.append(build_t7_dumbbell_svg())
+html.append('          </div>')
 html.append('        </div>')
-html.append('      </div>')
-html.append('    </section>')
+html.append('      </section>')
 
 # SECTION 03: T8-T9 DROP (ZERO TEXT OVERLAP)
-html.append('    <section class="section_block">')
-html.append('      <div class="section_header">')
-html.append('        <div class="section_title_wrap">')
-html.append('          <div class="section_num">03</div>')
-html.append('          <div>')
-html.append('            <div class="section_title">Mức độ sụt giảm T8–T9/2026 sau biến động</div>')
-html.append('            <div class="section_sub">So sánh T8–T9/2026 so với cùng kỳ 2025: Toàn trang sụt giảm 58,1%; 13/14 ban giảm trên 40%</div>')
+html.append('      <section class="section_block" id="sec03">')
+html.append('        <div class="section_header">')
+html.append('          <div class="section_title_wrap">')
+html.append('            <div class="section_num">03</div>')
+html.append('            <div>')
+html.append('              <div class="section_title">Mức độ sụt giảm T8–T9/2026 sau biến động</div>')
+html.append('              <div class="section_sub">So sánh T8–T9/2026 so với cùng kỳ 2025: Toàn trang sụt giảm 58,1%; 13/14 ban giảm trên 40%</div>')
+html.append('            </div>')
 html.append('          </div>')
 html.append('        </div>')
-html.append('      </div>')
-html.append('      <div class="card">')
+html.append('        <div class="card">')
+html.append('          <h3>Tỷ lệ sụt giảm trung bình tháng T8–T9/2026 vs cùng kỳ 2025</h3>')
+html.append('          <p>Trục 0% ở bên trái, thanh bar mở rộng sang phải, đảm bảo không che lấp nhãn đơn vị</p>')
 html.append(build_drop_t8t9_svg())
-html.append('      </div>')
-html.append('    </section>')
+html.append('        </div>')
+html.append('      </section>')
 
-# SECTION 04: CORE EMPHASIS - KPI QUÝ 4/2026 TỪNG BAN & TỪNG THÁNG (4 TIERS)
-html.append('    <section class="section_block">')
-html.append('      <div class="section_header">')
-html.append('        <div class="section_title_wrap">')
-html.append('          <div class="section_num">04</div>')
-html.append('          <div>')
-html.append('            <div class="section_title">Mục tiêu KPI Quý 4/2026 từng Ban & từng Tháng (4 Mốc Kịch Bản)</div>')
-html.append('            <div class="section_sub">Chi tiết 4 mức mục tiêu: +10% (Cơ sở), +15% (Phấn đấu), +20% (Thử thách) và +50% (Cần thiết để lấy lại truy cập)</div>')
+# SECTION 04: TIẾN ĐỘ THỰC HIỆN KPI 9 THÁNG & CÚ SỐC THÁNG 8 (NEW)
+html.append('      <section class="section_block" id="sec04">')
+html.append('        <div class="section_header">')
+html.append('          <div class="section_title_wrap">')
+html.append('            <div class="section_num">04</div>')
+html.append('            <div>')
+html.append('              <div class="section_title">Tiến độ thực hiện KPI năm 2026 theo ban & Cú sốc tháng 8</div>')
+html.append('              <div class="section_sub">So sánh tỷ lệ hoàn thành KPI 7 tháng, 8 tháng và 9 tháng đầu năm 2026 so với mốc chuẩn (58,3% → 66,7% → 75,0%)</div>')
+html.append('            </div>')
 html.append('          </div>')
 html.append('        </div>')
+
+# 4 Stat Cards for KPI Progress
+html.append('        <div class="grid_4col">')
+# Card 1: 7T Progress
+html.append('          <div class="kpi_card_head">')
+html.append('            <div class="kpi_label">Tiến Độ 7 Tháng (Trước Biến Động)</div>')
+html.append('            <div class="kpi_value_huge">52,7%</div>')
+html.append('            <div class="kpi_sub">Mốc chuẩn: <strong>58,3%</strong> (Đạt 439,9 / 834,2 tr. Thể thao 61,4%, Đời sống 59,4%, Thế giới 90,0% vượt chuẩn)</div>')
+html.append('          </div>')
+# Card 2: Shock Month 8
+html.append('          <div class="kpi_card_head warn_card">')
+html.append('            <div class="kpi_label">Bước Ngoặt Tháng 8 (Chững Lại)</div>')
+html.append('            <div class="kpi_value_huge warning_val">56,5%</div>')
+html.append('            <div class="kpi_sub">Mốc chuẩn: <strong>66,7%</strong> (Hụt 10,2 điểm %. Tháng 8 chỉ nhích thêm 3,8% so với mức tăng 7,5%/tháng trước đó)</div>')
+html.append('          </div>')
+# Card 3: 9M Status
+html.append('          <div class="kpi_card_head alert_card">')
+html.append('            <div class="kpi_label">Hiện Trạng Sau 9 Tháng</div>')
+html.append('            <div class="kpi_value_huge negative">59,5%</div>')
+html.append('            <div class="kpi_sub">Mốc chuẩn: <strong>75,0%</strong> (Hụt 15,5 điểm %. 13/14 chuyên mục chậm tiến độ, Xã hội 31,9%, Pháp luật 39,5%)</div>')
+html.append('          </div>')
+# Card 4: Q4 Impossible Gap
+html.append('          <div class="kpi_card_head alert_card">')
+html.append('            <div class="kpi_label">Thách Thức Q4 Nếu Giữ KPI Cũ</div>')
+html.append('            <div class="kpi_value_huge negative">+298,1%</div>')
+html.append('            <div class="kpi_sub">Còn thiếu <strong>337,74 tr</strong>. Mỗi tháng cần <strong>112,58 tr</strong> (gấp 4 lần thực tế T8–T9: 28,28 tr) — Bất khả thi!</div>')
+html.append('          </div>')
+html.append('        </div>')
+
+# Progress Table Card
+html.append('        <div class="card">')
+html.append('          <div class="dep_card_header">')
+html.append('            <div>')
+html.append('              <h3>Bảng chi tiết tiến độ KPI 2026 qua các mốc 7T, 8T, 9T (19 đơn vị)</h3>')
+html.append('              <p>Vạch đen trên thanh tiến độ thể hiện mốc chuẩn thời gian: 7T = 58,3% | 8T = 66,7% | 9T = 75,0%</p>')
+html.append('            </div>')
+html.append('            <div class="controls_bar" id="prog_filter_chips">')
+html.append('              <div class="chip active" data-filter="all">Tất cả (19)</div>')
+html.append('              <div class="chip" data-filter="blocks">Chỉ xem Khối</div>')
+html.append('              <div class="chip" data-filter="deps">Chỉ xem Ban</div>')
+html.append('              <div class="chip" data-filter="heavy_lag">Chậm nặng (&gt;300%)</div>')
+html.append('            </div>')
+html.append('          </div>')
+
+html.append('          <div class="table_responsive">')
+html.append('            <table class="kpi_table" id="prog_table">')
+html.append('              <thead>')
+html.append('                <tr>')
+html.append('                  <th>Đơn vị / Ban</th>')
+html.append('                  <th class="cell_num">KPI Năm 2026</th>')
+html.append('                  <th class="cell_num">Đạt 7T (Chuẩn 58,3%)</th>')
+html.append('                  <th class="cell_num">Đạt 8T (Chuẩn 66,7%)</th>')
+html.append('                  <th class="cell_num">Đạt 9T (Chuẩn 75,0%)</th>')
+html.append('                  <th class="cell_num">Còn thiếu</th>')
+html.append('                  <th class="cell_num">Cần/tháng Q4</th>')
+html.append('                  <th class="cell_center">Cần tăng vs TB T8–T9</th>')
+html.append('                </tr>')
+html.append('              </thead>')
+html.append('              <tbody>')
+
+for item in tien_do_kpi:
+    name = item["ten"]
+    khoi = item["khoi"]
+    kpi_nam = item["kpi_nam_2026"] / 1000000.0
+    d7 = item["dat_7t"] / 1000000.0
+    p7 = item["pct_kpi_7t"]
+    d8 = item["dat_8t"] / 1000000.0
+    p8 = item["pct_kpi_8t"]
+    d9 = item["dat_9t"] / 1000000.0
+    p9 = item["pct_kpi_9t"]
+    thieu = item["con_thieu"] / 1000000.0
+    can_th = item["can_moi_thang_q4"] / 1000000.0
+    can_pct = item["pct_can_thang_vs_tb_T8T9"]
+
+    is_total = (name == "Toàn Znews")
+    is_block = (name in all_blocks)
+    is_heavy_lag = (can_pct > 300.0)
+
+    row_class = "row_total" if is_total else ("row_block" if is_block else "")
+    cat_class = "prog_row_total" if is_total else ("prog_row_block" if is_block else "prog_row_dep")
+    if is_heavy_lag:
+        cat_class += " prog_row_heavylag"
+
+    indent = "" if (is_total or is_block) else "&nbsp;&nbsp;↳ "
+    display_name = f"<strong>{name}</strong>" if (is_total or is_block) else f"{indent}{name}"
+
+    svg_bar_7t = build_mini_progress_svg(p7, benchmarks.get("7t", 58.3))
+    svg_bar_8t = build_mini_progress_svg(p8, benchmarks.get("8t", 66.7))
+    svg_bar_9t = build_mini_progress_svg(p9, benchmarks.get("9t", 75.0))
+
+    cls_p7 = "pct_good" if p7 >= 58.3 else ("pct_warn" if p7 >= 50.0 else "pct_bad")
+    cls_p8 = "pct_good" if p8 >= 66.7 else ("pct_warn" if p8 >= 58.0 else "pct_bad")
+    cls_p9 = "pct_good" if p9 >= 75.0 else ("pct_warn" if p9 >= 65.0 else "pct_bad")
+
+    if can_pct > 300.0:
+        badge_req = f'<div class="badge_critical">+{can_pct:.1f}%</div>'
+    elif can_pct > 100.0:
+        badge_req = f'<div class="badge_warning">+{can_pct:.1f}%</div>'
+    elif can_pct > 0.0:
+        badge_req = f'<div class="badge_warning">+{can_pct:.1f}%</div>'
+    else:
+        badge_req = f'<div class="badge_success">{can_pct:.1f}%</div>'
+
+    html.append(f'                <tr class="{row_class} {cat_class}">')
+    html.append(f'                  <td>{display_name}</td>')
+    html.append(f'                  <td class="cell_num cell_bold">{fmt_tr(kpi_nam * 1000, 2)} tr</td>')
+    html.append(f'                  <td class="cell_num"><div class="prog_cell"><div class="prog_val_line"><strong class="num">{fmt_tr(d7 * 1000, 2)} tr</strong><strong class="prog_pct {cls_p7}">({p7:.1f}%)</strong></div>{svg_bar_7t}</div></td>')
+    html.append(f'                  <td class="cell_num"><div class="prog_cell"><div class="prog_val_line"><strong class="num">{fmt_tr(d8 * 1000, 2)} tr</strong><strong class="prog_pct {cls_p8}">({p8:.1f}%)</strong></div>{svg_bar_8t}</div></td>')
+    html.append(f'                  <td class="cell_num"><div class="prog_cell"><div class="prog_val_line"><strong class="num">{fmt_tr(d9 * 1000, 2)} tr</strong><strong class="prog_pct {cls_p9}">({p9:.1f}%)</strong></div>{svg_bar_9t}</div></td>')
+    html.append(f'                  <td class="cell_num">{fmt_tr(thieu * 1000, 2)} tr</td>')
+    html.append(f'                  <td class="cell_num cell_primary">{fmt_tr(can_th * 1000, 2)} tr</td>')
+    html.append(f'                  <td class="cell_center">{badge_req}</td>')
+    html.append('                </tr>')
+
+html.append('              </tbody>')
+html.append('            </table>')
+html.append('          </div>')
+html.append('        </div>')
+html.append('      </section>')
+html.append('    </div>') # end part1
+
+# =======================================================
+# PART 2: ĐỀ XUẤT CÁC MỨC KPI MỚI CHO QUÝ 4 VÀ CẢ NĂM 2026
+# =======================================================
+html.append('    <div class="dashboard_part" id="part2">')
+html.append('      <div class="part_banner part2_banner">')
+html.append('        <div class="part_badge">PHẦN II</div>')
+html.append('        <h2 class="part_title">Đề xuất các mức KPI mới cho Quý 4 & Cả năm 2026</h2>')
+html.append('        <p class="part_desc">Xây dựng 4 kịch bản KPI thực tế và phân cấp mục tiêu dựa trên thực tế sau biến động T8–T9: Mức +10% (Cơ sở), Mức +15% (Phấn đấu), Mức +20% (Thử thách) và Mức +50% (Cần thiết để lấy lại truy cập).</p>')
 html.append('      </div>')
 
-# Overview block cards (Toàn trang & 4 Khối)
-html.append('      <div class="card_hero">')
-html.append('        <h3>Tổng hợp 4 kịch bản KPI Quý 4/2026 của 4 Khối & Toàn trang</h3>')
-html.append('        <p>Khoảng giá trị trải dài từ mốc Cơ sở (+10%) đến mốc Phục hồi truy cập (+50%). Tổng Q4 = KPI tháng × 3.</p>')
-html.append('        <div class="grid_4col card_hero_inner">')
+# SECTION 05: CORE EMPHASIS - KPI QUÝ 4/2026 TỪNG BAN & TỪNG THÁNG (4 TIERS)
+html.append('      <section class="section_block" id="sec05">')
+html.append('        <div class="section_header">')
+html.append('          <div class="section_title_wrap">')
+html.append('            <div class="section_num">05</div>')
+html.append('            <div>')
+html.append('              <div class="section_title">Mục tiêu KPI Quý 4/2026 từng ban & từng tháng (Trọng tâm)</div>')
+html.append('              <div class="section_sub">Chi tiết 4 mức mục tiêu: +10% (Cơ sở), +15% (Phấn đấu), +20% (Thử thách) và +50% (Cần thiết để lấy lại truy cập)</div>')
+html.append('            </div>')
+html.append('          </div>')
+html.append('        </div>')
+
+# 4 Blocks summary hero cards
+html.append('        <div class="card">')
+html.append('          <h3>Tổng hợp 4 kịch bản KPI Quý 4/2026 của 4 Khối & Toàn trang</h3>')
+html.append('          <p>Khoảng giá trị trải dài từ mốc Cơ sở (+10%) đến mốc Phục hồi truy cập (+50%). Tổng Q4 = KPI tháng × 3.</p>')
+html.append('          <div class="grid_4col card_hero_inner">')
 for blk in all_blocks:
     b_kpi = kpi_4tiers[blk]
-    html.append('          <div class="kpi_card_head">')
-    html.append(f'            <div class="kpi_label">{blk}</div>')
-    html.append(f'            <div class="kpi_value_huge accent">{fmt_tr(b_kpi["m10"]["q4"], 2)}–{fmt_tr(b_kpi["m50"]["q4"], 2)} tr</div>')
-    html.append(f'            <div class="kpi_sub">Mỗi tháng: <strong class="num cell_primary">{fmt_tr(b_kpi["m10"]["th"], 2)}–{fmt_tr(b_kpi["m50"]["th"], 2)} tr</strong></div>')
-    html.append('          </div>')
+    html.append('            <div class="kpi_card_head">')
+    html.append(f'              <div class="kpi_label">{blk}</div>')
+    html.append(f'              <div class="kpi_value_huge accent">{fmt_tr(b_kpi["m10"]["q4"], 2)}–{fmt_tr(b_kpi["m50"]["q4"], 2)} tr</div>')
+    html.append(f'              <div class="kpi_sub">Mỗi tháng: <strong class="num cell_primary">{fmt_tr(b_kpi["m10"]["th"], 2)}–{fmt_tr(b_kpi["m50"]["th"], 2)} tr</strong></div>')
+    html.append('            </div>')
+html.append('          </div>')
 html.append('        </div>')
-html.append('      </div>')
 
 # Master Table Card
-html.append('      <div class="card">')
-html.append('        <div class="dep_card_header">')
-html.append('          <div>')
-html.append('            <h3>Bảng phân bổ KPI Quý 4/2026 chi tiết 4 mốc (19 đơn vị)</h3>')
-html.append('            <p>Chọn các nút bên phải để làm nổi bật mốc KPI cần quan sát</p>')
-html.append('          </div>')
+html.append('        <div class="card">')
+html.append('          <div class="dep_card_header">')
+html.append('            <div>')
+html.append('              <h3>Bảng phân bổ KPI Quý 4/2026 chi tiết 4 mốc (19 đơn vị)</h3>')
+html.append('              <p>Chọn các nút bên phải để làm nổi bật mốc KPI cần quan sát</p>')
+html.append('            </div>')
 # 4-Tier Switcher Chips
-html.append('          <div class="controls_bar" id="kpi_tier_chips">')
-html.append('            <div class="chip active" data-tier="all">Xem cả 4 mức</div>')
-html.append('            <div class="chip" data-tier="10">+10% (Cơ sở)</div>')
-html.append('            <div class="chip" data-tier="15">+15% (Phấn đấu)</div>')
-html.append('            <div class="chip" data-tier="20">+20% (Thử thách)</div>')
-html.append('            <div class="chip" data-tier="50">+50% (Lấy lại truy cập)</div>')
+html.append('            <div class="controls_bar" id="kpi_tier_chips">')
+html.append('              <div class="chip active" data-tier="all">Xem cả 4 mức</div>')
+html.append('              <div class="chip" data-tier="10">+10% (Cơ sở)</div>')
+html.append('              <div class="chip" data-tier="15">+15% (Phấn đấu)</div>')
+html.append('              <div class="chip" data-tier="20">+20% (Thử thách)</div>')
+html.append('              <div class="chip" data-tier="50">+50% (Lấy lại truy cập)</div>')
+html.append('            </div>')
 html.append('          </div>')
-html.append('        </div>')
 
 # Master 19-row Table with 4 tiers
-html.append('        <div class="table_responsive">')
-html.append('          <table class="kpi_table">')
-html.append('            <thead>')
-html.append('              <tr>')
-html.append('                <th>Đơn vị / Ban</th>')
-html.append('                <th class="cell_num">TB T8–T9</th>')
-html.append('                <th class="cell_num col_10">KPI/Tháng (+10%)</th>')
-html.append('                <th class="cell_num col_15">KPI/Tháng (+15%)</th>')
-html.append('                <th class="cell_num col_20">KPI/Tháng (+20%)</th>')
-html.append('                <th class="cell_num col_50">KPI/Tháng (+50%)</th>')
-html.append('                <th class="cell_num col_10">Tổng Q4 (+10%)</th>')
-html.append('                <th class="cell_num col_20">Tổng Q4 (+20%)</th>')
-html.append('                <th class="cell_num col_50">Tổng Q4 (+50%)</th>')
-html.append('                <th class="cell_num">Cả năm (+10% → +50%)</th>')
-html.append('              </tr>')
-html.append('            </thead>')
-html.append('            <tbody>')
+html.append('          <div class="table_responsive">')
+html.append('            <table class="kpi_table">')
+html.append('              <thead>')
+html.append('                <tr>')
+html.append('                  <th>Đơn vị / Ban</th>')
+html.append('                  <th class="cell_num">TB T8–T9</th>')
+html.append('                  <th class="cell_num col_10">KPI/Tháng (+10%)</th>')
+html.append('                  <th class="cell_num col_15">KPI/Tháng (+15%)</th>')
+html.append('                  <th class="cell_num col_20">KPI/Tháng (+20%)</th>')
+html.append('                  <th class="cell_num col_50">KPI/Tháng (+50%)</th>')
+html.append('                  <th class="cell_num col_10">Tổng Q4 (+10%)</th>')
+html.append('                  <th class="cell_num col_20">Tổng Q4 (+20%)</th>')
+html.append('                  <th class="cell_num col_50">Tổng Q4 (+50%)</th>')
+html.append('                  <th class="cell_num">Cả năm (+10% → +50%)</th>')
+html.append('                </tr>')
+html.append('              </thead>')
+html.append('              <tbody>')
 
 for blk in all_blocks:
-    blk_item = kpi_4tiers[blk]
-    html.append('              <tr class="row_block">')
-    html.append(f'                <td><strong>{blk}</strong></td>')
-    html.append(f'                <td class="cell_num">{fmt_tr(blk_item["tb"], 2)} tr</td>')
-    html.append(f'                <td class="cell_num col_10 cell_primary">{fmt_tr(blk_item["m10"]["th"], 2)} tr</td>')
-    html.append(f'                <td class="cell_num col_15 cell_primary">{fmt_tr(blk_item["m15"]["th"], 2)} tr</td>')
-    html.append(f'                <td class="cell_num col_20 cell_challenge">{fmt_tr(blk_item["m20"]["th"], 2)} tr</td>')
-    html.append(f'                <td class="cell_num col_50 cell_recover">{fmt_tr(blk_item["m50"]["th"], 2)} tr</td>')
-    html.append(f'                <td class="cell_num col_10 cell_bold">{fmt_tr(blk_item["m10"]["q4"], 2)} tr</td>')
-    html.append(f'                <td class="cell_num col_20 cell_challenge">{fmt_tr(blk_item["m20"]["q4"], 2)} tr</td>')
-    html.append(f'                <td class="cell_num col_50 cell_recover">{fmt_tr(blk_item["m50"]["q4"], 2)} tr</td>')
-    html.append(f'                <td class="cell_num">{fmt_tr(blk_item["m10"]["yr"], 1)} → {fmt_tr(blk_item["m50"]["yr"], 1)} tr ({fmt_pct(blk_item["m10"]["pct_yr"])} → {fmt_pct(blk_item["m50"]["pct_yr"])})</td>')
-    html.append('              </tr>')
-    
-    for dep in deps_by_block[blk]:
-        d_item = kpi_4tiers[dep]
-        html.append('              <tr>')
-        html.append(f'                <td>&nbsp;&nbsp;↳ {dep}</td>')
-        html.append(f'                <td class="cell_num">{fmt_tr(d_item["tb"], 2)} tr</td>')
-        html.append(f'                <td class="cell_num col_10 cell_primary">{fmt_tr(d_item["m10"]["th"], 2)} tr</td>')
-        html.append(f'                <td class="cell_num col_15 cell_primary">{fmt_tr(d_item["m15"]["th"], 2)} tr</td>')
-        html.append(f'                <td class="cell_num col_20 cell_challenge">{fmt_tr(d_item["m20"]["th"], 2)} tr</td>')
-        html.append(f'                <td class="cell_num col_50 cell_recover">{fmt_tr(d_item["m50"]["th"], 2)} tr</td>')
-        html.append(f'                <td class="cell_num col_10 cell_bold">{fmt_tr(d_item["m10"]["q4"], 2)} tr</td>')
-        html.append(f'                <td class="cell_num col_20 cell_challenge">{fmt_tr(d_item["m20"]["q4"], 2)} tr</td>')
-        html.append(f'                <td class="cell_num col_50 cell_recover">{fmt_tr(d_item["m50"]["q4"], 2)} tr</td>')
-        yr_pct_class = "cell_pos" if d_item["m50"]["pct_yr"] > 0 else "cell_neg"
-        html.append(f'                <td class="cell_num">{fmt_tr(d_item["m10"]["yr"], 1)} → {fmt_tr(d_item["m50"]["yr"], 1)} tr (<strong class="{yr_pct_class}">{fmt_pct(d_item["m10"]["pct_yr"])} → {fmt_pct(d_item["m50"]["pct_yr"])}</strong>)</td>')
-        html.append('              </tr>')
+    b_item = kpi_4tiers[blk]
+    html.append('                <tr class="row_block">')
+    html.append(f'                  <td><strong>{blk}</strong></td>')
+    html.append(f'                  <td class="cell_num">{fmt_tr(b_item["tb"], 2)} tr</td>')
+    html.append(f'                  <td class="cell_num col_10 cell_primary">{fmt_tr(b_item["m10"]["th"], 2)} tr</td>')
+    html.append(f'                  <td class="cell_num col_15 cell_primary">{fmt_tr(b_item["m15"]["th"], 2)} tr</td>')
+    html.append(f'                  <td class="cell_num col_20 cell_challenge">{fmt_tr(b_item["m20"]["th"], 2)} tr</td>')
+    html.append(f'                  <td class="cell_num col_50 cell_recover">{fmt_tr(b_item["m50"]["th"], 2)} tr</td>')
+    html.append(f'                  <td class="cell_num col_10 cell_bold">{fmt_tr(b_item["m10"]["q4"], 2)} tr</td>')
+    html.append(f'                  <td class="cell_num col_20 cell_challenge">{fmt_tr(b_item["m20"]["q4"], 2)} tr</td>')
+    html.append(f'                  <td class="cell_num col_50 cell_recover">{fmt_tr(b_item["m50"]["q4"], 2)} tr</td>')
+    html.append(f'                  <td class="cell_num">{fmt_tr(b_item["m10"]["yr"], 1)} → {fmt_tr(b_item["m50"]["yr"], 1)} tr ({fmt_pct(b_item["m10"]["pct_yr"])} → {fmt_pct(b_item["m50"]["pct_yr"])})</td>')
+    html.append('                </tr>')
 
-# Total Row
-html.append('              <tr class="row_total">')
-html.append('                <td><strong>TOÀN ZNEWS</strong></td>')
-html.append(f'                <td class="cell_num">{fmt_tr(toan_tb, 2)} tr</td>')
-html.append(f'                <td class="cell_num col_10">{fmt_tr(toan_m10_th, 2)} tr</td>')
-html.append(f'                <td class="cell_num col_15">{fmt_tr(toan_m15_th, 2)} tr</td>')
-html.append(f'                <td class="cell_num col_20">{fmt_tr(toan_m20_th, 2)} tr</td>')
-html.append(f'                <td class="cell_num col_50">{fmt_tr(toan_m50_th, 2)} tr</td>')
-html.append(f'                <td class="cell_num col_10">{fmt_tr(toan_m10_q4, 2)} tr</td>')
-html.append(f'                <td class="cell_num col_20">{fmt_tr(toan_m20_q4, 2)} tr</td>')
-html.append(f'                <td class="cell_num col_50">{fmt_tr(toan_m50_q4, 2)} tr</td>')
-html.append(f'                <td class="cell_num">{fmt_tr(toan_m10_yr, 1)} → {fmt_tr(toan_m50_yr, 1)} tr ({fmt_pct(toan_m10_pct_yr)} → {fmt_pct(toan_m50_pct_yr)})</td>')
-html.append('              </tr>')
+    for d in deps_by_block[blk]:
+        d_item = kpi_4tiers[d]
+        html.append('                <tr>')
+        html.append(f'                  <td>&nbsp;&nbsp;↳ {d}</td>')
+        html.append(f'                  <td class="cell_num">{fmt_tr(d_item["tb"], 2)} tr</td>')
+        html.append(f'                  <td class="cell_num col_10 cell_primary">{fmt_tr(d_item["m10"]["th"], 2)} tr</td>')
+        html.append(f'                  <td class="cell_num col_15 cell_primary">{fmt_tr(d_item["m15"]["th"], 2)} tr</td>')
+        html.append(f'                  <td class="cell_num col_20 cell_challenge">{fmt_tr(d_item["m20"]["th"], 2)} tr</td>')
+        html.append(f'                  <td class="cell_num col_50 cell_recover">{fmt_tr(d_item["m50"]["th"], 2)} tr</td>')
+        html.append(f'                  <td class="cell_num col_10 cell_bold">{fmt_tr(d_item["m10"]["q4"], 2)} tr</td>')
+        html.append(f'                  <td class="cell_num col_20 cell_challenge">{fmt_tr(d_item["m20"]["q4"], 2)} tr</td>')
+        html.append(f'                  <td class="cell_num col_50 cell_recover">{fmt_tr(d_item["m50"]["q4"], 2)} tr</td>')
+        html.append(f'                  <td class="cell_num">{fmt_tr(d_item["m10"]["yr"], 1)} → {fmt_tr(d_item["m50"]["yr"], 1)} tr (<strong class="cell_neg">{fmt_pct(d_item["m10"]["pct_yr"])} → {fmt_pct(d_item["m50"]["pct_yr"])}</strong>)</td>')
+        html.append('                </tr>')
 
-html.append('            </tbody>')
-html.append('          </table>')
+# Total row
+t_item = kpi_4tiers["Toàn Znews"]
+html.append('                <tr class="row_total">')
+html.append('                  <td><strong>TOÀN ZNEWS</strong></td>')
+html.append(f'                  <td class="cell_num">{fmt_tr(t_item["tb"], 2)} tr</td>')
+html.append(f'                  <td class="cell_num col_10">{fmt_tr(t_item["m10"]["th"], 2)} tr</td>')
+html.append(f'                  <td class="cell_num col_15">{fmt_tr(t_item["m15"]["th"], 2)} tr</td>')
+html.append(f'                  <td class="cell_num col_20">{fmt_tr(t_item["m20"]["th"], 2)} tr</td>')
+html.append(f'                  <td class="cell_num col_50">{fmt_tr(t_item["m50"]["th"], 2)} tr</td>')
+html.append(f'                  <td class="cell_num col_10">{fmt_tr(t_item["m10"]["q4"], 2)} tr</td>')
+html.append(f'                  <td class="cell_num col_20">{fmt_tr(t_item["m20"]["q4"], 2)} tr</td>')
+html.append(f'                  <td class="cell_num col_50">{fmt_tr(t_item["m50"]["q4"], 2)} tr</td>')
+html.append(f'                  <td class="cell_num">{fmt_tr(t_item["m10"]["yr"], 1)} → {fmt_tr(t_item["m50"]["yr"], 1)} tr ({fmt_pct(t_item["m10"]["pct_yr"])} → {fmt_pct(t_item["m50"]["pct_yr"])})</td>')
+html.append('                </tr>')
+
+html.append('              </tbody>')
+html.append('            </table>')
+html.append('          </div>')
 html.append('        </div>')
 
-# Grouped bar chart comparing TB T8-T9 vs 4 tiers
-html.append('        <h3>So sánh trực quan: TB tháng T8–T9 vs 4 Mốc mục tiêu KPI tháng</h3>')
-html.append('        <p>Cột hiển thị theo thứ tự: TB T8–T9 (nhạt) → +10% Cơ sở → +20% Thử thách → +50% Lấy lại truy cập (đậm nhất)</p>')
+# Grouped Bar Chart
+html.append('        <div class="card">')
+html.append('          <h3>So sánh mục tiêu tháng Quý 4/2026 theo từng ban (TB vs +10% vs +20% vs +50%)</h3>')
+html.append('          <p>Cột hiển thị theo thứ tự: TB T8–T9 (nhạt) → +10% Cơ sở → +20% Thử thách → +50% Lấy lại truy cập (đậm nhất)</p>')
 html.append(build_kpi_comparison_svg())
-html.append('      </div>')
-
-# 14 DEPARTMENT SHOWCASE CARDS (USER SPECIAL EMPHASIS WITH 4 TIERS)
-html.append('      <div class="card card_spaced">')
-html.append('        <div class="dep_card_header">')
-html.append('          <div>')
-html.append('            <h3>Thẻ tra cứu KPI chi tiết từng Ban (4 Kịch bản Từng Tháng & Quý 4)</h3>')
-html.append('            <p>Nhấp vào các khối bên dưới để lọc nhanh các ban tương ứng</p>')
-html.append('          </div>')
-html.append('        </div>')
-html.append('        <div class="controls_bar" id="dep_filter_chips">')
-html.append('          <div class="chip active" data-filter="all">Tất cả 14 Ban</div>')
-for blk in all_blocks:
-    html.append(f'          <div class="chip" data-filter="{blk}">{blk}</div>')
 html.append('        </div>')
 
-# Cards Grid
-html.append('        <div class="grid_3col" id="dep_cards_grid">')
-for dep in all_deps:
-    d_item = kpi_4tiers[dep]
-    blk = dep_block_map[dep]
-    tb = d_item["tb"]
-    
-    html.append(f'          <div class="dep_kpi_card" data-block="{blk}">')
-    html.append('            <div class="dep_card_header">')
-    html.append('              <div>')
-    html.append(f'                <div class="dep_name">{dep}</div>')
-    html.append(f'                <div class="meta_subtext">{blk}</div>')
+# 14 Detailed Department Cards
+html.append('        <div class="dep_grid">')
+for d in all_deps:
+    d_item = kpi_4tiers[d]
+    blk = dep_block_map[d]
+    html.append('          <div class="dep_card">')
+    html.append('            <div>')
+    html.append('              <div class="dep_card_header">')
+    html.append(f'                <div class="dep_name">{d}</div>')
+    html.append(f'                <div class="dep_block_tag">{blk}</div>')
     html.append('              </div>')
-    html.append(f'              <div class="dep_block_tag">{blk.replace("Khối ", "")}</div>')
-    html.append('            </div>')
+    html.append('              <div class="dep_stat_row">')
+    html.append('                <div class="stat_box">')
+    html.append('                  <div class="stat_box_label">Trung bình T8–T9/2026</div>')
+    html.append(f'                  <div class="stat_box_val">{fmt_tr(d_item["tb"], 2)} tr</div>')
+    html.append('                </div>')
+    html.append('                <div class="stat_box">')
+    html.append('                  <div class="stat_box_label">Q4/2025 Thực tế</div>')
+    html.append(f'                  <div class="stat_box_val">{fmt_tr(d_item["q4_25"], 2)} tr</div>')
+    html.append('                </div>')
+    html.append('              </div>')
     
-    html.append('            <div class="dep_baseline">')
-    html.append('              <div>Thực tế TB T8–T9:</div>')
-    html.append(f'              <div class="num cell_bold">{fmt_tr(tb, 2)} tr/tháng</div>')
-    html.append('            </div>')
-    
-    # BOX 1: KPI MỖI THÁNG T10-T12 (4 TIERS)
-    html.append('            <div class="dep_kpi_box_highlight">')
-    html.append('              <div class="kpi_box_title">🎯 KPI MỖI THÁNG T10–T12 (4 MỐC)</div>')
-    html.append('              <div class="kpi_target_row row_tier_10">')
+    # 4 Targets breakdown
+    html.append('              <div class="target_row">')
     html.append('                <div class="target_tier">+10% (Cơ sở):</div>')
-    html.append(f'                <div class="target_number primary">{fmt_tr(d_item["m10"]["th"], 2)} tr</div>')
+    html.append(f'                <div class="target_val">{fmt_tr(d_item["m10"]["th"], 2)} tr/tháng &bull; Q4: {fmt_tr(d_item["m10"]["q4"], 2)} tr</div>')
     html.append('              </div>')
-    html.append('              <div class="kpi_target_row row_tier_15">')
+    html.append('              <div class="target_row">')
     html.append('                <div class="target_tier">+15% (Phấn đấu):</div>')
-    html.append(f'                <div class="target_number primary">{fmt_tr(d_item["m15"]["th"], 2)} tr</div>')
+    html.append(f'                <div class="target_val">{fmt_tr(d_item["m15"]["th"], 2)} tr/tháng &bull; Q4: {fmt_tr(d_item["m15"]["q4"], 2)} tr</div>')
     html.append('              </div>')
-    html.append('              <div class="kpi_target_row row_tier_20">')
+    html.append('              <div class="target_row">')
     html.append('                <div class="target_tier">+20% (Thử thách):</div>')
-    html.append(f'                <div class="target_number challenge">{fmt_tr(d_item["m20"]["th"], 2)} tr</div>')
+    html.append(f'                <div class="target_val">{fmt_tr(d_item["m20"]["th"], 2)} tr/tháng &bull; Q4: {fmt_tr(d_item["m20"]["q4"], 2)} tr</div>')
     html.append('              </div>')
-    html.append('              <div class="kpi_target_row row_tier_50">')
-    html.append('                <div class="target_tier accent_recover">+50% (Lấy lại truy cập):</div>')
-    html.append(f'                <div class="target_number recover">{fmt_tr(d_item["m50"]["th"], 2)} tr</div>')
+    html.append('              <div class="target_row gold">')
+    html.append('                <div class="target_tier">+50% (Lấy lại truy cập):</div>')
+    html.append(f'                <div class="target_val gold">{fmt_tr(d_item["m50"]["th"], 2)} tr/tháng &bull; Q4: {fmt_tr(d_item["m50"]["q4"], 2)} tr</div>')
     html.append('              </div>')
-    html.append('            </div>')
-
-    # BOX 2: TỔNG KPI CẢ QUÝ 4 (4 TIERS)
-    html.append('            <div class="dep_kpi_box_highlight q4_box">')
-    html.append('              <div class="kpi_box_title">🏆 TỔNG KPI CẢ QUÝ 4/2026 (4 MỐC)</div>')
-    html.append('              <div class="kpi_target_row row_tier_10">')
-    html.append('                <div class="target_tier">Mức +10%:</div>')
-    html.append(f'                <div class="target_number q4_val">{fmt_tr(d_item["m10"]["q4"], 2)} tr</div>')
-    html.append('              </div>')
-    html.append('              <div class="kpi_target_row row_tier_15">')
-    html.append('                <div class="target_tier">Mức +15%:</div>')
-    html.append(f'                <div class="target_number q4_val">{fmt_tr(d_item["m15"]["q4"], 2)} tr</div>')
-    html.append('              </div>')
-    html.append('              <div class="kpi_target_row row_tier_20">')
-    html.append('                <div class="target_tier">Mức +20% (Thử thách):</div>')
-    html.append(f'                <div class="target_number challenge">{fmt_tr(d_item["m20"]["q4"], 2)} tr</div>')
-    html.append('              </div>')
-    html.append('              <div class="kpi_target_row row_tier_50">')
-    html.append('                <div class="target_tier accent_recover">Mức +50% (Lấy lại truy cập):</div>')
-    html.append(f'                <div class="target_number recover">{fmt_tr(d_item["m50"]["q4"], 2)} tr</div>')
-    html.append('              </div>')
-    html.append('            </div>')
-
-    # FOOTER COMPARISON
-    q4_color = "cell_pos" if d_item["m50"]["pct_q4"] > 0 else "cell_neg"
-    yr_color = "cell_pos" if d_item["m50"]["pct_yr"] > 0 else "cell_neg"
-    html.append('            <div class="dep_card_footer">')
-    html.append(f'              <div>Vs Q4/2025: <strong class="{q4_color}">{fmt_pct(d_item["m10"]["pct_q4"])} → {fmt_pct(d_item["m50"]["pct_q4"])}</strong></div>')
-    html.append(f'              <div>Cả năm: <strong class="num {yr_color}">{fmt_pct(d_item["m10"]["pct_yr"])} → {fmt_pct(d_item["m50"]["pct_yr"])}</strong></div>')
     html.append('            </div>')
     
+    html.append('            <div class="dep_footer_row">')
+    html.append(f'              <div>Cả năm 2026: <strong>{fmt_tr(d_item["m10"]["yr"], 2)}–{fmt_tr(d_item["m50"]["yr"], 2)} tr</strong></div>')
+    html.append(f'              <div>Tăng trưởng vs 2025: <strong class="cell_neg">{fmt_pct(d_item["m10"]["pct_yr"])} → {fmt_pct(d_item["m50"]["pct_yr"])}</strong></div>')
+    html.append('            </div>')
     html.append('          </div>')
-
 html.append('        </div>')
-html.append('      </div>')
-html.append('    </section>')
+html.append('      </section>')
 
-# SECTION 05: FULL YEAR FORECAST
-html.append('    <section class="section_block">')
-html.append('      <div class="section_header">')
-html.append('        <div class="section_title_wrap">')
-html.append('          <div class="section_num">05</div>')
-html.append('          <div>')
-html.append('            <div class="section_title">Kịch bản cả năm 2026 so với 2025 (4 Mức KPI)</div>')
-html.append('            <div class="section_sub">Kịch bản cả năm 2026 biến thiên từ 589,79 triệu (-26,2% ở mức +10%) lên 623,74 triệu (-22,0% ở mức +50% phục hồi truy cập)</div>')
+# SECTION 06: FULL YEAR FORECAST
+html.append('      <section class="section_block" id="sec06">')
+html.append('        <div class="section_header">')
+html.append('          <div class="section_title_wrap">')
+html.append('            <div class="section_num">06</div>')
+html.append('            <div>')
+html.append('              <div class="section_title">Kịch bản cả năm 2026 so với 2025 (4 Mức KPI)</div>')
+html.append('              <div class="section_sub">Kịch bản cả năm 2026 biến thiên từ 589,79 triệu (-26,2% ở mức +10%) lên 623,74 triệu (-22,0% ở mức +50% phục hồi truy cập)</div>')
+html.append('            </div>')
 html.append('          </div>')
 html.append('        </div>')
-html.append('      </div>')
-html.append('      <div class="grid_2col">')
-html.append('        <div class="card">')
-html.append('          <h3>Quy mô cả năm 2025 vs 2026 (4 Khối + Toàn trang)</h3>')
-html.append('          <p>Điểm xám: 2025 | Xanh: Mức +10% | Tím đen: Mức +50% (triệu lượt)</p>')
+html.append('        <div class="grid_2col">')
+html.append('          <div class="card">')
+html.append('            <h3>Quy mô cả năm 2025 vs 2026 (4 Khối + Toàn trang)</h3>')
+html.append('            <p>Điểm xám: 2025 | Xanh: Mức +10% | Tím đen: Mức +50% (triệu lượt)</p>')
 html.append(build_year_dumbbell_svg())
-html.append('        </div>')
-html.append('        <div class="card">')
-html.append('          <h3>Tăng trưởng cả năm 2026 vs 2025 theo 14 chuyên mục</h3>')
-html.append('          <p>Hiển thị khoảng % tăng/giảm từ mức +10% đến mức +50%</p>')
+html.append('          </div>')
+html.append('          <div class="card">')
+html.append('            <h3>Tăng trưởng cả năm 2026 vs 2025 theo 14 chuyên mục</h3>')
+html.append('            <p>Hiển thị khoảng % tăng/giảm từ mức +10% đến mức +50%</p>')
 html.append(build_year_growth_bar_svg())
-html.append('        </div>')
-html.append('      </div>')
-html.append('    </section>')
-
-# SECTION 06: STRATEGIC INSIGHTS & METHODOLOGY
-html.append('    <section class="section_block">')
-html.append('      <div class="section_header">')
-html.append('        <div class="section_title_wrap">')
-html.append('          <div class="section_num">06</div>')
-html.append('          <div>')
-html.append('            <div class="section_title">Nhận định chuyên sâu & Phân tích 4 Mốc KPI Chiến lược</div>')
-html.append('            <div class="section_sub">Căn cứ thực tiễn và lộ trình từng bước phục hồi lưu lượng truy cập của Znews</div>')
 html.append('          </div>')
 html.append('        </div>')
+html.append('      </section>')
+html.append('    </div>') # end part2
+
+# =======================================================
+# PART 3: CƠ SỞ & LÝ DO ĐỀ XUẤT MỨC KPI MỚI
+# =======================================================
+html.append('    <div class="dashboard_part" id="part3">')
+html.append('      <div class="part_banner part3_banner">')
+html.append('        <div class="part_badge">PHẦN III</div>')
+html.append('        <h2 class="part_title">Cơ sở & Lý do đề xuất mức KPI mới</h2>')
+html.append('        <p class="part_desc">Lý giải nguyên nhân không thể giữ KPI cũ và phân tích chi tiết 2 đòn bẩy tăng trưởng cốt lõi giúp Quý 4 phục hồi: Kênh Zalo OA và Thuật toán đề xuất của Google.</p>')
 html.append('      </div>')
-html.append('      <div class="insights_box">')
 
-insights = [
-    ("1", "<strong>7 tháng đầu năm 2026:</strong> Toàn trang giảm 6,5% so với cùng kỳ 2025. Chỉ 4/14 chuyên mục đạt tăng trưởng dương: <em>Thế giới</em> (+63,5%), <em>Thể thao</em> (+10,2%, hoàn thành mục tiêu), <em>Đời sống</em> (+8,5%) và <em>Du lịch</em> (+2,4%). Khối Truy cập là khối duy nhất duy trì tăng trưởng (+2,4%), trong khi Khối Uy tín giảm sâu nhất (-19,2%)."),
-    ("2", "<strong>Biến động mạnh từ tháng 8/2026:</strong> Sang tháng 8 và tháng 9/2026, lượng truy cập toàn trang sụt giảm nghiêm trọng 58,1% so với cùng kỳ năm 2025. Mức trung bình tháng của toàn trang chỉ còn 28,28 triệu lượt (so với mức 65–75 triệu lượt/tháng của giai đoạn trước)."),
-    ("3", "<strong>Hai mốc ban đầu (Phương án C - Khả thi cơ bản):</strong> Gồm <em>Mức +10% (Cơ sở)</em> đạt 31,11 triệu lượt/tháng (tổng Q4 93,33 triệu) và <em>Mức +15% (Phấn đấu)</em> đạt 32,52 triệu lượt/tháng (tổng Q4 97,57 triệu). Hai mức này bám sát quán tính hồi phục tự nhiên sau cú sốc T8–T9."),
-    ("4", "<strong>Mốc 'Thử thách' (+20% so với TB T8–T9):</strong> Đòi hỏi toàn trang nâng mức truy cập lên <strong>33,94 triệu lượt/tháng</strong>, tổng Quý 4 đạt <strong>101,82 triệu lượt</strong>. Mốc này vượt ngưỡng tâm lý 100 triệu lượt của Quý 4, yêu cầu các ban chủ lực (Thể thao, Đời sống, Kinh doanh) tạo ra các tuyến bài độc quyền và tối ưu hóa mạnh mẽ kênh SEO/Social."),
-    ("5", "<strong>Mốc 'Cần thiết để lấy lại truy cập' (+50% so với TB T8–T9):</strong> Nhằm tiệm cận lại mục tiêu KPI đã đặt ra đầu năm. Toàn trang cần đạt <strong>42,43 triệu lượt/tháng</strong>, đưa tổng Quý 4 lên <strong>127,28 triệu lượt</strong>. Kịch bản này giúp cả năm 2026 đạt <strong>623,74 triệu lượt</strong>, thu hẹp đà giảm cả năm xuống còn <strong>-22,0%</strong> (giảm thiệt hại hơn 34 triệu lượt truy cập so với mức cơ sở), tạo bệ phóng phục hồi vững chắc cho năm 2027."),
-    ("6", "<strong>Độ co giãn và tính khả thi:</strong> Việc nâng mục tiêu từ +10% lên +20% giúp cải thiện kết quả cả năm 1,0 điểm phần trăm (-26,2% lên -25,2%). Tuy nhiên, nếu đạt mốc +50%, kết quả cả năm sẽ cải thiện rõ rệt tới <strong>4,2 điểm phần trăm</strong> (-26,2% lên -22,0%). Đây là mục tiêu đòi hỏi sự phối hợp tổng lực giữa nội dung, công nghệ và phát triển độc giả."),
-    ("7", "<strong>Ghi chú điều chỉnh & phạm vi dữ liệu:</strong> Dữ liệu ngày 08/12/2025 của chuyên mục <em>Lifestyle</em> đã được điều chỉnh về số chuẩn (91.774 lượt thay vì 19.177.465 do lỗi nhập thừa số), đưa tổng lượt truy cập năm 2025 của Lifestyle về 16,82 triệu, Khối Lifestyle về 180,51 triệu và Toàn Znews về 799,68 triệu. Dữ liệu tháng 9/2026 được chốt đến hết ngày 29/09/2026. Chuyên mục <em>Xuất bản</em> bao gồm Sách hay và Văn hóa đọc; <em>Du lịch</em> bao gồm Ẩm thực; <em>Giải trí</em> bao gồm Phim ảnh, Âm nhạc và Thời trang Sao. Số liệu các khối và toàn trang được tổng hợp chuẩn xác từ các chuyên mục thành phần.")
-]
+html.append('      <section class="section_block" id="sec07">')
+html.append('        <div class="section_header">')
+html.append('          <div class="section_title_wrap">')
+html.append('            <div class="section_num">07</div>')
+html.append('            <div>')
+html.append('              <div class="section_title">Nhận định chuyên sâu & Luận cứ chiến lược KPI Quý 4/2026</div>')
+html.append('              <div class="section_sub">Căn cứ thực tiễn từ đà sụt giảm và lộ trình phục hồi lưu lượng dựa trên 2 động lực cốt lõi</div>')
+html.append('            </div>')
+html.append('          </div>')
+html.append('        </div>')
 
-for num, text in insights:
-    html.append('        <div class="insight_item">')
-    html.append(f'          <div class="insight_num">{num}</div>')
-    html.append(f'          <div class="insight_text">{text}</div>')
-    html.append('        </div>')
+# 3 Pillars of Strategic Rationale
+html.append('        <div class="reason_grid">')
 
-html.append('      </div>')
-html.append('    </section>')
+# Card 1: Tại sao không thể giữ KPI cũ
+html.append('          <div class="reason_card">')
+html.append('            <div class="reason_header">')
+html.append('              <div class="reason_icon icon_shock">⚠️</div>')
+html.append('              <div>')
+html.append('                <div class="reason_title">Tại sao không thể giữ KPI đầu năm?</div>')
+html.append('                <div class="section_sub">Cú sốc sụt giảm sâu & Khoảng cách bất khả thi</div>')
+html.append('              </div>')
+html.append('            </div>')
+html.append('            <div class="reason_body">')
+html.append('              Biến động tháng 8–9/2026 đã khiến lưu lượng toàn trang giảm <strong>58,1%</strong>, kéo mức trung bình tháng về <strong>28,28 triệu lượt</strong>. Sau 9 tháng, toàn trang mới đạt <strong>59,5%</strong> kế hoạch năm (chuẩn là 75,0%), còn thiếu tới <strong>337,74 triệu lượt</strong>.')
+html.append('              <ul class="reason_bullets">')
+html.append('                <li><strong>Áp lực phi thực tế:</strong> Nếu giữ nguyên KPI cũ, mỗi tháng Quý 4 cần đạt <strong>112,58 triệu lượt</strong>, tức phải tăng <strong>+298,1% (gấp 4 lần)</strong> so với thực tế hiện tại.</li>')
+html.append('                <li><strong>Mức tăng bất khả thi ở các ban:</strong> Xã hội cần tăng <strong>+955,4%</strong>, Pháp luật tăng <strong>+721,8%</strong>, Giải trí tăng <strong>+399,6%</strong>, Đời sống tăng <strong>+366,3%</strong>.</li>')
+html.append('                <li><strong>Kết luận:</strong> Việc giữ nguyên KPI cũ sẽ tạo áp lực quá tải, làm triệt tiêu động lực của đội ngũ. Cần tái lập KPI dựa trên trung bình T8–T9 làm mốc chặn đáy để phục hồi từng bước.</li>')
+html.append('              </ul>')
+html.append('            </div>')
+html.append('          </div>')
+
+# Card 2: Đòn bẩy 1 - Zalo OA
+html.append('          <div class="reason_card">')
+html.append('            <div class="reason_header">')
+html.append('              <div class="reason_icon icon_zalo">💬</div>')
+html.append('              <div>')
+html.append('                <div class="reason_title">Đòn bẩy 1: Khai thác Kênh Zalo OA</div>')
+html.append('                <div class="section_sub">Tiếp cận trực tiếp độc giả trung thành không qua tìm kiếm</div>')
+html.append('              </div>')
+html.append('            </div>')
+html.append('            <div class="reason_body">')
+html.append('              Zalo là nền tảng tin nhắn lớn nhất Việt Nam với hơn 75 triệu người dùng hoạt động. Hệ thống Zalo Official Account (OA) của Znews sở hữu tệp người theo dõi trung thành, là kênh kéo traffic trực tiếp vô cùng hiệu quả.')
+html.append('              <ul class="reason_bullets">')
+html.append('                <li><strong>Bắn tin chủ động (Broadcast):</strong> Thay vì phụ thuộc vào tìm kiếm, Znews chủ động gửi các tin nóng, bài phóng sự độc quyền, tuyến bài thể thao/giải trí vào các khung giờ vàng (8h–9h, 11h30–12h30, 20h–21h).</li>')
+html.append('                <li><strong>Tạo lưu lượng tức thời (Instant Traffic):</strong> Mỗi đợt phát tin Zalo OA có thể tạo ra hàng trăm nghìn lượt đọc trong thời gian ngắn, giúp bù đắp ngay lập tức phần thiếu hụt từ Google.</li>')
+html.append('                <li><strong>Cá nhân hóa nội dung:</strong> Phân luồng chủ đề theo sở thích của độc giả (bóng đá, sức khỏe, tài chính, lối sống) để nâng cao tỷ lệ mở đọc (CTR) và thời gian đọc bài.</li>')
+html.append('              </ul>')
+html.append('            </div>')
+html.append('          </div>')
+
+# Card 3: Đòn bẩy 2 - Google Domain Warmup
+html.append('          <div class="reason_card">')
+html.append('            <div class="reason_header">')
+html.append('              <div class="reason_icon icon_google">🔍</div>')
+html.append('              <div>')
+html.append('                <div class="reason_title">Đòn bẩy 2: Google quen dần với tên miền mới</div>')
+html.append('                <div class="section_sub">Thuật toán lập chỉ mục ổn định & Mở luồng Google Discover</div>')
+html.append('              </div>')
+html.append('            </div>')
+html.append('            <div class="reason_body">')
+html.append('              Sau giai đoạn chuyển dịch tên miền vào tháng 8, hệ thống bot tìm kiếm của Google (Googlebot) cần thời gian từ 6 đến 8 tuần để quét lại dữ liệu (crawl budget), lập lại chỉ mục (indexing) và đánh giá lại độ uy tín (Domain Authority).')
+html.append('              <ul class="reason_bullets">')
+html.append('                <li><strong>Tên miền mới đã "ấm máy" (Domain Warm-up):</strong> Đến cuối tháng 9 và bước sang Quý 4, hệ thống máy chủ và cấu trúc sitemap mới đã được Google nhận diện ổn định, giảm thiểu lỗi thu thập dữ liệu.</li>')
+html.append('                <li><strong>Mở lại đề xuất Google Discover:</strong> Google đã bắt đầu đề xuất trở lại các bài viết chất lượng cao của Znews trên luồng Khám phá (Discover) của hàng chục triệu người dùng Android/iOS.</li>')
+html.append('                <li><strong>Thu hồi thứ hạng từ khóa:</strong> Các chuyên mục thế mạnh (Thể thao, Kinh doanh, Công nghệ, Xe) bắt đầu lấy lại vị trí top tìm kiếm tự nhiên (Organic Search), tạo dòng truy cập tự nhiên bền vững.</li>')
+html.append('              </ul>')
+html.append('            </div>')
+html.append('          </div>')
+
+# Card 4: Tổng kết & Lộ trình 4 Mốc KPI
+html.append('          <div class="reason_card">')
+html.append('            <div class="reason_header">')
+html.append('              <div class="reason_icon icon_shock">🎯</div>')
+html.append('              <div>')
+html.append('                <div class="reason_title">Lộ trình 4 Mốc KPI Quý 4/2026</div>')
+html.append('                <div class="section_sub">Chiến lược phục hồi từng nấc thang vững chắc</div>')
+html.append('              </div>')
+html.append('            </div>')
+html.append('            <div class="reason_body">')
+html.append('              Sự kết hợp giữa <strong>Zalo OA</strong> (đòn bẩy chủ động) và <strong>Google SEO/Discover</strong> (phục hồi tự nhiên) tạo cơ sở kỹ thuật vững chắc để Znews đặt mục tiêu tăng trưởng dương trong Quý 4:')
+html.append('              <ul class="reason_bullets">')
+html.append('                <li><strong>Mốc +10% (Cơ sở - 31,11 tr/th):</strong> Mức chặn đáy tối thiểu để giữ ổn định hệ thống.</li>')
+html.append('                <li><strong>Mốc +15% (Phấn đấu - 32,52 tr/th):</strong> Tận dụng đà bắn tin Zalo OA đều đặn hàng tuần.</li>')
+html.append('                <li><strong>Mốc +20% (Thử thách - 33,94 tr/th):</strong> Vượt mốc tâm lý 100 triệu lượt/quý khi Google Discover hồi phục.</li>')
+html.append('                <li><strong>Mốc +50% (Phục hồi - 42,43 tr/th):</strong> Thu hẹp đà giảm cả năm 2026 xuống <strong>-22,0%</strong>, tiệm cận kế hoạch đầu năm và tạo bàn đạp mạnh mẽ cho năm 2027.</li>')
+html.append('              </ul>')
+html.append('            </div>')
+html.append('          </div>')
+
+html.append('        </div>') # end reason_grid
+
+# Action Matrix for 4 Blocks
+html.append('        <div class="card card_spaced">')
+html.append('          <h3>Ma trận hành động theo 4 Khối biên tập trong Quý 4/2026</h3>')
+html.append('          <p>Phân công trọng tâm tác chiến để kích hoạt tối đa 2 đòn bẩy Zalo OA và Google Search/Discover</p>')
+html.append('          <div class="matrix_grid">')
+
+html.append('            <div class="matrix_card">')
+html.append('              <div class="matrix_title">1. Khối Truy cập</div>')
+html.append('              <div class="matrix_sub"><strong>Mũi nhọn kéo traffic:</strong> Thể thao & Giải trí chiếm 39% dung lượng toàn trang. Trọng tâm: Tường thuật trực tiếp sự kiện lớn cuối năm, khai thác tin nóng tức thời và phối hợp bắn tin Zalo OA khung giờ vàng tối.</div>')
+html.append('            </div>')
+
+html.append('            <div class="matrix_card">')
+html.append('              <div class="matrix_title">2. Khối Lifestyle</div>')
+html.append('              <div class="matrix_sub"><strong>Tối ưu Google Discover:</strong> Đời sống, Sức khỏe, Du lịch, Giáo dục, Lifestyle. Trọng tâm: Tuyến bài hình ảnh đẹp, infographic chuyên sâu, bắt trend mùa lễ hội, ẩm thực cuối năm để lên top đề xuất Discover.</div>')
+html.append('            </div>')
+
+html.append('            <div class="matrix_card">')
+html.append('              <div class="matrix_title">3. Khối Kinh doanh</div>')
+html.append('              <div class="matrix_sub"><strong>Tối ưu SEO chuyên sâu:</strong> Kinh doanh, Công nghệ, Xe. Trọng tâm: Bắt trọn từ khóa mua sắm cuối năm, xu hướng bất động sản, tài chính, ra mắt xe và thiết bị công nghệ mới.</div>')
+html.append('            </div>')
+
+html.append('            <div class="matrix_card">')
+html.append('              <div class="matrix_title">4. Khối Uy tín</div>')
+html.append('              <div class="matrix_sub"><strong>Củng cố Domain Trust:</strong> Xã hội, Pháp luật, Thế giới, Xuất bản. Trọng tâm: Giữ vững uy tín thương hiệu, tạo nguồn tin xác thực (E-E-A-T) giúp Google nhanh chóng nâng điểm tín nhiệm cho tên miền mới.</div>')
+html.append('            </div>')
+
+html.append('          </div>')
+
+# Callout banner for Data adjustment & notes
+html.append('          <div class="callout_banner">')
+html.append('            <div class="callout_title">📌 Ghi chú điều chỉnh số liệu & Minh bạch dữ liệu</div>')
+html.append('            <div class="callout_text">')
+html.append('              Dữ liệu ngày 08/12/2025 của chuyên mục <em>Lifestyle</em> đã được điều chỉnh về số chuẩn (91.774 lượt thay vì 19.177.465 do lỗi nhập thừa số), đưa tổng lượt truy cập năm 2025 của Lifestyle về 16,82 triệu, Khối Lifestyle về 180,51 triệu và Toàn Znews về 799,68 triệu. Dữ liệu tháng 9/2026 được chốt đến hết ngày 29/09/2026. Số liệu các khối và toàn trang được tổng hợp chuẩn xác từ 14 chuyên mục thành phần.')
+html.append('            </div>')
+html.append('          </div>')
+
+html.append('        </div>')
+html.append('      </section>')
+html.append('    </div>') # end part3
 
 # FOOTER
 html.append('    <footer class="page_footer">')
-html.append('      <div>Nguồn dữ liệu: <strong>Tong hop truy cap 2025-2026.xlsx</strong> (Cập nhật 29/09/2026)</div>')
-html.append('      <div>Bản quyền Báo điện tử Tri thức (Znews) • Lưu hành nội bộ</div>')
+html.append('      <div>Nguồn dữ liệu: <strong>Tong hop truy cap 2025-2026.xlsx</strong> &bull; Sheet "Tiến độ KPI 2026" & "Truy cập (new)" (Cập nhật 29/09/2026)</div>')
+html.append('      <div>Bản quyền Báo điện tử Tri thức (Znews) &bull; Lưu hành nội bộ Ban biên tập</div>')
 html.append('    </footer>')
 
 html.append('  </div>') # wrap
@@ -1711,42 +2251,45 @@ js_script = f"""
     maxVal = Math.ceil((maxVal * 1.15) / 1000) * 1000;
     if (maxVal < 1000) maxVal = 1000;
 
-    function getY(v) {{
-      return T + PH - (v / maxVal) * PH;
+    function getY(val) {{
+      return T + PH - (val / maxVal) * PH;
     }}
 
+    const yTicks = [0, maxVal * 0.25, maxVal * 0.5, maxVal * 0.75, maxVal];
+    const gridLines = document.querySelectorAll('.grid_line');
     const yLabels = document.querySelectorAll('.axis_label_y');
-    const yLines = document.querySelectorAll('.grid_line');
-    const steps = [0, 0.25, 0.5, 0.75, 1.0];
-    steps.forEach((st, idx) => {{
-      const val = maxVal * st;
-      const y = getY(val);
-      if (yLines[idx]) {{
-        yLines[idx].setAttribute('y1', y);
-        yLines[idx].setAttribute('y2', y);
+    yTicks.forEach((yt, idx) => {{
+      const yp = getY(yt);
+      if (gridLines[idx]) {{
+        gridLines[idx].setAttribute('y1', yp.toFixed(1));
+        gridLines[idx].setAttribute('y2', yp.toFixed(1));
       }}
       if (yLabels[idx]) {{
-        yLabels[idx].setAttribute('y', y + 4);
-        yLabels[idx].textContent = (val / 1000).toLocaleString('vi-VN', {{ maximumFractionDigits: 1 }}) + ' tr';
+        yLabels[idx].setAttribute('y', (yp + 4).toFixed(1));
+        yLabels[idx].textContent = fmtTr(yt);
       }}
     }});
 
-    const pts25 = s.vals_2025.map((v, i) => `${{xs[i].toFixed(1)}},${{getY(v).toFixed(1)}}`).join(' L ');
-    const p25 = document.getElementById('path_2025');
-    if (p25) p25.setAttribute('d', 'M ' + pts25);
+    const p25 = s.vals_2025.map((v, i) => `${{xs[i].toFixed(1)}},${{getY(v).toFixed(1)}}`).join(' ');
+    const path25 = document.getElementById('path_2025');
+    if (path25) path25.setAttribute('d', `M ${{p25.replace(/ /g, ' L ')}}`);
+
+    const p26 = s.vals_2026.map((v, i) => `${{xs[i].toFixed(1)}},${{getY(v).toFixed(1)}}`).join(' ');
+    const path26 = document.getElementById('path_2026');
+    if (path26) path26.setAttribute('d', `M ${{p26.replace(/ /g, ' L ')}}`);
 
     const dots25 = document.querySelectorAll('.dot_2025');
-    s.vals_2025.forEach((v, i) => {{
-      if (dots25[i]) dots25[i].setAttribute('cy', getY(v).toFixed(1));
+    dots25.forEach((d, i) => {{
+      if (s.vals_2025[i] !== undefined) {{
+        d.setAttribute('cy', getY(s.vals_2025[i]).toFixed(1));
+      }}
     }});
 
-    const pts26 = s.vals_2026.map((v, i) => `${{xs[i].toFixed(1)}},${{getY(v).toFixed(1)}}`).join(' L ');
-    const p26 = document.getElementById('path_2026');
-    if (p26) p26.setAttribute('d', 'M ' + pts26);
-
     const dots26 = document.querySelectorAll('.dot_2026');
-    s.vals_2026.forEach((v, i) => {{
-      if (dots26[i]) dots26[i].setAttribute('cy', getY(v).toFixed(1));
+    dots26.forEach((d, i) => {{
+      if (s.vals_2026[i] !== undefined) {{
+        d.setAttribute('cy', getY(s.vals_2026[i]).toFixed(1));
+      }}
     }});
 
     const yT9 = getY(s.vals_2026[8]);
@@ -1790,19 +2333,19 @@ js_script = f"""
     const lblT1 = document.getElementById('lbl_t1');
     if (lblT1) {{
       lblT1.setAttribute('y', (getY(s.vals_2026[0]) - 12).toFixed(1));
-      lblT1.textContent = fmtTr(s.vals_2026[0]);
+      lblT1.textContent = `${{fmtTr(s.vals_2026[0])}}`;
     }}
 
     const lblT8 = document.getElementById('lbl_t8');
     if (lblT8) {{
       lblT8.setAttribute('y', (getY(s.vals_2026[7]) - 12).toFixed(1));
-      lblT8.textContent = fmtTr(s.vals_2026[7]);
+      lblT8.textContent = `${{fmtTr(s.vals_2026[7])}}`;
     }}
 
     const lblT9 = document.getElementById('lbl_t9');
     if (lblT9) {{
       lblT9.setAttribute('y', (yT9 + 18).toFixed(1));
-      lblT9.textContent = fmtTr(s.vals_2026[8]);
+      lblT9.textContent = `${{fmtTr(s.vals_2026[8])}}`;
     }}
 
     const lblTarget = document.getElementById('lbl_target');
@@ -1812,31 +2355,14 @@ js_script = f"""
     }}
   }}
 
-  const allChips = document.querySelectorAll('#monthly_chips .chip, #monthly_dep_chips .chip');
+  // 2. Entity chips listener
+  const allChips = document.querySelectorAll('#monthly_block_chips .chip, #monthly_dep_chips .chip');
   allChips.forEach(chip => {{
     chip.addEventListener('click', function() {{
       allChips.forEach(c => c.classList.remove('active'));
       this.classList.add('active');
-      const name = this.getAttribute('data-entity');
-      updateLineChart(name);
-    }});
-  }});
-
-  // 2. Department cards filter
-  const filterChips = document.querySelectorAll('#dep_filter_chips .chip');
-  const depCards = document.querySelectorAll('.dep_kpi_card');
-  filterChips.forEach(chip => {{
-    chip.addEventListener('click', function() {{
-      filterChips.forEach(c => c.classList.remove('active'));
-      this.classList.add('active');
-      const filter = this.getAttribute('data-filter');
-      depCards.forEach(card => {{
-        if (filter === 'all' || card.getAttribute('data-block') === filter) {{
-          card.classList.remove('hidden_element');
-        }} else {{
-          card.classList.add('hidden_element');
-        }}
-      }});
+      const entity = this.getAttribute('data-entity');
+      updateLineChart(entity);
     }});
   }});
 
@@ -1884,6 +2410,74 @@ js_script = f"""
       }}
     }});
   }});
+
+  // 4. Progress Table Filter (All / Blocks / Deps / Heavy Lag)
+  const progChips = document.querySelectorAll('#prog_filter_chips .chip');
+  const progRowsBlock = document.querySelectorAll('.prog_row_block');
+  const progRowsDep = document.querySelectorAll('.prog_row_dep');
+  const progRowsTotal = document.querySelectorAll('.prog_row_total');
+
+  progChips.forEach(chip => {{
+    chip.addEventListener('click', function() {{
+      progChips.forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      const filter = this.getAttribute('data-filter');
+
+      const allProgRows = document.querySelectorAll('#prog_table tbody tr');
+      allProgRows.forEach(r => {{
+        if (filter === 'all') {{
+          r.classList.remove('hidden_element');
+        }} else if (filter === 'blocks') {{
+          if (r.classList.contains('prog_row_block') || r.classList.contains('prog_row_total')) {{
+            r.classList.remove('hidden_element');
+          }} else {{
+            r.classList.add('hidden_element');
+          }}
+        }} else if (filter === 'deps') {{
+          if (r.classList.contains('prog_row_dep')) {{
+            r.classList.remove('hidden_element');
+          }} else {{
+            r.classList.add('hidden_element');
+          }}
+        }} else if (filter === 'heavy_lag') {{
+          if (r.classList.contains('prog_row_heavylag')) {{
+            r.classList.remove('hidden_element');
+          }} else {{
+            r.classList.add('hidden_element');
+          }}
+        }}
+      }});
+    }});
+  }});
+
+  // 5. Sticky Navigation ScrollSpy
+  const navTabs = document.querySelectorAll('.main_nav_tabs .nav_tab');
+  const partSections = ['part1', 'part2', 'part3'].map(id => document.getElementById(id));
+
+  navTabs.forEach(tab => {{
+    tab.addEventListener('click', function(e) {{
+      navTabs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    }});
+  }});
+
+  window.addEventListener('scroll', function() {{
+    const scrollPos = window.scrollY + 180;
+    let currentPart = 'part1';
+    partSections.forEach(section => {{
+      if (section && section.offsetTop <= scrollPos) {{
+        currentPart = section.getAttribute('id');
+      }}
+    }});
+    navTabs.forEach(tab => {{
+      if (tab.getAttribute('data-part') === currentPart) {{
+        tab.classList.add('active');
+      }} else {{
+        tab.classList.remove('active');
+      }}
+    }});
+  }});
+
 }})();
 """
 
@@ -1915,4 +2509,4 @@ assert '<div class="wrap">' in full_html, "Missing <div class=\"wrap\">"
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(full_html)
 
-print("SUCCESS: index.html regenerated with 4 KPI tiers and 100% passed constraints!")
+print("SUCCESS: index.html regenerated with 3 Parts, Progress Section, and 100% passed constraints!")
