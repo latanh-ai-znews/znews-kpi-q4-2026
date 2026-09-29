@@ -549,11 +549,11 @@ def build_year_dumbbell_svg():
     row_h = 75
     
     rows = [
-        {"name": "Khối Truy cập", "y25": 309966, "y26_10": kpi_4tiers["Khối Truy cập"]["m10"]["yr"], "y26_50": kpi_4tiers["Khối Truy cập"]["m50"]["yr"], "pct_10": kpi_4tiers["Khối Truy cập"]["m10"]["pct_yr"], "pct_50": kpi_4tiers["Khối Truy cập"]["m50"]["pct_yr"]},
-        {"name": "Khối Lifestyle", "y25": 199598, "y26_10": kpi_4tiers["Khối Lifestyle"]["m10"]["yr"], "y26_50": kpi_4tiers["Khối Lifestyle"]["m50"]["yr"], "pct_10": kpi_4tiers["Khối Lifestyle"]["m10"]["pct_yr"], "pct_50": kpi_4tiers["Khối Lifestyle"]["m50"]["pct_yr"]},
-        {"name": "Khối Uy tín", "y25": 182651, "y26_10": kpi_4tiers["Khối Uy tín"]["m10"]["yr"], "y26_50": kpi_4tiers["Khối Uy tín"]["m50"]["yr"], "pct_10": kpi_4tiers["Khối Uy tín"]["m10"]["pct_yr"], "pct_50": kpi_4tiers["Khối Uy tín"]["m50"]["pct_yr"]},
-        {"name": "Khối Kinh doanh", "y25": 126553, "y26_10": kpi_4tiers["Khối Kinh doanh"]["m10"]["yr"], "y26_50": kpi_4tiers["Khối Kinh doanh"]["m50"]["yr"], "pct_10": kpi_4tiers["Khối Kinh doanh"]["m10"]["pct_yr"], "pct_50": kpi_4tiers["Khối Kinh doanh"]["m50"]["pct_yr"]},
-        {"name": "Toàn Znews", "y25": 818767, "y26_10": kpi_4tiers["Toàn Znews"]["m10"]["yr"], "y26_50": kpi_4tiers["Toàn Znews"]["m50"]["yr"], "pct_10": kpi_4tiers["Toàn Znews"]["m10"]["pct_yr"], "pct_50": kpi_4tiers["Toàn Znews"]["m50"]["pct_yr"]}
+        {"name": "Khối Truy cập", "y25": kpi_4tiers["Khối Truy cập"]["yr_25"], "y26_10": kpi_4tiers["Khối Truy cập"]["m10"]["yr"], "y26_50": kpi_4tiers["Khối Truy cập"]["m50"]["yr"], "pct_10": kpi_4tiers["Khối Truy cập"]["m10"]["pct_yr"], "pct_50": kpi_4tiers["Khối Truy cập"]["m50"]["pct_yr"]},
+        {"name": "Khối Lifestyle", "y25": kpi_4tiers["Khối Lifestyle"]["yr_25"], "y26_10": kpi_4tiers["Khối Lifestyle"]["m10"]["yr"], "y26_50": kpi_4tiers["Khối Lifestyle"]["m50"]["yr"], "pct_10": kpi_4tiers["Khối Lifestyle"]["m10"]["pct_yr"], "pct_50": kpi_4tiers["Khối Lifestyle"]["m50"]["pct_yr"]},
+        {"name": "Khối Uy tín", "y25": kpi_4tiers["Khối Uy tín"]["yr_25"], "y26_10": kpi_4tiers["Khối Uy tín"]["m10"]["yr"], "y26_50": kpi_4tiers["Khối Uy tín"]["m50"]["yr"], "pct_10": kpi_4tiers["Khối Uy tín"]["m10"]["pct_yr"], "pct_50": kpi_4tiers["Khối Uy tín"]["m50"]["pct_yr"]},
+        {"name": "Khối Kinh doanh", "y25": kpi_4tiers["Khối Kinh doanh"]["yr_25"], "y26_10": kpi_4tiers["Khối Kinh doanh"]["m10"]["yr"], "y26_50": kpi_4tiers["Khối Kinh doanh"]["m50"]["yr"], "pct_10": kpi_4tiers["Khối Kinh doanh"]["m10"]["pct_yr"], "pct_50": kpi_4tiers["Khối Kinh doanh"]["m50"]["pct_yr"]},
+        {"name": "Toàn Znews", "y25": kpi_4tiers["Toàn Znews"]["yr_25"], "y26_10": kpi_4tiers["Toàn Znews"]["m10"]["yr"], "y26_50": kpi_4tiers["Toàn Znews"]["m50"]["yr"], "pct_10": kpi_4tiers["Toàn Znews"]["m10"]["pct_yr"], "pct_50": kpi_4tiers["Toàn Znews"]["m50"]["pct_yr"]}
     ]
     
     svg = []
@@ -1622,7 +1622,7 @@ html.append('        <div class="section_title_wrap">')
 html.append('          <div class="section_num">05</div>')
 html.append('          <div>')
 html.append('            <div class="section_title">Kịch bản cả năm 2026 so với 2025 (4 Mức KPI)</div>')
-html.append('            <div class="section_sub">Kịch bản cả năm 2026 biến thiên từ 589,79 triệu (-28,0% ở mức +10%) lên 623,74 triệu (-23,8% ở mức +50% phục hồi truy cập)</div>')
+html.append('            <div class="section_sub">Kịch bản cả năm 2026 biến thiên từ 589,79 triệu (-26,2% ở mức +10%) lên 623,74 triệu (-22,0% ở mức +50% phục hồi truy cập)</div>')
 html.append('          </div>')
 html.append('        </div>')
 html.append('      </div>')
@@ -1658,9 +1658,9 @@ insights = [
     ("2", "<strong>Biến động mạnh từ tháng 8/2026:</strong> Sang tháng 8 và tháng 9/2026, lượng truy cập toàn trang sụt giảm nghiêm trọng 58,1% so với cùng kỳ năm 2025. Mức trung bình tháng của toàn trang chỉ còn 28,28 triệu lượt (so với mức 65–75 triệu lượt/tháng của giai đoạn trước)."),
     ("3", "<strong>Hai mốc ban đầu (Phương án C - Khả thi cơ bản):</strong> Gồm <em>Mức +10% (Cơ sở)</em> đạt 31,11 triệu lượt/tháng (tổng Q4 93,33 triệu) và <em>Mức +15% (Phấn đấu)</em> đạt 32,52 triệu lượt/tháng (tổng Q4 97,57 triệu). Hai mức này bám sát quán tính hồi phục tự nhiên sau cú sốc T8–T9."),
     ("4", "<strong>Mốc 'Thử thách' (+20% so với TB T8–T9):</strong> Đòi hỏi toàn trang nâng mức truy cập lên <strong>33,94 triệu lượt/tháng</strong>, tổng Quý 4 đạt <strong>101,82 triệu lượt</strong>. Mốc này vượt ngưỡng tâm lý 100 triệu lượt của Quý 4, yêu cầu các ban chủ lực (Thể thao, Đời sống, Kinh doanh) tạo ra các tuyến bài độc quyền và tối ưu hóa mạnh mẽ kênh SEO/Social."),
-    ("5", "<strong>Mốc 'Cần thiết để lấy lại truy cập' (+50% so với TB T8–T9):</strong> Nhằm tiệm cận lại mục tiêu KPI đã đặt ra đầu năm. Toàn trang cần đạt <strong>42,43 triệu lượt/tháng</strong>, đưa tổng Quý 4 lên <strong>127,28 triệu lượt</strong>. Kịch bản này giúp cả năm 2026 đạt <strong>623,74 triệu lượt</strong>, thu hẹp đà giảm cả năm xuống còn <strong>-23,8%</strong> (giảm thiệt hại hơn 34 triệu lượt truy cập so với mức cơ sở), tạo bệ phóng phục hồi vững chắc cho năm 2027."),
-    ("6", "<strong>Độ co giãn và tính khả thi:</strong> Việc nâng mục tiêu từ +10% lên +20% chỉ cải thiện kết quả cả năm 1,1 điểm phần trăm. Tuy nhiên, nếu đạt mốc +50%, kết quả cả năm sẽ cải thiện rõ rệt tới <strong>4,2 điểm phần trăm</strong>. Đây là mục tiêu đòi hỏi sự phối hợp tổng lực giữa nội dung, công nghệ và phát triển độc giả."),
-    ("7", "<strong>Ghi chú phạm vi dữ liệu:</strong> Dữ liệu tháng 9/2026 được chốt đến hết ngày 29/09/2026. Chuyên mục <em>Xuất bản</em> bao gồm Sách hay và Văn hóa đọc; <em>Du lịch</em> bao gồm Ẩm thực; <em>Giải trí</em> bao gồm Phim ảnh, Âm nhạc và Thời trang Sao. Số liệu các khối và toàn trang được tổng hợp chuẩn xác từ các chuyên mục thành phần.")
+    ("5", "<strong>Mốc 'Cần thiết để lấy lại truy cập' (+50% so với TB T8–T9):</strong> Nhằm tiệm cận lại mục tiêu KPI đã đặt ra đầu năm. Toàn trang cần đạt <strong>42,43 triệu lượt/tháng</strong>, đưa tổng Quý 4 lên <strong>127,28 triệu lượt</strong>. Kịch bản này giúp cả năm 2026 đạt <strong>623,74 triệu lượt</strong>, thu hẹp đà giảm cả năm xuống còn <strong>-22,0%</strong> (giảm thiệt hại hơn 34 triệu lượt truy cập so với mức cơ sở), tạo bệ phóng phục hồi vững chắc cho năm 2027."),
+    ("6", "<strong>Độ co giãn và tính khả thi:</strong> Việc nâng mục tiêu từ +10% lên +20% giúp cải thiện kết quả cả năm 1,0 điểm phần trăm (-26,2% lên -25,2%). Tuy nhiên, nếu đạt mốc +50%, kết quả cả năm sẽ cải thiện rõ rệt tới <strong>4,2 điểm phần trăm</strong> (-26,2% lên -22,0%). Đây là mục tiêu đòi hỏi sự phối hợp tổng lực giữa nội dung, công nghệ và phát triển độc giả."),
+    ("7", "<strong>Ghi chú điều chỉnh & phạm vi dữ liệu:</strong> Dữ liệu ngày 08/12/2025 của chuyên mục <em>Lifestyle</em> đã được điều chỉnh về số chuẩn (91.774 lượt thay vì 19.177.465 do lỗi nhập thừa số), đưa tổng lượt truy cập năm 2025 của Lifestyle về 16,82 triệu, Khối Lifestyle về 180,51 triệu và Toàn Znews về 799,68 triệu. Dữ liệu tháng 9/2026 được chốt đến hết ngày 29/09/2026. Chuyên mục <em>Xuất bản</em> bao gồm Sách hay và Văn hóa đọc; <em>Du lịch</em> bao gồm Ẩm thực; <em>Giải trí</em> bao gồm Phim ảnh, Âm nhạc và Thời trang Sao. Số liệu các khối và toàn trang được tổng hợp chuẩn xác từ các chuyên mục thành phần.")
 ]
 
 for num, text in insights:
