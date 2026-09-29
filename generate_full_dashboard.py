@@ -1,11 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-Complete generator for Znews Q4 2026 Static Dashboard.
-Appends full HTML assembly, interactive JS, strict validation and writes index.html.
+Production-grade generator for Znews Q4 2026 Static Dashboard.
+100% compliance with Znews CMS:
+- No inline style="" anywhere in HTML or JS
+- No <span> tags anywhere (div/em/strong/b/small used instead)
+- No <button> tags anywhere (div.chip / a.chip used instead)
+- No base64 images (pure inline SVG)
+- Fully responsive, mobile font size increased ~15%
+- Full-bleed 100vw layout scoped in .container_AI
+- Numbers formatted in Vietnamese locale (1.000,00)
+- Emphasis on monthly and Q4 KPI for every department
 """
 import json
 import re
-import sys
 
 # 1. Load data
 with open("brief_data.json", "r", encoding="utf-8") as f:
@@ -462,7 +469,7 @@ def build_year_growth_bar_svg():
 
 
 # ==========================================
-# ASSEMBLE FULL HTML
+# ASSEMBLE FULL HTML WITH ZERO STYLE ATTRIBUTES
 # ==========================================
 
 css_scoped = """
@@ -577,6 +584,11 @@ css_scoped = """
   border-radius: 16px;
   padding: 24px;
   box-shadow: 0 4px 14px rgba(59, 86, 224, 0.08);
+  margin-bottom: 24px;
+}
+
+.container_AI .card_hero_inner {
+  margin-top: 18px;
 }
 
 .container_AI .section_block {
@@ -786,6 +798,7 @@ css_scoped = """
   border-radius: 10px;
   padding: 12px 14px;
   margin-bottom: 10px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .container_AI .dep_kpi_box_highlight.q4_box {
@@ -807,6 +820,12 @@ css_scoped = """
   justify-content: space-between;
   align-items: baseline;
   margin-bottom: 4px;
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+.container_AI .kpi_target_row.tier_focus {
+  background-color: #e0e7ff;
 }
 
 .container_AI .target_tier {
@@ -848,6 +867,7 @@ css_scoped = """
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   background-color: #ffffff;
+  margin-top: 14px;
   margin-bottom: 24px;
 }
 
@@ -922,6 +942,10 @@ css_scoped = """
   font-weight: 600;
 }
 
+.container_AI .table_col_highlight {
+  background-color: #f0f3fe;
+}
+
 /* Strategic Insights Box (Section 06) */
 .container_AI .insights_box {
   background-color: #f7f8fe;
@@ -987,6 +1011,14 @@ css_scoped = """
 .container_AI .chart_svg {
   display: block;
   overflow: visible;
+}
+
+.container_AI .card_spaced {
+  margin-top: 24px;
+}
+
+.container_AI .hidden_element {
+  display: none !important;
 }
 
 @media (max-width: 760px) {
@@ -1075,7 +1107,6 @@ html.append('          </div>')
 html.append('        </div>')
 html.append('      </div>')
 html.append('      <div class="card">')
-# Chips selector
 html.append('        <div class="controls_bar" id="monthly_chips">')
 html.append('          <div class="chip active" data-entity="Toàn Znews">Toàn Znews</div>')
 for blk in all_blocks:
@@ -1101,13 +1132,11 @@ html.append('          </div>')
 html.append('        </div>')
 html.append('      </div>')
 html.append('      <div class="grid_2col">')
-# Left: Diverging bar chart
 html.append('        <div class="card">')
 html.append('          <h3>Tăng trưởng 14 chuyên mục (7T/2026 vs 7T/2025)</h3>')
 html.append('          <p>Xếp hạng theo % tăng/giảm cùng đánh giá mục tiêu</p>')
 html.append(build_t7_growth_bar_svg())
 html.append('        </div>')
-# Right: Dumbbell chart
 html.append('        <div class="card">')
 html.append('          <h3>Quy mô truy cập 4 Khối & Toàn trang (7T/2025 vs 7T/2026)</h3>')
 html.append('          <p>Điểm xám: 7T/2025 | Điểm xanh: 7T/2026 (đơn vị: triệu lượt)</p>')
@@ -1145,10 +1174,10 @@ html.append('        </div>')
 html.append('      </div>')
 
 # Overview block cards (Toàn trang & 4 Khối)
-html.append('      <div class="card_hero" style-disabled="hero">')
+html.append('      <div class="card_hero">')
 html.append('        <h3>Tổng hợp chỉ tiêu KPI Quý 4/2026 theo Phương án C</h3>')
 html.append('        <p>Cơ chế: KPI mỗi tháng T10–T12 = TB tháng T8–T9/2026 × (1 + 10% hoặc 15%). Tổng Q4 = KPI tháng × 3.</p>')
-html.append('        <div class="grid_4col" style-disabled="top-margin">')
+html.append('        <div class="grid_4col card_hero_inner">')
 for blk in all_blocks:
     b_kpi = kpi_dict[blk]
     html.append('          <div class="kpi_card_head">')
@@ -1159,9 +1188,20 @@ for blk in all_blocks:
 html.append('        </div>')
 html.append('      </div>')
 
-html.append('      <div class="card" style-disabled="margin-top">')
-html.append('        <h3>Bảng phân bổ KPI Quý 4/2026 chi tiết 19 đơn vị</h3>')
-html.append('        <p>Nhóm theo từng Khối và Toàn Znews (số liệu gốc: nghìn lượt truy cập)</p>')
+# Master Table Card
+html.append('      <div class="card">')
+html.append('        <div class="dep_card_header">')
+html.append('          <div>')
+html.append('            <h3>Bảng phân bổ KPI Quý 4/2026 chi tiết 19 đơn vị</h3>')
+html.append('            <p>Nhóm theo từng Khối và Toàn Znews (số liệu gốc: nghìn lượt truy cập)</p>')
+html.append('          </div>')
+# Mode Switcher Chips
+html.append('          <div class="controls_bar" id="kpi_tier_chips">')
+html.append('            <div class="chip active" data-tier="both">Xem cả 2 mức</div>')
+html.append('            <div class="chip" data-tier="10">Mức +10% (Cơ sở)</div>')
+html.append('            <div class="chip" data-tier="15">Mức +15% (Phấn đấu)</div>')
+html.append('          </div>')
+html.append('        </div>')
 
 # Master 19-row Table
 html.append('        <div class="table_responsive">')
@@ -1170,10 +1210,10 @@ html.append('            <thead>')
 html.append('              <tr>')
 html.append('                <th>Đơn vị / Ban</th>')
 html.append('                <th class="cell_num">TB T8–T9</th>')
-html.append('                <th class="cell_num">KPI Tháng (+10%)</th>')
-html.append('                <th class="cell_num">KPI Tháng (+15%)</th>')
-html.append('                <th class="cell_num">Tổng Q4 (+10%)</th>')
-html.append('                <th class="cell_num">Tổng Q4 (+15%)</th>')
+html.append('                <th class="cell_num col_10">KPI Tháng (+10%)</th>')
+html.append('                <th class="cell_num col_15">KPI Tháng (+15%)</th>')
+html.append('                <th class="cell_num col_10">Tổng Q4 (+10%)</th>')
+html.append('                <th class="cell_num col_15">Tổng Q4 (+15%)</th>')
 html.append('                <th class="cell_num">% vs Q4/2025</th>')
 html.append('                <th class="cell_num">Cả năm 2026</th>')
 html.append('              </tr>')
@@ -1182,29 +1222,27 @@ html.append('            <tbody>')
 
 # Populate Table by Blocks
 for blk in all_blocks:
-    # Block Header Row
     blk_item = kpi_dict[blk]
     html.append('              <tr class="row_block">')
     html.append(f'                <td><strong>{blk}</strong></td>')
     html.append(f'                <td class="cell_num">{fmt_tr(blk_item["tb_thang_T8T9_2026"], 2)} tr</td>')
-    html.append(f'                <td class="cell_num cell_primary">{fmt_tr(blk_item["muc_10"]["kpi_moi_thang"], 2)} tr</td>')
-    html.append(f'                <td class="cell_num cell_primary">{fmt_tr(blk_item["muc_15"]["kpi_moi_thang"], 2)} tr</td>')
-    html.append(f'                <td class="cell_num cell_bold">{fmt_tr(blk_item["muc_10"]["tong_q4"], 2)} tr</td>')
-    html.append(f'                <td class="cell_num cell_bold">{fmt_tr(blk_item["muc_15"]["tong_q4"], 2)} tr</td>')
+    html.append(f'                <td class="cell_num cell_primary col_10">{fmt_tr(blk_item["muc_10"]["kpi_moi_thang"], 2)} tr</td>')
+    html.append(f'                <td class="cell_num cell_primary col_15">{fmt_tr(blk_item["muc_15"]["kpi_moi_thang"], 2)} tr</td>')
+    html.append(f'                <td class="cell_num cell_bold col_10">{fmt_tr(blk_item["muc_10"]["tong_q4"], 2)} tr</td>')
+    html.append(f'                <td class="cell_num cell_bold col_15">{fmt_tr(blk_item["muc_15"]["tong_q4"], 2)} tr</td>')
     html.append(f'                <td class="cell_num cell_neg">{fmt_pct(blk_item["muc_10"]["pct_q4_vs_q4_2025"])}</td>')
     html.append(f'                <td class="cell_num">{fmt_tr(blk_item["muc_10"]["ca_nam_2026"], 1)} tr ({fmt_pct(blk_item["muc_10"]["pct_ca_nam_vs_2025"])})</td>')
     html.append('              </tr>')
     
-    # Department Rows
     for dep in deps_by_block[blk]:
         d_item = kpi_dict[dep]
         html.append('              <tr>')
         html.append(f'                <td>&nbsp;&nbsp;↳ {dep}</td>')
         html.append(f'                <td class="cell_num">{fmt_tr(d_item["tb_thang_T8T9_2026"], 2)} tr</td>')
-        html.append(f'                <td class="cell_num cell_primary">{fmt_tr(d_item["muc_10"]["kpi_moi_thang"], 2)} tr</td>')
-        html.append(f'                <td class="cell_num cell_primary">{fmt_tr(d_item["muc_15"]["kpi_moi_thang"], 2)} tr</td>')
-        html.append(f'                <td class="cell_num cell_bold">{fmt_tr(d_item["muc_10"]["tong_q4"], 2)} tr</td>')
-        html.append(f'                <td class="cell_num cell_bold">{fmt_tr(d_item["muc_15"]["tong_q4"], 2)} tr</td>')
+        html.append(f'                <td class="cell_num cell_primary col_10">{fmt_tr(d_item["muc_10"]["kpi_moi_thang"], 2)} tr</td>')
+        html.append(f'                <td class="cell_num cell_primary col_15">{fmt_tr(d_item["muc_15"]["kpi_moi_thang"], 2)} tr</td>')
+        html.append(f'                <td class="cell_num cell_bold col_10">{fmt_tr(d_item["muc_10"]["tong_q4"], 2)} tr</td>')
+        html.append(f'                <td class="cell_num cell_bold col_15">{fmt_tr(d_item["muc_15"]["tong_q4"], 2)} tr</td>')
         q4_pct_class = "cell_pos" if d_item["muc_10"]["pct_q4_vs_q4_2025"] > 0 else "cell_neg"
         html.append(f'                <td class="cell_num {q4_pct_class}">{fmt_pct(d_item["muc_10"]["pct_q4_vs_q4_2025"])}</td>')
         yr_pct_class = "cell_pos" if d_item["muc_10"]["pct_ca_nam_vs_2025"] > 0 else "cell_neg"
@@ -1215,10 +1253,10 @@ for blk in all_blocks:
 html.append('              <tr class="row_total">')
 html.append('                <td><strong>TOÀN ZNEWS</strong></td>')
 html.append(f'                <td class="cell_num">{fmt_tr(toan_kpi["tb_thang_T8T9_2026"], 2)} tr</td>')
-html.append(f'                <td class="cell_num">{fmt_tr(toan_kpi["muc_10"]["kpi_moi_thang"], 2)} tr</td>')
-html.append(f'                <td class="cell_num">{fmt_tr(toan_kpi["muc_15"]["kpi_moi_thang"], 2)} tr</td>')
-html.append(f'                <td class="cell_num">{fmt_tr(toan_kpi["muc_10"]["tong_q4"], 2)} tr</td>')
-html.append(f'                <td class="cell_num">{fmt_tr(toan_kpi["muc_15"]["tong_q4"], 2)} tr</td>')
+html.append(f'                <td class="cell_num col_10">{fmt_tr(toan_kpi["muc_10"]["kpi_moi_thang"], 2)} tr</td>')
+html.append(f'                <td class="cell_num col_15">{fmt_tr(toan_kpi["muc_15"]["kpi_moi_thang"], 2)} tr</td>')
+html.append(f'                <td class="cell_num col_10">{fmt_tr(toan_kpi["muc_10"]["tong_q4"], 2)} tr</td>')
+html.append(f'                <td class="cell_num col_15">{fmt_tr(toan_kpi["muc_15"]["tong_q4"], 2)} tr</td>')
 html.append(f'                <td class="cell_num">{fmt_pct(toan_kpi["muc_10"]["pct_q4_vs_q4_2025"])}</td>')
 html.append(f'                <td class="cell_num">{fmt_tr(toan_kpi["muc_10"]["ca_nam_2026"], 1)} tr ({fmt_pct(toan_kpi["muc_10"]["pct_ca_nam_vs_2025"])})</td>')
 html.append('              </tr>')
@@ -1234,14 +1272,13 @@ html.append(build_kpi_comparison_svg())
 html.append('      </div>')
 
 # 14 DEPARTMENT SHOWCASE CARDS (USER SPECIAL EMPHASIS)
-html.append('      <div class="card" style-disabled="margin-top">')
+html.append('      <div class="card card_spaced">')
 html.append('        <div class="dep_card_header">')
 html.append('          <div>')
 html.append('            <h3>Thẻ tra cứu KPI chi tiết từng Ban (14 Chuyên mục)</h3>')
 html.append('            <p>Nhấp vào các khối bên dưới để lọc nhanh các ban tương ứng</p>')
 html.append('          </div>')
 html.append('        </div>')
-# Filter Chips
 html.append('        <div class="controls_bar" id="dep_filter_chips">')
 html.append('          <div class="chip active" data-filter="all">Tất cả 14 Ban</div>')
 for blk in all_blocks:
@@ -1279,11 +1316,11 @@ for dep in all_deps:
     # BOX 1: KPI MỖI THÁNG
     html.append('            <div class="dep_kpi_box_highlight">')
     html.append('              <div class="kpi_box_title">🎯 KPI MỖI THÁNG T10–T12</div>')
-    html.append('              <div class="kpi_target_row">')
+    html.append('              <div class="kpi_target_row row_tier_10">')
     html.append('                <div class="target_tier">Mức +10% (Cơ sở):</div>')
     html.append(f'                <div class="target_number primary">{fmt_tr(m10_th, 2)} tr</div>')
     html.append('              </div>')
-    html.append('              <div class="kpi_target_row">')
+    html.append('              <div class="kpi_target_row row_tier_15">')
     html.append('                <div class="target_tier">Mức +15% (Phấn đấu):</div>')
     html.append(f'                <div class="target_number primary">{fmt_tr(m15_th, 2)} tr</div>')
     html.append('              </div>')
@@ -1292,11 +1329,11 @@ for dep in all_deps:
     # BOX 2: TỔNG KPI QUÝ 4
     html.append('            <div class="dep_kpi_box_highlight q4_box">')
     html.append('              <div class="kpi_box_title">🏆 TỔNG KPI CẢ QUÝ 4/2026</div>')
-    html.append('              <div class="kpi_target_row">')
+    html.append('              <div class="kpi_target_row row_tier_10">')
     html.append('                <div class="target_tier">Mức +10%:</div>')
     html.append(f'                <div class="target_number q4_val">{fmt_tr(m10_q4, 2)} tr</div>')
     html.append('              </div>')
-    html.append('              <div class="kpi_target_row">')
+    html.append('              <div class="kpi_target_row row_tier_15">')
     html.append('                <div class="target_tier">Mức +15%:</div>')
     html.append(f'                <div class="target_number q4_val">{fmt_tr(m15_q4, 2)} tr</div>')
     html.append('              </div>')
@@ -1328,13 +1365,11 @@ html.append('          </div>')
 html.append('        </div>')
 html.append('      </div>')
 html.append('      <div class="grid_2col">')
-# Left: Dumbbell cả năm
 html.append('        <div class="card">')
 html.append('          <h3>Quy mô cả năm 2025 vs 2026 dự kiến (4 Khối + Toàn trang)</h3>')
 html.append('          <p>Điểm xám: Cả năm 2025 | Điểm xanh: Cả năm 2026 (triệu lượt)</p>')
 html.append(build_year_dumbbell_svg())
 html.append('        </div>')
-# Right: Diverging bars cả năm 14 ban
 html.append('        <div class="card">')
 html.append('          <h3>Tăng trưởng cả năm 2026 vs 2025 theo 14 chuyên mục</h3>')
 html.append('          <p>Thế giới là ban duy nhất tăng (+12,6%); Xuất bản gần đi ngang (-1,7%)</p>')
@@ -1384,7 +1419,7 @@ html.append('    </footer>')
 html.append('  </div>') # wrap
 html.append('</article>') # container_AI
 
-# EMBEDDED JAVASCRIPT FOR INTERACTIVITY
+# EMBEDDED JAVASCRIPT FOR INTERACTIVITY (USES NO STYLE ATTRIBUTES)
 client_data_json = json.dumps({
     "monthly": monthly_series,
     "kpi": {k: {"tb": v["tb_thang_T8T9_2026"], "m10": v["muc_10"]["kpi_moi_thang"], "m15": v["muc_15"]["kpi_moi_thang"]} for k, v in kpi_dict.items()}
@@ -1403,14 +1438,13 @@ js_script = f"""
     return v.toLocaleString('vi-VN', {{ minimumFractionDigits: 1, maximumFractionDigits: 2 }}) + ' tr';
   }}
 
-  // 1. Line chart interactive updater
+  // 1. Line chart updater
   function updateLineChart(name) {{
     const s = rawData.monthly[name];
     if (!s) return;
     const kpi = rawData.kpi[name];
     if (!kpi) return;
 
-    // Find local max to scale nicely
     let maxVal = Math.max(...s.vals_2025, ...s.vals_2026, kpi.m10, kpi.m15);
     maxVal = Math.ceil((maxVal * 1.15) / 1000) * 1000;
     if (maxVal < 1000) maxVal = 1000;
@@ -1419,7 +1453,6 @@ js_script = f"""
       return T + PH - (v / maxVal) * PH;
     }}
 
-    // Update Y grid labels
     const yLabels = document.querySelectorAll('.axis_label_y');
     const yLines = document.querySelectorAll('.grid_line');
     const steps = [0, 0.25, 0.5, 0.75, 1.0];
@@ -1436,7 +1469,6 @@ js_script = f"""
       }}
     }});
 
-    // Update 2025 line
     const pts25 = s.vals_2025.map((v, i) => `${{xs[i].toFixed(1)}},${{getY(v).toFixed(1)}}`).join(' L ');
     const p25 = document.getElementById('path_2025');
     if (p25) p25.setAttribute('d', 'M ' + pts25);
@@ -1446,7 +1478,6 @@ js_script = f"""
       if (dots25[i]) dots25[i].setAttribute('cy', getY(v).toFixed(1));
     }});
 
-    // Update 2026 line
     const pts26 = s.vals_2026.map((v, i) => `${{xs[i].toFixed(1)}},${{getY(v).toFixed(1)}}`).join(' L ');
     const p26 = document.getElementById('path_2026');
     if (p26) p26.setAttribute('d', 'M ' + pts26);
@@ -1456,7 +1487,6 @@ js_script = f"""
       if (dots26[i]) dots26[i].setAttribute('cy', getY(v).toFixed(1));
     }});
 
-    // Update Targets (T10-T12)
     const yT9 = getY(s.vals_2026[8]);
     const yM10 = getY(kpi.m10);
     const yM15 = getY(kpi.m15);
@@ -1485,7 +1515,6 @@ js_script = f"""
     const dotsM15 = document.querySelectorAll('.dot_target_15');
     dotsM15.forEach(d => d.setAttribute('cy', yM15.toFixed(1)));
 
-    // Labels
     const lblT1 = document.getElementById('lbl_t1');
     if (lblT1) {{
       lblT1.setAttribute('y', (getY(s.vals_2026[0]) - 12).toFixed(1));
@@ -1511,7 +1540,6 @@ js_script = f"""
     }}
   }}
 
-  // Chip click listeners for line chart
   const allChips = document.querySelectorAll('#monthly_chips .chip, #monthly_dep_chips .chip');
   allChips.forEach(chip => {{
     chip.addEventListener('click', function() {{
@@ -1522,7 +1550,7 @@ js_script = f"""
     }});
   }});
 
-  // 2. Department cards filter
+  // 2. Department cards filter using class hidden_element (no style attribute)
   const filterChips = document.querySelectorAll('#dep_filter_chips .chip');
   const depCards = document.querySelectorAll('.dep_kpi_card');
   filterChips.forEach(chip => {{
@@ -1532,11 +1560,43 @@ js_script = f"""
       const filter = this.getAttribute('data-filter');
       depCards.forEach(card => {{
         if (filter === 'all' || card.getAttribute('data-block') === filter) {{
-          card.style.display = 'flex';
+          card.classList.remove('hidden_element');
         }} else {{
-          card.style.display = 'none';
+          card.classList.add('hidden_element');
         }}
       }});
+    }});
+  }});
+
+  // 3. KPI Tier switch (Both / +10% / +15%)
+  const tierChips = document.querySelectorAll('#kpi_tier_chips .chip');
+  const cols10 = document.querySelectorAll('.col_10');
+  const cols15 = document.querySelectorAll('.col_15');
+  const rowsTier10 = document.querySelectorAll('.row_tier_10');
+  const rowsTier15 = document.querySelectorAll('.row_tier_15');
+
+  tierChips.forEach(chip => {{
+    chip.addEventListener('click', function() {{
+      tierChips.forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      const tier = this.getAttribute('data-tier');
+
+      if (tier === 'both') {{
+        cols10.forEach(c => c.classList.remove('table_col_highlight'));
+        cols15.forEach(c => c.classList.remove('table_col_highlight'));
+        rowsTier10.forEach(r => r.classList.remove('tier_focus'));
+        rowsTier15.forEach(r => r.classList.remove('tier_focus'));
+      }} else if (tier === '10') {{
+        cols10.forEach(c => c.classList.add('table_col_highlight'));
+        cols15.forEach(c => c.classList.remove('table_col_highlight'));
+        rowsTier10.forEach(r => r.classList.add('tier_focus'));
+        rowsTier15.forEach(r => r.classList.remove('tier_focus'));
+      }} else if (tier === '15') {{
+        cols10.forEach(c => c.classList.remove('table_col_highlight'));
+        cols15.forEach(c => c.classList.add('table_col_highlight'));
+        rowsTier10.forEach(r => r.classList.remove('tier_focus'));
+        rowsTier15.forEach(r => r.classList.add('tier_focus'));
+      }}
     }});
   }});
 }})();
@@ -1551,9 +1611,9 @@ full_html = "\n".join(html)
 # ==========================================
 # STRICT CONSTRAINT VALIDATION
 # ==========================================
-print("Validating constraints...")
+print("Validating constraints strictly...")
 
-# 1. No inline style=""
+# 1. No inline style="" anywhere in HTML
 style_matches = re.findall(r'\bstyle\s*=', full_html)
 assert len(style_matches) == 0, f"Found inline style attributes: {style_matches}"
 
@@ -1575,4 +1635,4 @@ assert '<div class="wrap">' in full_html, "Missing <div class=\"wrap\">"
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(full_html)
 
-print("SUCCESS: index.html generated and validated with 0 errors!")
+print("SUCCESS: index.html generated and passed 100% of strict constraints!")
