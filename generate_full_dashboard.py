@@ -498,20 +498,23 @@ def build_kpi_comparison_svg():
     W, H = 960, 520
     top_offset = 40
     row_h = 32
-    scale = 35.0
+    scale = 32.0
     bx = 180
     
     svg = []
     svg.append(f'<svg class="chart_svg" viewBox="0 0 {W} {H}" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">')
     
     svg.append('<rect x="180" y="10" width="12" height="12" fill="#cbd5e1" rx="2"/>')
-    svg.append('<text x="198" y="21" fill="#64748b" font-size="11.5" font-weight="600" font-family="Be Vietnam Pro">TB T8–T9 (Mốc so sánh)</text>')
-    
-    svg.append('<rect x="385" y="10" width="12" height="12" fill="#3b56e0" rx="2"/>')
-    svg.append('<text x="403" y="21" fill="#1e293b" font-size="11.5" font-weight="600" font-family="Be Vietnam Pro">+20% Thử thách</text>')
+    svg.append('<text x="198" y="21" fill="#64748b" font-size="11.5" font-weight="600" font-family="Be Vietnam Pro">TB T8–T9</text>')
 
-    svg.append('<rect x="525" y="10" width="12" height="12" fill="#1e1b4b" rx="2"/>')
-    svg.append('<text x="543" y="21" fill="#1e1b4b" font-size="11.5" font-weight="800" font-family="Be Vietnam Pro">+50% Lấy lại truy cập</text>')
+    svg.append('<rect x="290" y="10" width="12" height="12" fill="#818cf8" rx="2"/>')
+    svg.append('<text x="308" y="21" fill="#4338ca" font-size="11.5" font-weight="600" font-family="Be Vietnam Pro">+10% Cơ sở</text>')
+    
+    svg.append('<rect x="420" y="10" width="12" height="12" fill="#3b56e0" rx="2"/>')
+    svg.append('<text x="438" y="21" fill="#1e293b" font-size="11.5" font-weight="600" font-family="Be Vietnam Pro">+20% Thử thách</text>')
+
+    svg.append('<rect x="570" y="10" width="12" height="12" fill="#1e1b4b" rx="2"/>')
+    svg.append('<text x="588" y="21" fill="#1e1b4b" font-size="11.5" font-weight="800" font-family="Be Vietnam Pro">+50% Lấy lại truy cập</text>')
 
     for i, name in enumerate(all_deps):
         y = top_offset + i * row_h
@@ -536,7 +539,7 @@ def build_kpi_comparison_svg():
         svg.append(f'<rect x="{bx}" y="{y-8}" width="{w_m10:.1f}" height="17" fill="#818cf8" rx="3"/>')
         svg.append(f'<rect x="{bx}" y="{y-8}" width="{w_tb:.1f}" height="17" fill="#cbd5e1" rx="3"/>')
         
-        val_txt = f"{fmt_tr(tb, 2)} → {fmt_tr(m10, 2)} | {fmt_tr(m20, 2)} | {fmt_tr(m50, 2)} tr"
+        val_txt = f"{fmt_tr(item['tb'], 2)} → {fmt_tr(item['m10']['th'], 2)} | {fmt_tr(item['m20']['th'], 2)} | {fmt_tr(item['m50']['th'], 2)} tr"
         svg.append(f'<text x="{bx + w_m50 + 10:.1f}" y="{y+5}" fill="#14161c" font-size="11" font-weight="700" font-family="Manrope">{val_txt}</text>')
 
     svg.append('</svg>')
