@@ -9,7 +9,7 @@ Tài liệu này ghi lại toàn bộ lịch sử các lần cập nhật, sửa
 
 | Phiên bản | Thời gian | Mã Commit | Nội dung cập nhật chính | Người thực hiện |
 | :--- | :--- | :--- | :--- | :--- |
-| **v2.6** | 30/09/2026 23:22 | `Pending` | Thêm box giải thích bối cảnh và nguyên tắc đề xuất KPI mới ở đầu trang | Antigravity AI |
+| **v2.6** | 30/09/2026 23:22 | `1532730` | Thêm box giải thích bối cảnh và nguyên tắc đề xuất KPI mới ở đầu trang | Antigravity AI |
 | **v2.5** | 30/09/2026 22:46 | `0dc4c28` | Đặt mặc định trừ Zalo 5,0%; thêm ô tùy chỉnh % ảnh hưởng Zalo linh hoạt | Antigravity AI |
 | **v2.4** | 30/09/2026 22:34 | `2646ad7` | Đổi tên "Đề xuất KPI từng ban (14 ban)"; đưa 4 thẻ chỉ số tổng quan xuống cuối trang | Antigravity AI |
 | **v2.3** | 30/09/2026 22:26 | `af164f9` | Đảo vị trí: Thẻ 14 ban lên đầu $\rightarrow$ Bảng tổng hợp $\rightarrow$ Bảng điều khiển | Antigravity AI |
@@ -36,7 +36,7 @@ Tài liệu này ghi lại toàn bộ lịch sử các lần cập nhật, sửa
 ---
 
 ### [Cập nhật #23] — Phiên bản v2.6 (30/09/2026 23:22:00)
-- **Mã Commit:** Đang cập nhật (nhánh `main` & `gh-pages`)
+- **Mã Commit:** `1532730` (nhánh `main`) và `d9b56b0` (nhánh `gh-pages`)
 - **Yêu cầu từ người dùng:**
   > *"Thêm một box giải thích ở ngay đầu trang, phía trên phần Đề xuất KPI từng ban. Box này cần được đặt trong ô căn giữa trang, có nền nhã nhặn và chữ dễ nhìn.*
   > *Bối cảnh và nguyên tắc đề xuất KPI mới:*
