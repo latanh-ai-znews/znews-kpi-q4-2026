@@ -119,6 +119,7 @@ Toàn bộ các lần thay đổi, tinh chỉnh số liệu, sửa đổi giao d
 👉 **[Xem chi tiết toàn bộ lịch sử cập nhật tại CHANGELOG.md](CHANGELOG.md)**
 
 ### Tóm tắt các mốc phiên bản gần nhất:
+- **v2.6 (30/09 23:22):** Bổ sung ô giải thích bối cảnh và nguyên tắc đề xuất KPI mới ở ngay đầu trang (căn giữa, nền nhã nhặn, chữ dễ đọc).
 - **v2.5 (30/09 22:46):** Đặt mặc định trừ Zalo 5,0%; bổ sung ô và nút tùy chỉnh % ảnh hưởng Zalo linh hoạt theo thời gian thực (`Tùy chỉnh: [ 5 ] %`).
 - **v2.4 (30/09 22:34):** Chuẩn hóa tiêu đề "Đề xuất KPI từng ban (14 ban)"; đưa khối 4 thẻ chỉ số tổng quan xuống cuối trang.
 - **v2.3 (30/09 22:26):** Tái cấu trúc layout: Thẻ 14 ban lên đầu $\rightarrow$ Bảng tổng hợp $\rightarrow$ Bảng điều khiển $\rightarrow$ 4 thẻ chỉ số.
