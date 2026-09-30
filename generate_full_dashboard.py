@@ -2381,36 +2381,6 @@ def build_interactive_t9_index_html():
     html.append('      </div>')
     html.append('    </header>')
 
-    # 4 Overview Metric Cards (Live Reactive)
-    html.append('    <div class="kpi_grid_4">')
-    # Card 1: Ngày
-    html.append('      <div class="kpi_metric_card highlight_day">')
-    html.append('        <div class="kpi_metric_label">KPI truy cập theo ngày (toàn trang)</div>')
-    html.append('        <div class="kpi_metric_val val_green" id="metric_day">976.291</div>')
-    html.append('        <div class="kpi_metric_sub">Lượt xem trung bình mỗi ngày trong Quý 4 (92 ngày)</div>')
-    html.append('      </div>')
-    # Card 2: Tháng
-    html.append('      <div class="kpi_metric_card highlight_month">')
-    html.append('        <div class="kpi_metric_label">KPI truy cập trung bình tháng</div>')
-    html.append('        <div class="kpi_metric_val val_blue" id="metric_month">29,94M</div>')
-    html.append('        <div class="kpi_metric_sub">Trung bình mỗi tháng trong Quý 4 (T10, T11, T12)</div>')
-    html.append('      </div>')
-    # Card 3: Cả Quý 4
-    html.append('      <div class="kpi_metric_card highlight_quarter">')
-    html.append('        <div class="kpi_metric_label">KPI truy cập quý 4</div>')
-    html.append('        <div class="kpi_metric_val val_purple" id="metric_q4">89,82M</div>')
-    html.append('        <div class="kpi_metric_sub">Tổng 3 tháng: T10 (31 ngày) + T11 (30 ngày) + T12 (31 ngày)</div>')
-    html.append('      </div>')
-    # Card 4: Cả năm
-    html.append('      <div class="kpi_metric_card">')
-    html.append('        <div class="kpi_metric_label">Dự kiến cả năm 2026</div>')
-    html.append('        <div class="kpi_metric_val" id="metric_year">586,28M</div>')
-    html.append('        <div class="kpi_metric_sub">')
-    html.append('          <div class="badge_kpi badge_15" id="metric_year_pct">-26,7% vs 2025</div>')
-    html.append('        </div>')
-    html.append('      </div>')
-    html.append('    </div>')
-
     # Pre-render initial data
     DEPS_INFO = [
       {"id": "xh", "name": "Xã hội", "block": "Khối Uy tín", "base": 1832748.64, "day": 70255, "th": 2154498, "q4": 6463494, "yr": 33890494, "pct": -54.1},
@@ -2440,7 +2410,7 @@ def build_interactive_t9_index_html():
     html.append('    <div class="card">')
     html.append('      <div class="dep_card_header">')
     html.append('        <div>')
-    html.append('          <h3>Đề xuất KPI từng ban (14 ban biên tập)</h3>')
+    html.append('          <h3>Đề xuất KPI từng ban (14 ban)</h3>')
     html.append('        </div>')
     html.append('      </div>')
     html.append('      <div class="dep_grid">')
@@ -2602,6 +2572,36 @@ def build_interactive_t9_index_html():
     html.append('          <div class="control_helper_text" id="rate_helper_note">Chọn nhanh tỷ lệ đặt sẵn hoặc nhập con số tăng trưởng tùy ý vào ô trên.</div>')
     html.append('        </div>')
 
+    html.append('      </div>')
+    html.append('    </div>')
+
+    # 4 Overview Metric Cards (Live Reactive)
+    html.append('    <div class="kpi_grid_4">')
+    # Card 1: Ngày
+    html.append('      <div class="kpi_metric_card highlight_day">')
+    html.append('        <div class="kpi_metric_label">KPI truy cập theo ngày (toàn trang)</div>')
+    html.append('        <div class="kpi_metric_val val_green" id="metric_day">976.291</div>')
+    html.append('        <div class="kpi_metric_sub">Lượt xem trung bình mỗi ngày trong Quý 4 (92 ngày)</div>')
+    html.append('      </div>')
+    # Card 2: Tháng
+    html.append('      <div class="kpi_metric_card highlight_month">')
+    html.append('        <div class="kpi_metric_label">KPI truy cập trung bình tháng</div>')
+    html.append('        <div class="kpi_metric_val val_blue" id="metric_month">29,94M</div>')
+    html.append('        <div class="kpi_metric_sub">Trung bình mỗi tháng trong Quý 4 (T10, T11, T12)</div>')
+    html.append('      </div>')
+    # Card 3: Cả Quý 4
+    html.append('      <div class="kpi_metric_card highlight_quarter">')
+    html.append('        <div class="kpi_metric_label">KPI truy cập quý 4</div>')
+    html.append('        <div class="kpi_metric_val val_purple" id="metric_q4">89,82M</div>')
+    html.append('        <div class="kpi_metric_sub">Tổng 3 tháng: T10 (31 ngày) + T11 (30 ngày) + T12 (31 ngày)</div>')
+    html.append('      </div>')
+    # Card 4: Cả năm
+    html.append('      <div class="kpi_metric_card">')
+    html.append('        <div class="kpi_metric_label">Dự kiến cả năm 2026</div>')
+    html.append('        <div class="kpi_metric_val" id="metric_year">586,28M</div>')
+    html.append('        <div class="kpi_metric_sub">')
+    html.append('          <div class="badge_kpi badge_15" id="metric_year_pct">-26,7% vs 2025</div>')
+    html.append('        </div>')
     html.append('      </div>')
     html.append('    </div>')
 
