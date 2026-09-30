@@ -2605,64 +2605,6 @@ def build_interactive_t9_index_html():
     html.append('      </div>')
     html.append('    </div>')
 
-    # Comparison Matrix Card (Section 3 from Excel)
-    html.append('    <div class="card">')
-    html.append('      <div class="dep_card_header">')
-    html.append('        <div>')
-    html.append('          <h3>So sánh 4 mốc tăng trưởng (+10%, +15%, +20%, +50%) theo cơ sở tháng 9</h3>')
-    html.append('        </div>')
-    html.append('      </div>')
-    html.append('      <div class="control_desc" id="compare_desc_note">KPI trung bình tháng (quy đổi 30 ngày) cho 14 ban và 4 khối theo cơ sở Zalo đang chọn.</div>')
-    html.append('      <div class="table_responsive">')
-    html.append('        <table class="kpi_table" id="comparison_matrix_table">')
-    html.append('          <thead>')
-    html.append('            <tr>')
-    html.append('              <th>Đơn vị / ban</th>')
-    html.append('              <th class="cell_num">Cơ sở T9 (nền)</th>')
-    html.append('              <th class="cell_num">Mức +10%</th>')
-    html.append('              <th class="cell_num cell_primary">Mức +15%</th>')
-    html.append('              <th class="cell_num">Mức +20%</th>')
-    html.append('              <th class="cell_num cell_challenge">Mức +50%</th>')
-    html.append('            </tr>')
-    html.append('          </thead>')
-    html.append('          <tbody id="comparison_tbody">')
-    # Pre-render comparison rows
-    for blk in BLOCKS_INFO:
-        b = blk["base"]
-        html.append(f'            <tr class="row_block prog_row_block" id="cmp_row_{blk["id"]}">')
-        html.append(f'              <td><strong>{blk["name"]}</strong></td>')
-        html.append(f'              <td class="cell_num" id="cmp_base_{blk["id"]}">{fmt_tr(b, 2)}</td>')
-        html.append(f'              <td class="cell_num" id="cmp_10_{blk["id"]}">{fmt_tr(b*1.10, 2)}</td>')
-        html.append(f'              <td class="cell_num cell_primary" id="cmp_15_{blk["id"]}">{fmt_tr(b*1.15, 2)}</td>')
-        html.append(f'              <td class="cell_num" id="cmp_20_{blk["id"]}">{fmt_tr(b*1.20, 2)}</td>')
-        html.append(f'              <td class="cell_num cell_challenge" id="cmp_50_{blk["id"]}">{fmt_tr(b*1.50, 2)}</td>')
-        html.append('            </tr>')
-        for d in DEPS_INFO:
-            if d["id"] in blk["deps"]:
-                db = d["base"]
-                html.append(f'            <tr class="prog_row_dep" id="cmp_row_dep_{d["id"]}">')
-                html.append(f'              <td>&nbsp;&nbsp;↳ {d["name"]}</td>')
-                html.append(f'              <td class="cell_num" id="cmp_base_{d["id"]}">{fmt_tr(db, 2)}</td>')
-                html.append(f'              <td class="cell_num" id="cmp_10_{d["id"]}">{fmt_tr(db*1.10, 2)}</td>')
-                html.append(f'              <td class="cell_num cell_primary" id="cmp_15_{d["id"]}">{fmt_tr(db*1.15, 2)}</td>')
-                html.append(f'              <td class="cell_num" id="cmp_20_{d["id"]}">{fmt_tr(db*1.20, 2)}</td>')
-                html.append(f'              <td class="cell_num cell_challenge" id="cmp_50_{d["id"]}">{fmt_tr(db*1.50, 2)}</td>')
-                html.append('            </tr>')
-    # Total row in comparison
-    tot_base = 25468459.62
-    html.append('            <tr class="row_total prog_row_total" id="cmp_row_total">')
-    html.append('              <td><strong>Toàn Znews</strong></td>')
-    html.append(f'              <td class="cell_num cell_bold" id="cmp_base_total">{fmt_tr(tot_base, 2)}</td>')
-    html.append(f'              <td class="cell_num cell_bold" id="cmp_10_total">{fmt_tr(tot_base*1.10, 2)}</td>')
-    html.append(f'              <td class="cell_num cell_primary cell_bold" id="cmp_15_total">{fmt_tr(tot_base*1.15, 2)}</td>')
-    html.append(f'              <td class="cell_num cell_bold" id="cmp_20_total">{fmt_tr(tot_base*1.20, 2)}</td>')
-    html.append(f'              <td class="cell_num cell_challenge cell_bold" id="cmp_50_total">{fmt_tr(tot_base*1.50, 2)}</td>')
-    html.append('            </tr>')
-    html.append('          </tbody>')
-    html.append('        </table>')
-    html.append('      </div>')
-    html.append('    </div>')
-
     # Big CTA Footer Banner
     html.append('    <div class="cta_footer_card">')
     html.append('      <div class="cta_footer_content">')
@@ -2942,49 +2884,6 @@ def build_interactive_t9_index_html():
         }
       }
     });
-
-    // 4. Update Comparison Matrix Table
-    BLOCKS.forEach(b => {
-      const blk = blkRes[b.id];
-      const base = blk.base;
-      const cBase = document.getElementById('cmp_base_' + b.id);
-      const c10 = document.getElementById('cmp_10_' + b.id);
-      const c15 = document.getElementById('cmp_15_' + b.id);
-      const c20 = document.getElementById('cmp_20_' + b.id);
-      const c50 = document.getElementById('cmp_50_' + b.id);
-      if (cBase) cBase.textContent = fmtTr(base, 2);
-      if (c10) c10.textContent = fmtTr(base * 1.10, 2);
-      if (c15) c15.textContent = fmtTr(base * 1.15, 2);
-      if (c20) c20.textContent = fmtTr(base * 1.20, 2);
-      if (c50) c50.textContent = fmtTr(base * 1.50, 2);
-    });
-
-    DEPARTMENTS.forEach(d => {
-      const res = depRes[d.id];
-      const base = res.base;
-      const cBase = document.getElementById('cmp_base_' + d.id);
-      const c10 = document.getElementById('cmp_10_' + d.id);
-      const c15 = document.getElementById('cmp_15_' + d.id);
-      const c20 = document.getElementById('cmp_20_' + d.id);
-      const c50 = document.getElementById('cmp_50_' + d.id);
-      if (cBase) cBase.textContent = fmtTr(base, 2);
-      if (c10) c10.textContent = fmtTr(base * 1.10, 2);
-      if (c15) c15.textContent = fmtTr(base * 1.15, 2);
-      if (c20) c20.textContent = fmtTr(base * 1.20, 2);
-      if (c50) c50.textContent = fmtTr(base * 1.50, 2);
-    });
-
-    const cmpTotBase = totRes.base;
-    const cmpTotBaseEl = document.getElementById('cmp_base_total');
-    const cmpTot10 = document.getElementById('cmp_10_total');
-    const cmpTot15 = document.getElementById('cmp_15_total');
-    const cmpTot20 = document.getElementById('cmp_20_total');
-    const cmpTot50 = document.getElementById('cmp_50_total');
-    if (cmpTotBaseEl) cmpTotBaseEl.textContent = fmtTr(cmpTotBase, 2);
-    if (cmpTot10) cmpTot10.textContent = fmtTr(cmpTotBase * 1.10, 2);
-    if (cmpTot15) cmpTot15.textContent = fmtTr(cmpTotBase * 1.15, 2);
-    if (cmpTot20) cmpTot20.textContent = fmtTr(cmpTotBase * 1.20, 2);
-    if (cmpTot50) cmpTot50.textContent = fmtTr(cmpTotBase * 1.50, 2);
   }
 
   // EVENT LISTENERS
