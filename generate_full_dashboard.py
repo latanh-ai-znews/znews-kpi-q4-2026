@@ -2103,7 +2103,7 @@ def build_index_html():
     html.append('<head>')
     html.append('  <meta charset="UTF-8">')
     html.append('  <meta name="viewport" content="width=device-width, initial-scale=1.0">')
-    html.append('  <title>Bảng giao chỉ tiêu KPI quý 4/2026 — Báo điện tử Znews</title>')
+    html.append('  <title>Bảng giao chỉ tiêu KPI quý 4/2026 — Tạp chí điện tử Tri thức - Znews</title>')
     html.append(f'  <style>{css_scoped}</style>')
     html.append('</head>')
     html.append('<body>')
@@ -2113,7 +2113,7 @@ def build_index_html():
     # Header
     html.append('    <header class="top_header">')
     html.append('      <div class="brand_area">')
-    html.append('        <div class="brand_kicker">Báo điện tử Znews • Ban biên tập</div>')
+    html.append('        <div class="brand_kicker">Tạp chí điện tử Tri thức - Znews • Ban biên tập</div>')
     html.append('        <div class="brand_title">Bảng giao chỉ tiêu KPI quý 4/2026</div>')
     html.append('        <div class="brand_sub">Chỉ tiêu chính thức theo ngày • tháng • cả quý 4 cho 14 ban & 4 khối</div>')
     html.append('      </div>')
@@ -2263,6 +2263,11 @@ def build_index_html():
     html.append('        <a href="detail.html" class="btn_cta_large">📑 Mở trang giải thích chi tiết & bối cảnh dữ liệu →</a>')
     html.append('      </div>')
     html.append('    </div>')
+    
+    # Footer
+    html.append('    <footer class="page_footer">')
+    html.append('      <div>Bản quyền Tạp chí điện tử Tri thức - Znews &bull; Lưu hành nội bộ Ban biên tập</div>')
+    html.append('    </footer>')
 
     html.append('  </div>') # end wrap
     html.append('</article>')
@@ -2314,7 +2319,7 @@ def build_detail_html():
     html.append('<head>')
     html.append('  <meta charset="UTF-8">')
     html.append('  <meta name="viewport" content="width=device-width, initial-scale=1.0">')
-    html.append('  <title>Truy cập Znews 2025–2026 & báo cáo KPI quý 4/2026</title>')
+    html.append('  <title>Truy cập Znews 2025–2026 & báo cáo KPI quý 4/2026 — Tạp chí điện tử Tri thức - Znews</title>')
     html.append(f'  <style>{css_scoped}</style>')
     html.append('</head>')
     html.append('<body>')
@@ -2323,7 +2328,7 @@ def build_detail_html():
     
     # Top Nav Bar linking to index.html
     html.append('    <div class="top_nav_back_bar">')
-    html.append('      <div class="brand_kicker">Báo cáo phân tích chi tiết • Znews</div>')
+    html.append('      <div class="brand_kicker">Tạp chí điện tử Tri thức - Znews • Ban biên tập</div>')
     html.append('      <div><a href="index.html" class="nav_btn_back">← Về bảng giao chỉ tiêu KPI quý 4 chính thức</a></div>')
     html.append('    </div>')
     
@@ -2960,7 +2965,7 @@ def build_detail_html():
     # FOOTER
     html.append('    <footer class="page_footer">')
     html.append('      <div>Nguồn dữ liệu: <strong>Tong hop truy cap 2025-2026.xlsx</strong> &bull; Sheet "Tiến độ KPI 2026" & "Truy cập (new)" (Cập nhật 29/09/2026)</div>')
-    html.append('      <div>Bản quyền Báo điện tử Tri thức (Znews) &bull; Lưu hành nội bộ Ban biên tập</div>')
+    html.append('      <div>Bản quyền Tạp chí điện tử Tri thức - Znews &bull; Lưu hành nội bộ Ban biên tập</div>')
     html.append('    </footer>')
     
     
@@ -2968,10 +2973,10 @@ def build_detail_html():
     html.append('    <div class="cta_footer_card">')
     html.append('      <div class="cta_footer_content">')
     html.append('        <div class="cta_footer_title">Đã nắm rõ bối cảnh và cơ sở đề xuất?</div>')
-    html.append('        <div class="cta_footer_desc">Bấm nút bên dưới để quay lại Bảng Giao Chỉ Tiêu KPI Quý 4/2026 chính thức phân bổ theo Ngày, Tháng và Cả Quý cho từng ban biên tập.</div>')
+    html.append('        <div class="cta_footer_desc">Bấm nút bên dưới để quay lại bảng giao chỉ tiêu KPI quý 4/2026 chính thức phân bổ theo ngày, tháng và cả quý cho từng ban biên tập.</div>')
     html.append('      </div>')
     html.append('      <div>')
-    html.append('        <a href="index.html" class="btn_cta_large">← Trở về Bảng Giao Chỉ Tiêu KPI Quý 4</a>')
+    html.append('        <a href="index.html" class="btn_cta_large">← Trở về bảng giao chỉ tiêu KPI quý 4</a>')
     html.append('      </div>')
     html.append('    </div>')
     html.append('  </div>') # wrap
