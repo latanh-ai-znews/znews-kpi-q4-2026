@@ -2788,13 +2788,13 @@ def build_interactive_t9_index_html():
       blk.th = blk.q4 / 3.0;
       blk.yr_26 = blk.lk_9t + blk.q4;
       blk.pct_25 = ((blk.yr_26 - blk.yr_25) / blk.yr_25) * 100.0;
-      blk.implied_rate = ((blk.th / blk.base) - 1.0) * 100.0;
+      blk.implied_rate = ((blk.day / (blk.base / 30.0)) - 1.0) * 100.0;
     });
 
     totRes.th = totRes.q4 / 3.0;
     totRes.yr_26 = totRes.lk_9t + totRes.q4;
     totRes.pct_25 = ((totRes.yr_26 - totRes.yr_25) / totRes.yr_25) * 100.0;
-    totRes.implied_rate = ((totRes.th / totRes.base) - 1.0) * 100.0;
+    totRes.implied_rate = ((totRes.day / (totRes.base / 30.0)) - 1.0) * 100.0;
 
     return { depRes, blkRes, totRes };
   }
