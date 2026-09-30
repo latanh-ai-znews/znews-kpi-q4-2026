@@ -9,6 +9,7 @@ Tài liệu này ghi lại toàn bộ lịch sử các lần cập nhật, sửa
 
 | Phiên bản | Thời gian | Mã Commit | Nội dung cập nhật chính | Người thực hiện |
 | :--- | :--- | :--- | :--- | :--- |
+| **v2.7** | 30/09/2026 23:38 | `aeff07f` | Đồng bộ toàn bộ dòng tổng các khối về màu xanh trong Bảng tổng hợp; chạy code xác thực số liệu | Antigravity AI |
 | **v2.6** | 30/09/2026 23:22 | `1532730` | Thêm box giải thích bối cảnh và nguyên tắc đề xuất KPI mới ở đầu trang | Antigravity AI |
 | **v2.5** | 30/09/2026 22:46 | `0dc4c28` | Đặt mặc định trừ Zalo 5,0%; thêm ô tùy chỉnh % ảnh hưởng Zalo linh hoạt | Antigravity AI |
 | **v2.4** | 30/09/2026 22:34 | `2646ad7` | Đổi tên "Đề xuất KPI từng ban (14 ban)"; đưa 4 thẻ chỉ số tổng quan xuống cuối trang | Antigravity AI |
@@ -32,6 +33,31 @@ Tài liệu này ghi lại toàn bộ lịch sử các lần cập nhật, sửa
 ---
 
 ## 🔍 Chi Tiết Từng Lần Cập Nhật
+
+---
+
+### [Cập nhật #24] — Phiên bản v2.7 (30/09/2026 23:38:00)
+- **Mã Commit:** `aeff07f` (nhánh `main`)
+- **Yêu cầu từ người dùng:**
+  > *"Bảng tổng hợp chỉ tiêu: Ngày • Tháng • Quý 4/2026 & dự báo năm*
+  > *Trong bảng này, số tổng của các khối đều màu vàng, riêng khối lifestyle lại là màu xanh. Đổi lại đồng bộ màu xanh.*
+  > *Ngoài ra, chạy code để đảm bảo toàn bộ số liệu chính xác và xác thực cho tôi."*
+- **Các thay đổi thực hiện:**
+  1. **Đồng bộ màu sắc dòng tổng của các khối (Master Table):**
+     - Đổi style `.row_block` (dòng tổng 4 khối: Khối Uy tín, Khối Kinh doanh, Khối Lifestyle, Khối Truy cập) sang tông nền xanh dịu nhạt đồng nhất (`#f0fdf4`), viền xanh ngọc thanh lịch (`border: 1.5px solid #bbf7d0`), chữ màu xanh đậm (`color: #064e3b`).
+     - Đổi badge tỷ lệ tăng trưởng trên cả 4 dòng khối sang `badge_20` màu xanh lá dịu (`background: #dcfce7; color: #166534`).
+     - Đồng bộ hóa logic Javascript trong hàm `render()` để khi tính toán phản ứng, các badge dòng khối và dòng Toàn Znews luôn giữ màu xanh đồng bộ.
+     - Đồng bộ cả dòng tổng `row_total` (Toàn Znews) với viền ngọc emerald (`#059669`) và nền xanh (`#ecfdf5`).
+  2. **Chạy mã kiểm toán độc lập & xác thực 100% số liệu:**
+     - Đã chạy script Python kiểm toán toàn bộ số liệu từ dữ liệu gốc 29 ngày tháng 9 (`25.155.728` lượt), quy đổi 30 ngày (`26.023.166,90` lượt), sau trừ Zalo 5% (`24.722.008,55` lượt).
+     - Xác thực chéo chính xác:
+       * Tổng 14 ban $\equiv$ Tổng 4 khối $\equiv$ Toàn Znews.
+       * KPI ngày Quý 4: `947.677` lượt/ngày (+15,0% so với nền T9).
+       * KPI tháng Quý 4: `29,06M` lượt/tháng.
+       * KPI Quý 4 (92 ngày): `87,19M` lượt.
+       * Dự kiến cả năm 2026: `583,65M` lượt (-27,0% so với năm 2025 sau điều chỉnh Lifestyle).
+  3. **Tuân thủ quy chuẩn Znews CMS:**
+     - 100% tuân thủ CSS scoped, 0 inline styles, 0 thẻ `<span>`, 0 thẻ `<button>`, 0 ảnh base64.
 
 ---
 

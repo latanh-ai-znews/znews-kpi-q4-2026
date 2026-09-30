@@ -451,17 +451,53 @@ html {
 }
 
 .container_AI .kpi_table .row_block {
-  background-color: #f1f5f9;
+  background-color: #f0fdf4;
+  color: #064e3b;
   font-weight: 700;
-  border-top: 1.5px solid #e2e8f0;
-  border-bottom: 1.5px solid #e2e8f0;
+  border-top: 1.5px solid #bbf7d0;
+  border-bottom: 1.5px solid #bbf7d0;
+}
+
+.container_AI .kpi_table .row_block td {
+  color: #064e3b;
+}
+
+.container_AI .row_block .cell_day_hl {
+  background-color: #d1fae5;
+  color: #065f46;
+  font-weight: 800;
+  border-left: 1px solid #a7f3d0;
+  border-right: 1px solid #a7f3d0;
+}
+
+.container_AI .row_block .cell_primary {
+  color: #047857;
+  font-weight: 800;
 }
 
 .container_AI .kpi_table .row_total {
-  background-color: #eff6ff;
+  background-color: #ecfdf5;
+  color: #064e3b;
   font-weight: 800;
-  border-top: 2px solid #3b56e0;
-  border-bottom: 2px solid #3b56e0;
+  border-top: 2px solid #059669;
+  border-bottom: 2px solid #059669;
+}
+
+.container_AI .kpi_table .row_total td {
+  color: #064e3b;
+}
+
+.container_AI .row_total .cell_day_hl {
+  background-color: #a7f3d0;
+  color: #064e3b;
+  font-size: 15px;
+  border-left: 1px solid #6ee7b7;
+  border-right: 1px solid #6ee7b7;
+}
+
+.container_AI .row_total .cell_primary {
+  color: #047857;
+  font-weight: 800;
 }
 
 .container_AI tr.hidden_element,
@@ -2120,7 +2156,7 @@ html {
           <tbody>
             <tr class="row_block prog_row_block" id="row_b_uytin">
               <td><strong>Khối Uy tín</strong></td>
-              <td class="cell_center"><div class="badge_kpi badge_15" id="badge_rate_b_uytin">+15,0%</div></td>
+              <td class="cell_center"><div class="badge_kpi badge_20" id="badge_rate_b_uytin">+15,0%</div></td>
               <td class="cell_num" id="base_b_uytin">4,72M</td>
               <td class="cell_num cell_day_hl" id="day_b_uytin">180.803</td>
               <td class="cell_num cell_primary" id="th_b_uytin">5,54M</td>
@@ -2194,7 +2230,7 @@ html {
             </tr>
             <tr class="row_block prog_row_block" id="row_b_kinhdoanh">
               <td><strong>Khối Kinh doanh</strong></td>
-              <td class="cell_center"><div class="badge_kpi badge_15" id="badge_rate_b_kinhdoanh">+15,0%</div></td>
+              <td class="cell_center"><div class="badge_kpi badge_20" id="badge_rate_b_kinhdoanh">+15,0%</div></td>
               <td class="cell_num" id="base_b_kinhdoanh">5,79M</td>
               <td class="cell_num cell_day_hl" id="day_b_kinhdoanh">221.923</td>
               <td class="cell_num cell_primary" id="th_b_kinhdoanh">6,81M</td>
@@ -2252,7 +2288,7 @@ html {
             </tr>
             <tr class="row_block prog_row_block" id="row_b_lifestyle">
               <td><strong>Khối Lifestyle</strong></td>
-              <td class="cell_center"><div class="badge_kpi badge_15" id="badge_rate_b_lifestyle">+15,0%</div></td>
+              <td class="cell_center"><div class="badge_kpi badge_20" id="badge_rate_b_lifestyle">+15,0%</div></td>
               <td class="cell_num" id="base_b_lifestyle">5,42M</td>
               <td class="cell_num cell_day_hl" id="day_b_lifestyle">207.583</td>
               <td class="cell_num cell_primary" id="th_b_lifestyle">6,37M</td>
@@ -2342,7 +2378,7 @@ html {
             </tr>
             <tr class="row_block prog_row_block" id="row_b_truycap">
               <td><strong>Khối Truy cập</strong></td>
-              <td class="cell_center"><div class="badge_kpi badge_15" id="badge_rate_b_truycap">+15,0%</div></td>
+              <td class="cell_center"><div class="badge_kpi badge_20" id="badge_rate_b_truycap">+15,0%</div></td>
               <td class="cell_num" id="base_b_truycap">8,80M</td>
               <td class="cell_num cell_day_hl" id="day_b_truycap">337.368</td>
               <td class="cell_num cell_primary" id="th_b_truycap">10,35M</td>
@@ -2384,7 +2420,7 @@ html {
             </tr>
             <tr class="row_total prog_row_total" id="row_total_znews">
               <td><strong>Toàn Znews</strong></td>
-              <td class="cell_center"><div class="badge_kpi badge_15" id="badge_rate_total">+15,0%</div></td>
+              <td class="cell_center"><div class="badge_kpi badge_20" id="badge_rate_total">+15,0%</div></td>
               <td class="cell_num cell_bold" id="base_total">24,72M</td>
               <td class="cell_num cell_day_hl cell_bold" id="day_total">947.677</td>
               <td class="cell_num cell_primary cell_bold" id="th_total">29,06M</td>
@@ -2641,7 +2677,7 @@ html {
     if (elPctTot) elPctTot.textContent = fmtPct(totRes.pct_25, 1);
     if (elBadgeTot) {
       elBadgeTot.textContent = fmtPct(totRes.implied_rate, 1);
-      elBadgeTot.className = 'badge_kpi ' + getBadgeClass(totRes.implied_rate);
+      elBadgeTot.className = 'badge_kpi badge_20';
     }
 
     // Blocks
@@ -2663,7 +2699,7 @@ html {
       if (elPct) elPct.textContent = fmtPct(blk.pct_25, 1);
       if (elBadge) {
         elBadge.textContent = fmtPct(blk.implied_rate, 1);
-        elBadge.className = 'badge_kpi ' + getBadgeClass(blk.implied_rate);
+        elBadge.className = 'badge_kpi badge_20';
       }
     });
 

@@ -1262,17 +1262,53 @@ html {
 }
 
 .container_AI .kpi_table .row_block {
-  background-color: #f1f5f9;
+  background-color: #f0fdf4;
+  color: #064e3b;
   font-weight: 700;
-  border-top: 1.5px solid #e2e8f0;
-  border-bottom: 1.5px solid #e2e8f0;
+  border-top: 1.5px solid #bbf7d0;
+  border-bottom: 1.5px solid #bbf7d0;
+}
+
+.container_AI .kpi_table .row_block td {
+  color: #064e3b;
+}
+
+.container_AI .row_block .cell_day_hl {
+  background-color: #d1fae5;
+  color: #065f46;
+  font-weight: 800;
+  border-left: 1px solid #a7f3d0;
+  border-right: 1px solid #a7f3d0;
+}
+
+.container_AI .row_block .cell_primary {
+  color: #047857;
+  font-weight: 800;
 }
 
 .container_AI .kpi_table .row_total {
-  background-color: #eff6ff;
+  background-color: #ecfdf5;
+  color: #064e3b;
   font-weight: 800;
-  border-top: 2px solid #3b56e0;
-  border-bottom: 2px solid #3b56e0;
+  border-top: 2px solid #059669;
+  border-bottom: 2px solid #059669;
+}
+
+.container_AI .kpi_table .row_total td {
+  color: #064e3b;
+}
+
+.container_AI .row_total .cell_day_hl {
+  background-color: #a7f3d0;
+  color: #064e3b;
+  font-size: 15px;
+  border-left: 1px solid #6ee7b7;
+  border-right: 1px solid #6ee7b7;
+}
+
+.container_AI .row_total .cell_primary {
+  color: #047857;
+  font-weight: 800;
 }
 
 .container_AI tr.hidden_element,
@@ -2562,7 +2598,7 @@ def build_interactive_t9_index_html():
     for blk in BLOCKS_INFO:
         html.append(f'            <tr class="row_block prog_row_block" id="row_{blk["id"]}">')
         html.append(f'              <td><strong>{blk["name"]}</strong></td>')
-        html.append(f'              <td class="cell_center"><div class="badge_kpi badge_15" id="badge_rate_{blk["id"]}">+15,0%</div></td>')
+        html.append(f'              <td class="cell_center"><div class="badge_kpi badge_20" id="badge_rate_{blk["id"]}">+15,0%</div></td>')
         html.append(f'              <td class="cell_num" id="base_{blk["id"]}">{fmt_m(blk["base"], 2)}</td>')
         html.append(f'              <td class="cell_num cell_day_hl" id="day_{blk["id"]}">{fmt_day(blk["day"])}</td>')
         html.append(f'              <td class="cell_num cell_primary" id="th_{blk["id"]}">{fmt_m(blk["th"], 2)}</td>')
@@ -2593,7 +2629,7 @@ def build_interactive_t9_index_html():
     # Total Row
     html.append('            <tr class="row_total prog_row_total" id="row_total_znews">')
     html.append('              <td><strong>Toàn Znews</strong></td>')
-    html.append('              <td class="cell_center"><div class="badge_kpi badge_15" id="badge_rate_total">+15,0%</div></td>')
+    html.append('              <td class="cell_center"><div class="badge_kpi badge_20" id="badge_rate_total">+15,0%</div></td>')
     html.append('              <td class="cell_num cell_bold" id="base_total">24,72M</td>')
     html.append('              <td class="cell_num cell_day_hl cell_bold" id="day_total">947.677</td>')
     html.append('              <td class="cell_num cell_primary cell_bold" id="th_total">29,06M</td>')
@@ -2873,7 +2909,7 @@ def build_interactive_t9_index_html():
     if (elPctTot) elPctTot.textContent = fmtPct(totRes.pct_25, 1);
     if (elBadgeTot) {
       elBadgeTot.textContent = fmtPct(totRes.implied_rate, 1);
-      elBadgeTot.className = 'badge_kpi ' + getBadgeClass(totRes.implied_rate);
+      elBadgeTot.className = 'badge_kpi badge_20';
     }
 
     // Blocks
@@ -2895,7 +2931,7 @@ def build_interactive_t9_index_html():
       if (elPct) elPct.textContent = fmtPct(blk.pct_25, 1);
       if (elBadge) {
         elBadge.textContent = fmtPct(blk.implied_rate, 1);
-        elBadge.className = 'badge_kpi ' + getBadgeClass(blk.implied_rate);
+        elBadge.className = 'badge_kpi badge_20';
       }
     });
 
@@ -3240,7 +3276,7 @@ def build_kpi_phe_duyet_html():
         html.append(f'              <td class="cell_num cell_day_hl">{fmt_day(b_item["day"])}</td>')
         html.append(f'              <td class="cell_num cell_primary">{fmt_tr(b_item["th"], 2)}M</td>')
         html.append(f'              <td class="cell_num cell_bold">{fmt_tr(b_item["q4"], 2)}M</td>')
-        html.append(f'              <td class="cell_center"><div class="badge_kpi badge_15">+{b_item["pct"]:.1f}%</div></td>')
+        html.append(f'              <td class="cell_center"><div class="badge_kpi badge_20">+{b_item["pct"]:.1f}%</div></td>')
         html.append(f'              <td class="cell_num cell_bold">{fmt_tr(b_item["tb"], 2)}M</td>')
         html.append('            </tr>')
 
@@ -3262,7 +3298,7 @@ def build_kpi_phe_duyet_html():
     html.append(f'              <td class="cell_num cell_day_hl">{fmt_day(approved_total["day"])}</td>')
     html.append(f'              <td class="cell_num cell_primary cell_bold">{fmt_tr(approved_total["th"], 2)}M</td>')
     html.append(f'              <td class="cell_num cell_bold">{fmt_tr(approved_total["q4"], 2)}M</td>')
-    html.append(f'              <td class="cell_center"><div class="badge_kpi badge_15">+{approved_total["pct"]:.1f}%</div></td>')
+    html.append(f'              <td class="cell_center"><div class="badge_kpi badge_20">+{approved_total["pct"]:.1f}%</div></td>')
     html.append(f'              <td class="cell_num cell_bold">{fmt_tr(approved_total["tb"], 2)}M</td>')
     html.append('            </tr>')
 
