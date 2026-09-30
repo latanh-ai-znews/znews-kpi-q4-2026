@@ -9,6 +9,7 @@ Tài liệu này ghi lại toàn bộ lịch sử các lần cập nhật, sửa
 
 | Phiên bản | Thời gian | Mã Commit | Nội dung cập nhật chính | Người thực hiện |
 | :--- | :--- | :--- | :--- | :--- |
+| **v2.6** | 30/09/2026 23:22 | `Pending` | Thêm box giải thích bối cảnh và nguyên tắc đề xuất KPI mới ở đầu trang | Antigravity AI |
 | **v2.5** | 30/09/2026 22:46 | `0dc4c28` | Đặt mặc định trừ Zalo 5,0%; thêm ô tùy chỉnh % ảnh hưởng Zalo linh hoạt | Antigravity AI |
 | **v2.4** | 30/09/2026 22:34 | `2646ad7` | Đổi tên "Đề xuất KPI từng ban (14 ban)"; đưa 4 thẻ chỉ số tổng quan xuống cuối trang | Antigravity AI |
 | **v2.3** | 30/09/2026 22:26 | `af164f9` | Đảo vị trí: Thẻ 14 ban lên đầu $\rightarrow$ Bảng tổng hợp $\rightarrow$ Bảng điều khiển | Antigravity AI |
@@ -31,6 +32,25 @@ Tài liệu này ghi lại toàn bộ lịch sử các lần cập nhật, sửa
 ---
 
 ## 🔍 Chi Tiết Từng Lần Cập Nhật
+
+---
+
+### [Cập nhật #23] — Phiên bản v2.6 (30/09/2026 23:22:00)
+- **Mã Commit:** Đang cập nhật (nhánh `main` & `gh-pages`)
+- **Yêu cầu từ người dùng:**
+  > *"Thêm một box giải thích ở ngay đầu trang, phía trên phần Đề xuất KPI từng ban. Box này cần được đặt trong ô căn giữa trang, có nền nhã nhặn và chữ dễ nhìn.*
+  > *Bối cảnh và nguyên tắc đề xuất KPI mới:*
+  > *- Từ tháng 8, việc thay đổi tên miền khiến truy cập giảm mạnh. Mức giảm trung bình là 58%, nhưng có những ban giảm tới 70%. Tòa soạn cần đề xuất KPI mới vừa phản ánh được mặt bằng truy cập mới, vừa là con số để các ban phấn đấu.*
+  > *- KPI mới được xây dựng dựa trên mức trung bình truy cập của tháng 9, đồng thời giảm trừ khoảng 5% ảnh hưởng truy cập từ Zalo, yếu tố hiện tại tòa soạn chưa chủ động kiểm soát.*
+  > *- Cụ thể, con số đề xuất cho toàn bộ Quý IV là tăng 15% so với mức trung bình."*
+- **Các thay đổi thực hiện:**
+  1. **Vị trí hiển thị:** Đặt box giải thích `.intro_context_card` ở ngay đầu trang `index.html`, ngay dưới Header thương hiệu và phía trên phần "Đề xuất KPI từng ban (14 ban)".
+  2. **Giao diện & Căn giữa:**
+     - Thiết lập căn giữa trang (`max-width: 1040px; margin: 0 auto 28px auto;`).
+     - Tông màu nền nhã nhặn dịu mắt (`#f8faff`), viền xanh thanh lịch (`#dbeafe`), đường chỉ nhấn lề trái xanh dương Znews (`border-left: 4px solid #3b56e0`).
+     - Font chữ tối màu rõ ràng (`#334155`), tiêu đề đậm nét (`#1e293b`), các số liệu cốt lõi (`58%`, `70%`, `5%`, `tăng 15% so với mức trung bình`) được in đậm để lãnh đạo và biên tập viên dễ theo dõi.
+  3. **Tuân thủ quy chuẩn Znews CMS:**
+     - 100% tuân thủ CSS scoped, 0 inline styles, 0 thẻ `<span>`, 0 thẻ `<button>`, 0 ảnh base64.
 
 ---
 

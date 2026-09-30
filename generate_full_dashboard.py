@@ -1776,6 +1776,57 @@ html {
   box-shadow: 0 6px 20px rgba(59, 86, 224, 0.35);
 }
 
+.container_AI .intro_context_card {
+  max-width: 1040px;
+  margin: 0 auto 28px auto;
+  background: #f8faff;
+  border: 1px solid #dbeafe;
+  border-left: 4px solid #3b56e0;
+  border-radius: 12px;
+  padding: 20px 26px;
+  box-shadow: 0 2px 8px rgba(59, 86, 224, 0.05);
+}
+
+.container_AI .intro_context_header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e7ff;
+}
+
+.container_AI .intro_context_icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.container_AI .intro_context_title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #1e293b;
+  letter-spacing: -0.01em;
+}
+
+.container_AI .intro_context_list {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.container_AI .intro_context_list li {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #334155;
+}
+
+.container_AI .intro_context_list li strong {
+  color: #0f172a;
+  font-weight: 700;
+}
+
 .container_AI .nav_btn_back {
   display: inline-flex;
   align-items: center;
@@ -2419,6 +2470,21 @@ def build_interactive_t9_index_html():
       {"id": "b_lifestyle", "name": "Khối Lifestyle", "deps": ["ds", "ls", "sk", "gd", "dl"], "base": 5415199.50, "day": 207583, "th": 6365879, "q4": 19097636, "yr": 131817190, "pct": -27.0},
       {"id": "b_truycap", "name": "Khối Truy cập", "deps": ["tt", "gt"], "base": 8800911.05, "day": 337368, "th": 10345952, "q4": 31037856, "yr": 235643856, "pct": -24.0}
     ]
+
+    # Context & Principles Intro Box
+    html.append('    <div class="intro_context_card">')
+    html.append('      <div class="intro_context_header">')
+    html.append('        <div class="intro_context_icon">📌</div>')
+    html.append('        <div class="intro_context_title">Bối cảnh và nguyên tắc đề xuất KPI mới:</div>')
+    html.append('      </div>')
+    html.append('      <div class="intro_context_body">')
+    html.append('        <ul class="intro_context_list">')
+    html.append('          <li>Từ tháng 8, việc thay đổi tên miền khiến truy cập giảm mạnh. Mức giảm trung bình là <strong>58%</strong>, nhưng có những ban giảm tới <strong>70%</strong>. Tòa soạn cần đề xuất KPI mới vừa phản ánh được mặt bằng truy cập mới, vừa là con số để các ban phấn đấu.</li>')
+    html.append('          <li>KPI mới được xây dựng dựa trên mức trung bình truy cập của tháng 9, đồng thời giảm trừ khoảng <strong>5%</strong> ảnh hưởng truy cập từ Zalo, yếu tố hiện tại tòa soạn chưa chủ động kiểm soát.</li>')
+    html.append('          <li>Cụ thể, con số đề xuất cho toàn bộ Quý IV là <strong>tăng 15% so với mức trung bình</strong>.</li>')
+    html.append('        </ul>')
+    html.append('      </div>')
+    html.append('    </div>')
 
     # 14 Department Cards Grid
     html.append('    <div class="card">')
