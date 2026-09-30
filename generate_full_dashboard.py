@@ -2246,6 +2246,16 @@ html {
   box-shadow: 0 0 0 3px rgba(59, 86, 224, 0.15);
 }
 
+.container_AI .input_prefix_tag {
+  padding: 7px 10px 7px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+  background: #f8fafc;
+  border-right: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
 .container_AI .rate_input {
   width: 76px;
   padding: 7px 10px;
@@ -2381,29 +2391,33 @@ def build_interactive_t9_index_html():
     html.append('      </div>')
     html.append('    </header>')
 
+    def fmt_m(n, dec=2):
+        v = n / 1000000.0
+        return f"{v:,.{dec}f}".replace(",", "X").replace(".", ",").replace("X", ".") + "M"
+
     # Pre-render initial data
     DEPS_INFO = [
-      {"id": "xh", "name": "Xã hội", "block": "Khối Uy tín", "base": 1832748.64, "day": 70255, "th": 2154498, "q4": 6463494, "yr": 33890494, "pct": -54.1},
-      {"id": "pl", "name": "Pháp luật", "block": "Khối Uy tín", "base": 1112166.48, "day": 42633, "th": 1307413, "q4": 3922240, "yr": 28565240, "pct": -47.7},
-      {"id": "tg", "name": "Thế giới", "block": "Khối Uy tín", "base": 844548.36, "day": 32374, "th": 992814, "q4": 2978441, "yr": 45320441, "pct": 12.1},
-      {"id": "xb", "name": "Xuất bản", "block": "Khối Uy tín", "base": 1069556.27, "day": 41000, "th": 1257323, "q4": 3771968, "yr": 13632968, "pct": -1.7},
-      {"id": "kd", "name": "Kinh doanh", "block": "Khối Kinh doanh", "base": 3468334.28, "day": 132953, "th": 4077218, "q4": 12231653, "yr": 54813653, "pct": -26.5},
-      {"id": "cn", "name": "Công nghệ", "block": "Khối Kinh doanh", "base": 1674749.54, "day": 64199, "th": 1968766, "q4": 5906297, "yr": 26843297, "pct": -22.9},
-      {"id": "xe", "name": "Xe", "block": "Khối Kinh doanh", "base": 821007.29, "day": 31472, "th": 965150, "q4": 2895449, "yr": 14241449, "pct": -16.9},
-      {"id": "ds", "name": "Đời sống", "block": "Khối Lifestyle", "base": 1751488.83, "day": 67140, "th": 2059300, "q4": 6177899, "yr": 52908899, "pct": -20.2},
-      {"id": "ls", "name": "Lifestyle", "block": "Khối Lifestyle", "base": 553746.55, "day": 21227, "th": 650974, "q4": 1952923, "yr": 12319590, "pct": -26.7},
-      {"id": "sk", "name": "Sức khỏe", "block": "Khối Lifestyle", "base": 1890585.83, "day": 72472, "th": 2222822, "q4": 6668465, "yr": 34327465, "pct": -36.7},
-      {"id": "gd", "name": "Giáo dục", "block": "Khối Lifestyle", "base": 474675.62, "day": 18196, "th": 558000, "q4": 1674000, "yr": 12591000, "pct": -31.5},
-      {"id": "dl", "name": "Du lịch", "block": "Khối Lifestyle", "base": 908208.04, "day": 34815, "th": 1067645, "q4": 3202934, "yr": 20248934, "pct": -18.3},
-      {"id": "tt", "name": "Thể thao", "block": "Khối Truy cập", "base": 6452862.82, "day": 247360, "th": 7585699, "q4": 22757096, "yr": 173141096, "pct": -18.8},
-      {"id": "gt", "name": "Giải trí", "block": "Khối Truy cập", "base": 2613781.07, "day": 100195, "th": 3072645, "q4": 9217935, "yr": 63439935, "pct": -34.4}
+      {"id": "xh", "name": "Xã hội", "block": "Khối Uy tín", "base": 1779032.90, "day": 68196, "th": 2091344, "q4": 6274032, "yr": 33701032, "pct": -54.3},
+      {"id": "pl", "name": "Pháp luật", "block": "Khối Uy tín", "base": 1079570.18, "day": 41384, "th": 1269109, "q4": 3807328, "yr": 28450328, "pct": -47.9},
+      {"id": "tg", "name": "Thế giới", "block": "Khối Uy tín", "base": 819795.62, "day": 31425, "th": 963700, "q4": 2891100, "yr": 45233100, "pct": 11.9},
+      {"id": "xb", "name": "Xuất bản", "block": "Khối Uy tín", "base": 1038208.81, "day": 39798, "th": 1220472, "q4": 3661416, "yr": 13522416, "pct": -2.5},
+      {"id": "kd", "name": "Kinh doanh", "block": "Khối Kinh doanh", "base": 3366681.41, "day": 129056, "th": 3957717, "q4": 11873152, "yr": 54455152, "pct": -27.0},
+      {"id": "cn", "name": "Công nghệ", "block": "Khối Kinh doanh", "base": 1625664.57, "day": 62317, "th": 1911055, "q4": 5733164, "yr": 26670164, "pct": -23.4},
+      {"id": "xe", "name": "Xe", "block": "Khối Kinh doanh", "base": 796944.52, "day": 30550, "th": 936867, "q4": 2810600, "yr": 14156600, "pct": -17.4},
+      {"id": "ds", "name": "Đời sống", "block": "Khối Lifestyle", "base": 1700154.72, "day": 65173, "th": 1998639, "q4": 5995916, "yr": 52726916, "pct": -20.5},
+      {"id": "ls", "name": "Lifestyle", "block": "Khối Lifestyle", "base": 537516.88, "day": 20605, "th": 631887, "q4": 1895660, "yr": 12262327, "pct": -27.1},
+      {"id": "sk", "name": "Sức khỏe", "block": "Khối Lifestyle", "base": 1835174.95, "day": 70348, "th": 2157339, "q4": 6472016, "yr": 34131016, "pct": -37.0},
+      {"id": "gd", "name": "Giáo dục", "block": "Khối Lifestyle", "base": 460763.43, "day": 17663, "th": 541665, "q4": 1624996, "yr": 12541996, "pct": -31.8},
+      {"id": "dl", "name": "Du lịch", "block": "Khối Lifestyle", "base": 881589.52, "day": 33794, "th": 1036349, "q4": 3109048, "yr": 20155048, "pct": -18.7},
+      {"id": "tt", "name": "Thể thao", "block": "Khối Truy cập", "base": 6263736.88, "day": 240110, "th": 7363373, "q4": 22090120, "yr": 172474120, "pct": -19.1},
+      {"id": "gt", "name": "Giải trí", "block": "Khối Truy cập", "base": 2537174.18, "day": 97258, "th": 2982579, "q4": 8947736, "yr": 63169736, "pct": -34.7}
     ]
 
     BLOCKS_INFO = [
-      {"id": "b_uytin", "name": "Khối Uy tín", "deps": ["xh", "pl", "tg", "xb"], "base": 4859019.74, "day": 186262, "th": 5712048, "q4": 17136143, "yr": 121409143, "pct": -33.5},
-      {"id": "b_kinhdoanh", "name": "Khối Kinh doanh", "deps": ["kd", "cn", "xe"], "base": 5964091.11, "day": 228624, "th": 7011134, "q4": 21033399, "yr": 95898399, "pct": -24.2},
-      {"id": "b_lifestyle", "name": "Khối Lifestyle", "deps": ["ds", "ls", "sk", "gd", "dl"], "base": 5578704.88, "day": 213850, "th": 6558741, "q4": 19676221, "yr": 132395775, "pct": -26.7},
-      {"id": "b_truycap", "name": "Khối Truy cập", "deps": ["tt", "gt"], "base": 9066643.89, "day": 347555, "th": 10658344, "q4": 31975031, "yr": 236581031, "pct": -23.7}
+      {"id": "b_uytin", "name": "Khối Uy tín", "deps": ["xh", "pl", "tg", "xb"], "base": 4716607.51, "day": 180803, "th": 5544625, "q4": 16633876, "yr": 120906876, "pct": -33.8},
+      {"id": "b_kinhdoanh", "name": "Khối Kinh doanh", "deps": ["kd", "cn", "xe"], "base": 5789290.50, "day": 221923, "th": 6805639, "q4": 20416916, "yr": 95281916, "pct": -24.7},
+      {"id": "b_lifestyle", "name": "Khối Lifestyle", "deps": ["ds", "ls", "sk", "gd", "dl"], "base": 5415199.50, "day": 207583, "th": 6365879, "q4": 19097636, "yr": 131817190, "pct": -27.0},
+      {"id": "b_truycap", "name": "Khối Truy cập", "deps": ["tt", "gt"], "base": 8800911.05, "day": 337368, "th": 10345952, "q4": 31037856, "yr": 235643856, "pct": -24.0}
     ]
 
     # 14 Department Cards Grid
@@ -2435,16 +2449,16 @@ def build_interactive_t9_index_html():
         html.append('              </div>')
         html.append('              <div class="target_box">')
         html.append('                <div class="target_box_label">Mỗi tháng</div>')
-        html.append(f'                <div class="target_box_val" id="card_th_{d["id"]}">{fmt_tr(d["th"], 2)}</div>')
+        html.append(f'                <div class="target_box_val" id="card_th_{d["id"]}">{fmt_m(d["th"], 2)}</div>')
         html.append('              </div>')
         html.append('              <div class="target_box">')
         html.append('                <div class="target_box_label">Cả quý 4</div>')
-        html.append(f'                <div class="target_box_val" id="card_q4_{d["id"]}">{fmt_tr(d["q4"], 2)}</div>')
+        html.append(f'                <div class="target_box_val" id="card_q4_{d["id"]}">{fmt_m(d["q4"], 2)}</div>')
         html.append('              </div>')
         html.append('            </div>')
         html.append('            <div class="dep_stat_row">')
-        html.append(f'              <div>Cơ sở T9: <strong id="card_base_{d["id"]}">{fmt_tr(d["base"], 2)}</strong></div>')
-        html.append(f'              <div>Cả năm 2026: <strong id="card_yr_{d["id"]}">{fmt_tr(d["yr"], 2)}</strong> (<strong id="card_pct_{d["id"]}">{fmt_pct(d["pct"], 1)}</strong> vs 2025)</div>')
+        html.append(f'              <div>Cơ sở T9: <strong id="card_base_{d["id"]}">{fmt_m(d["base"], 2)}</strong></div>')
+        html.append(f'              <div>Cả năm 2026: <strong id="card_yr_{d["id"]}">{fmt_m(d["yr"], 2)}</strong> (<strong id="card_pct_{d["id"]}">{fmt_pct(d["pct"], 1)}</strong> vs 2025)</div>')
         html.append('            </div>')
         html.append('          </div>')
         html.append('        </div>')
@@ -2483,11 +2497,11 @@ def build_interactive_t9_index_html():
         html.append(f'            <tr class="row_block prog_row_block" id="row_{blk["id"]}">')
         html.append(f'              <td><strong>{blk["name"]}</strong></td>')
         html.append(f'              <td class="cell_center"><div class="badge_kpi badge_15" id="badge_rate_{blk["id"]}">+15,0%</div></td>')
-        html.append(f'              <td class="cell_num" id="base_{blk["id"]}">{fmt_tr(blk["base"], 2)}</td>')
+        html.append(f'              <td class="cell_num" id="base_{blk["id"]}">{fmt_m(blk["base"], 2)}</td>')
         html.append(f'              <td class="cell_num cell_day_hl" id="day_{blk["id"]}">{fmt_day(blk["day"])}</td>')
-        html.append(f'              <td class="cell_num cell_primary" id="th_{blk["id"]}">{fmt_tr(blk["th"], 2)}</td>')
-        html.append(f'              <td class="cell_num cell_bold" id="q4_{blk["id"]}">{fmt_tr(blk["q4"], 2)}</td>')
-        html.append(f'              <td class="cell_num cell_bold" id="yr_{blk["id"]}">{fmt_tr(blk["yr"], 2)}</td>')
+        html.append(f'              <td class="cell_num cell_primary" id="th_{blk["id"]}">{fmt_m(blk["th"], 2)}</td>')
+        html.append(f'              <td class="cell_num cell_bold" id="q4_{blk["id"]}">{fmt_m(blk["q4"], 2)}</td>')
+        html.append(f'              <td class="cell_num cell_bold" id="yr_{blk["id"]}">{fmt_m(blk["yr"], 2)}</td>')
         html.append(f'              <td class="cell_num cell_bold" id="pct_{blk["id"]}">{fmt_pct(blk["pct"], 1)}</td>')
         html.append('            </tr>')
 
@@ -2502,11 +2516,11 @@ def build_interactive_t9_index_html():
                 html.append('                  <div class="unit_tag">%</div>')
                 html.append('                </div>')
                 html.append('              </td>')
-                html.append(f'              <td class="cell_num" id="base_{d["id"]}">{fmt_tr(d["base"], 2)}</td>')
+                html.append(f'              <td class="cell_num" id="base_{d["id"]}">{fmt_m(d["base"], 2)}</td>')
                 html.append(f'              <td class="cell_num cell_day_hl" id="day_{d["id"]}">{fmt_day(d["day"])}</td>')
-                html.append(f'              <td class="cell_num cell_primary" id="th_{d["id"]}">{fmt_tr(d["th"], 2)}</td>')
-                html.append(f'              <td class="cell_num cell_bold" id="q4_{d["id"]}">{fmt_tr(d["q4"], 2)}</td>')
-                html.append(f'              <td class="cell_num" id="yr_{d["id"]}">{fmt_tr(d["yr"], 2)}</td>')
+                html.append(f'              <td class="cell_num cell_primary" id="th_{d["id"]}">{fmt_m(d["th"], 2)}</td>')
+                html.append(f'              <td class="cell_num cell_bold" id="q4_{d["id"]}">{fmt_m(d["q4"], 2)}</td>')
+                html.append(f'              <td class="cell_num" id="yr_{d["id"]}">{fmt_m(d["yr"], 2)}</td>')
                 html.append(f'              <td class="cell_num" id="pct_{d["id"]}">{fmt_pct(d["pct"], 1)}</td>')
                 html.append('            </tr>')
 
@@ -2514,12 +2528,12 @@ def build_interactive_t9_index_html():
     html.append('            <tr class="row_total prog_row_total" id="row_total_znews">')
     html.append('              <td><strong>Toàn Znews</strong></td>')
     html.append('              <td class="cell_center"><div class="badge_kpi badge_15" id="badge_rate_total">+15,0%</div></td>')
-    html.append('              <td class="cell_num cell_bold" id="base_total">25,47M</td>')
-    html.append('              <td class="cell_num cell_day_hl cell_bold" id="day_total">976.291</td>')
-    html.append('              <td class="cell_num cell_primary cell_bold" id="th_total">29,94M</td>')
-    html.append('              <td class="cell_num cell_bold" id="q4_total">89,82M</td>')
-    html.append('              <td class="cell_num cell_bold" id="yr_total">586,28M</td>')
-    html.append('              <td class="cell_num cell_bold" id="pct_total">-26,7%</td>')
+    html.append('              <td class="cell_num cell_bold" id="base_total">24,72M</td>')
+    html.append('              <td class="cell_num cell_day_hl cell_bold" id="day_total">947.677</td>')
+    html.append('              <td class="cell_num cell_primary cell_bold" id="th_total">29,06M</td>')
+    html.append('              <td class="cell_num cell_bold" id="q4_total">87,19M</td>')
+    html.append('              <td class="cell_num cell_bold" id="yr_total">583,65M</td>')
+    html.append('              <td class="cell_num cell_bold" id="pct_total">-27,0%</td>')
     html.append('            </tr>')
 
     html.append('          </tbody>')
@@ -2539,11 +2553,16 @@ def build_interactive_t9_index_html():
     html.append('        <div class="control_section control_section_full">')
     html.append('          <div class="control_label">Ảnh hưởng truy cập Zalo (Cơ sở dữ liệu tháng 9)</div>')
     html.append('          <div class="chip_group" id="zalo_chips">')
-    html.append('            <div class="chip active" data-zalo="real">Trừ Zalo thực tế (2,1%)</div>')
-    html.append('            <div class="chip" data-zalo="hypo">Trừ Zalo giả định (5,0%)</div>')
-    html.append('            <div class="chip" data-zalo="none">Không trừ Zalo (Số gốc T9 quy đổi)</div>')
+    html.append('            <div class="chip active" data-zalo="5">Trừ Zalo giả định (5,0%)</div>')
+    html.append('            <div class="chip" data-zalo="2.13">Trừ Zalo thực tế (2,1%)</div>')
+    html.append('            <div class="chip" data-zalo="0">Không trừ Zalo (Số gốc T9 quy đổi)</div>')
+    html.append('            <div class="rate_input_wrap" id="zalo_input_wrap">')
+    html.append('              <div class="input_prefix_tag">Tùy chỉnh:</div>')
+    html.append('              <input type="number" id="zalo_rate_input" class="rate_input" value="5" step="0.5" min="0" max="50">')
+    html.append('              <div class="rate_unit">%</div>')
+    html.append('            </div>')
     html.append('          </div>')
-    html.append('          <div class="control_helper_text" id="zalo_status_note">Mức nền T9 sau trừ Zalo thực tế (2,13%): 25,47M/tháng • 848.949 lượt/ngày (T9 gồm 29 ngày dữ liệu thực tế, quy đổi đủ 30 ngày).</div>')
+    html.append('          <div class="control_helper_text" id="zalo_status_note">Mức nền T9 sau trừ Zalo giả định (5,0%): 24,72M/tháng • 824.067 lượt/ngày (Bạn có thể chọn nhanh hoặc nhập mức trừ Zalo tùy ý vào ô trên).</div>')
     html.append('        </div>')
 
     # Section 2: Mode Toggle
@@ -2580,27 +2599,27 @@ def build_interactive_t9_index_html():
     # Card 1: Ngày
     html.append('      <div class="kpi_metric_card highlight_day">')
     html.append('        <div class="kpi_metric_label">KPI truy cập theo ngày (toàn trang)</div>')
-    html.append('        <div class="kpi_metric_val val_green" id="metric_day">976.291</div>')
+    html.append('        <div class="kpi_metric_val val_green" id="metric_day">947.677</div>')
     html.append('        <div class="kpi_metric_sub">Lượt xem trung bình mỗi ngày trong Quý 4 (92 ngày)</div>')
     html.append('      </div>')
     # Card 2: Tháng
     html.append('      <div class="kpi_metric_card highlight_month">')
     html.append('        <div class="kpi_metric_label">KPI truy cập trung bình tháng</div>')
-    html.append('        <div class="kpi_metric_val val_blue" id="metric_month">29,94M</div>')
+    html.append('        <div class="kpi_metric_val val_blue" id="metric_month">29,06M</div>')
     html.append('        <div class="kpi_metric_sub">Trung bình mỗi tháng trong Quý 4 (T10, T11, T12)</div>')
     html.append('      </div>')
     # Card 3: Cả Quý 4
     html.append('      <div class="kpi_metric_card highlight_quarter">')
     html.append('        <div class="kpi_metric_label">KPI truy cập quý 4</div>')
-    html.append('        <div class="kpi_metric_val val_purple" id="metric_q4">89,82M</div>')
+    html.append('        <div class="kpi_metric_val val_purple" id="metric_q4">87,19M</div>')
     html.append('        <div class="kpi_metric_sub">Tổng 3 tháng: T10 (31 ngày) + T11 (30 ngày) + T12 (31 ngày)</div>')
     html.append('      </div>')
     # Card 4: Cả năm
     html.append('      <div class="kpi_metric_card">')
     html.append('        <div class="kpi_metric_label">Dự kiến cả năm 2026</div>')
-    html.append('        <div class="kpi_metric_val" id="metric_year">586,28M</div>')
+    html.append('        <div class="kpi_metric_val" id="metric_year">583,65M</div>')
     html.append('        <div class="kpi_metric_sub">')
-    html.append('          <div class="badge_kpi badge_15" id="metric_year_pct">-26,7% vs 2025</div>')
+    html.append('          <div class="badge_kpi badge_15" id="metric_year_pct">-27,0% vs 2025</div>')
     html.append('        </div>')
     html.append('      </div>')
     html.append('    </div>')
@@ -2656,7 +2675,7 @@ def build_interactive_t9_index_html():
   const TOTAL_YR_2025 = 799681703;
 
   let state = {
-    zaloMode: 'real',
+    zaloRate: 5.0,
     rateMode: 'all',
     globalRate: 15.0,
     depRates: {
@@ -2700,9 +2719,7 @@ def build_interactive_t9_index_html():
     let totRes = { base: 0, day: 0, q4: 0, lk_9t: TOTAL_LK_9T, yr_25: TOTAL_YR_2025 };
 
     DEPARTMENTS.forEach(d => {
-      let base = d.zalo_real;
-      if (state.zaloMode === 'hypo') base = d.zalo_hypo;
-      else if (state.zaloMode === 'none') base = d.t9_scaled;
+      let base = d.t9_scaled * (1.0 - state.zaloRate / 100.0);
 
       let rate = state.rateMode === 'all' ? state.globalRate : (state.depRates[d.id] !== undefined ? state.depRates[d.id] : 15.0);
       let day = (base / 30.0) * (1.0 + rate / 100.0);
@@ -2884,29 +2901,60 @@ def build_interactive_t9_index_html():
         }
       }
     });
+
+    updateZaloNote(totRes.base);
   }
 
   // EVENT LISTENERS
-  // 1. Zalo Chips
+  // 1. Zalo Chips & Custom Input
   const zaloChips = document.querySelectorAll('#zalo_chips .chip');
   const zaloNote = document.getElementById('zalo_status_note');
+  const zaloInput = document.getElementById('zalo_rate_input');
+
+  function updateZaloNote(totBase) {
+    if (!zaloNote) return;
+    const baseTr = fmtTr(totBase, 2);
+    const dayBase = fmtDay(totBase / 30.0);
+    if (Math.abs(state.zaloRate - 5.0) < 0.01) {
+      zaloNote.textContent = 'Mức nền T9 sau trừ Zalo giả định (5,0%): ' + baseTr + '/tháng • ' + dayBase + ' lượt/ngày (Loại trừ 5,0% lượng truy cập do Zalo).';
+    } else if (Math.abs(state.zaloRate - 2.1316) < 0.05) {
+      zaloNote.textContent = 'Mức nền T9 sau trừ Zalo thực tế (2,13%): ' + baseTr + '/tháng • ' + dayBase + ' lượt/ngày (T9 gồm 29 ngày dữ liệu thực tế, quy đổi đủ 30 ngày).';
+    } else if (state.zaloRate === 0) {
+      zaloNote.textContent = 'Mức nền T9 gốc quy đổi đủ 30 ngày: ' + baseTr + '/tháng • ' + dayBase + ' lượt/ngày (Không trừ ảnh hưởng Zalo).';
+    } else {
+      zaloNote.textContent = 'Mức nền T9 sau trừ Zalo tùy chỉnh (' + state.zaloRate.toLocaleString('vi-VN', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%): ' + baseTr + '/tháng • ' + dayBase + ' lượt/ngày.';
+    }
+  }
+
+  function syncZaloChips() {
+    zaloChips.forEach(c => {
+      const zVal = parseFloat(c.getAttribute('data-zalo'));
+      if (Math.abs(zVal - state.zaloRate) < 0.05) {
+        c.classList.add('active');
+      } else {
+        c.classList.remove('active');
+      }
+    });
+  }
+
   zaloChips.forEach(chip => {
     chip.addEventListener('click', function() {
-      zaloChips.forEach(c => c.classList.remove('active'));
-      this.classList.add('active');
-      state.zaloMode = this.getAttribute('data-zalo');
-      if (zaloNote) {
-        if (state.zaloMode === 'real') {
-          zaloNote.textContent = 'Mức nền T9 sau trừ Zalo thực tế (2,13%): 25,47M/tháng • 848.949 lượt/ngày (T9 gồm 29 ngày dữ liệu thực tế, quy đổi đủ 30 ngày).';
-        } else if (state.zaloMode === 'hypo') {
-          zaloNote.textContent = 'Mức nền T9 sau trừ Zalo giả định (5,0%): 24,72M/tháng • 824.067 lượt/ngày (Loại trừ 5,0% lượng truy cập do Zalo).';
-        } else {
-          zaloNote.textContent = 'Mức nền T9 gốc quy đổi đủ 30 ngày: 26,02M/tháng • 867.439 lượt/ngày (Không trừ ảnh hưởng Zalo).';
-        }
-      }
+      const val = parseFloat(this.getAttribute('data-zalo'));
+      state.zaloRate = (val === 2.13 ? 2.1316 : val);
+      if (zaloInput) zaloInput.value = (val === 2.13 ? 2.1 : val);
+      syncZaloChips();
       render();
     });
   });
+
+  if (zaloInput) {
+    zaloInput.addEventListener('input', function() {
+      const val = parseFloat(this.value);
+      state.zaloRate = isNaN(val) ? 0 : Math.max(0, Math.min(100, val));
+      syncZaloChips();
+      render();
+    });
+  }
 
   // 2. Mode Chips
   const modeChips = document.querySelectorAll('#mode_chips .chip');
