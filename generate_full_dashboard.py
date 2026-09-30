@@ -2090,25 +2090,1073 @@ html {
   .container_AI .kpi_metric_val { font-size: 28px; }
   .container_AI .cta_footer_card { flex-direction: column; align-items: flex-start; }
 }
+
+/* =========================================================================
+   TOP NAV TABS & INTERACTIVE CONTROLS (T9 CALCULATOR)
+   ========================================================================= */
+.container_AI .top_bar_nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.container_AI .top_nav_link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  transition: all 0.2s ease;
+}
+
+.container_AI .top_nav_link:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.container_AI .top_nav_link.active {
+  background: #3b56e0;
+  color: #ffffff;
+  border-color: #3b56e0;
+  box-shadow: 0 2px 8px rgba(59, 86, 224, 0.25);
+}
+
+.container_AI .control_panel_card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 28px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.container_AI .control_panel_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.container_AI .control_panel_title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.container_AI .control_grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.container_AI .control_section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.container_AI .control_section_full {
+  grid-column: 1 / -1;
+  background: #f0f7ff;
+  border-color: #bfdbfe;
+}
+
+.container_AI .control_label {
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #334155;
+}
+
+.container_AI .control_desc {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.container_AI .chip_group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.container_AI .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
+}
+
+.container_AI .chip:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.container_AI .chip.active {
+  background: #3b56e0;
+  border-color: #3b56e0;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(59, 86, 224, 0.25);
+}
+
+.container_AI .rate_input_wrap {
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.container_AI .rate_input_wrap:focus-within {
+  border-color: #3b56e0;
+  box-shadow: 0 0 0 3px rgba(59, 86, 224, 0.15);
+}
+
+.container_AI .rate_input {
+  width: 76px;
+  padding: 7px 10px;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0f172a;
+  border: none;
+  outline: none;
+  background: transparent;
+  text-align: right;
+  font-family: inherit;
+}
+
+.container_AI .rate_unit {
+  padding: 7px 12px 7px 6px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #64748b;
+  background: #f8fafc;
+  border-left: 1px solid #e2e8f0;
+}
+
+.container_AI .control_helper_text {
+  font-size: 13px;
+  color: #475569;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.container_AI .table_dep_input {
+  width: 58px;
+  padding: 4px 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  text-align: right;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+
+.container_AI .table_dep_input:focus {
+  border-color: #3b56e0;
+  box-shadow: 0 0 0 2px rgba(59, 86, 224, 0.2);
+}
+
+.container_AI .card_dep_input {
+  width: 54px;
+  padding: 3px 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  text-align: right;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+
+.container_AI .card_dep_input:focus {
+  border-color: #3b56e0;
+  box-shadow: 0 0 0 2px rgba(59, 86, 224, 0.2);
+}
+
+.container_AI .table_input_cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.container_AI .unit_tag {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.container_AI .is_hidden {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .container_AI .control_grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 """
 
 
 # =========================================================================
 # BUILD INDEX.HTML (OFFICIAL ASSIGNED KPI PAGE)
 # =========================================================================
-def build_index_html():
+
+# =========================================================================
+# BUILD INTERACTIVE INDEX.HTML (SEPTEMBER 2026 KPI CALCULATOR)
+# =========================================================================
+def build_interactive_t9_index_html():
     html = []
     html.append('<!DOCTYPE html>')
     html.append('<html lang="vi">')
     html.append('<head>')
     html.append('  <meta charset="UTF-8">')
     html.append('  <meta name="viewport" content="width=device-width, initial-scale=1.0">')
-    html.append('  <title>Bảng giao chỉ tiêu KPI quý 4/2026 — Tạp chí điện tử Tri thức - Znews</title>')
+    html.append('  <title>Công cụ tính toán & đề xuất KPI quý 4/2026 từ tháng 9 — Tạp chí điện tử Tri thức - Znews</title>')
     html.append(f'  <style>{css_scoped}</style>')
     html.append('</head>')
     html.append('<body>')
     html.append('<article class="container_AI">')
     html.append('  <div class="wrap">')
+
+    # Top Bar Navigation
+    html.append('    <nav class="top_bar_nav">')
+    html.append('      <a href="index.html" class="top_nav_link active">🎯 Tính KPI từ tháng 9 (Công cụ mới)</a>')
+    html.append('      <a href="kpi_phe_duyet.html" class="top_nav_link">📋 Phương án TB T8–T9 đã duyệt</a>')
+    html.append('      <a href="detail.html" class="top_nav_link">📑 Báo cáo giải thích chi tiết</a>')
+    html.append('    </nav>')
+
+    # Header
+    html.append('    <header class="top_header">')
+    html.append('      <div class="brand_area">')
+    html.append('        <div class="brand_kicker">Tạp chí điện tử Tri thức - Znews • Ban biên tập</div>')
+    html.append('        <div class="brand_title">Công cụ tính toán & đề xuất KPI quý 4/2026 từ tháng 9</div>')
+    html.append('        <div class="brand_sub">Dựa trên dữ liệu thực tế tháng 9/2026 quy đổi 30 ngày • Tùy chỉnh tỷ lệ tăng trưởng và loại trừ ảnh hưởng Zalo theo thời gian thực</div>')
+    html.append('      </div>')
+    html.append('      <div>')
+    html.append('        <a href="detail.html" class="nav_btn_main">📑 Giải thích chi tiết & bối cảnh dữ liệu →</a>')
+    html.append('      </div>')
+    html.append('    </header>')
+
+    # Interactive Control Panel Card
+    html.append('    <div class="control_panel_card">')
+    html.append('      <div class="control_panel_header">')
+    html.append('        <div class="control_panel_title">Bảng điều khiển thông số tính toán KPI</div>')
+    html.append('        <div class="badge_kpi badge_15" id="active_mode_badge">Đang áp tỷ lệ toàn bộ: +15,0%</div>')
+    html.append('      </div>')
+    html.append('      <div class="control_grid">')
+    
+    # Section 1: Zalo Impact Options (Full row)
+    html.append('        <div class="control_section control_section_full">')
+    html.append('          <div class="control_label">Ảnh hưởng truy cập Zalo (Cơ sở dữ liệu tháng 9)</div>')
+    html.append('          <div class="chip_group" id="zalo_chips">')
+    html.append('            <div class="chip active" data-zalo="real">Trừ Zalo thực tế (2,1%)</div>')
+    html.append('            <div class="chip" data-zalo="hypo">Trừ Zalo giả định (5,0%)</div>')
+    html.append('            <div class="chip" data-zalo="none">Không trừ Zalo (Số gốc T9 quy đổi)</div>')
+    html.append('          </div>')
+    html.append('          <div class="control_helper_text" id="zalo_status_note">Mức nền T9 sau trừ Zalo thực tế (2,13%): 25,47M/tháng • 848.949 lượt/ngày (T9 gồm 29 ngày dữ liệu thực tế, quy đổi đủ 30 ngày).</div>')
+    html.append('        </div>')
+
+    # Section 2: Mode Toggle
+    html.append('        <div class="control_section">')
+    html.append('          <div class="control_label">Chế độ phân bổ tỷ lệ tăng trưởng</div>')
+    html.append('          <div class="chip_group" id="mode_chips">')
+    html.append('            <div class="chip active" data-mode="all">Áp tỷ lệ tăng toàn bộ ban</div>')
+    html.append('            <div class="chip" data-mode="custom">Tỷ lệ tăng tùy từng ban</div>')
+    html.append('          </div>')
+    html.append('          <div class="control_desc" id="mode_desc_note">Áp một tỷ lệ tăng trưởng đồng nhất cho toàn bộ 14 ban biên tập.</div>')
+    html.append('        </div>')
+
+    # Section 3: Preset Rates + Custom Rate Input
+    html.append('        <div class="control_section">')
+    html.append('          <div class="control_label">Thiết lập tỷ lệ tăng trưởng đề xuất</div>')
+    html.append('          <div class="chip_group" id="rate_chips">')
+    html.append('            <div class="chip" data-rate="10">+10%</div>')
+    html.append('            <div class="chip active" data-rate="15">+15%</div>')
+    html.append('            <div class="chip" data-rate="20">+20%</div>')
+    html.append('            <div class="chip" data-rate="50">+50%</div>')
+    html.append('            <div class="rate_input_wrap">')
+    html.append('              <input type="number" id="global_rate_input" class="rate_input" value="15" step="0.5" min="-50" max="200">')
+    html.append('              <div class="rate_unit">%</div>')
+    html.append('            </div>')
+    html.append('          </div>')
+    html.append('          <div class="control_helper_text" id="rate_helper_note">Chọn nhanh tỷ lệ đặt sẵn hoặc nhập con số tăng trưởng tùy ý vào ô trên.</div>')
+    html.append('        </div>')
+
+    html.append('      </div>')
+    html.append('    </div>')
+
+    # 4 Overview Metric Cards (Live Reactive)
+    html.append('    <div class="kpi_grid_4">')
+    # Card 1: Ngày
+    html.append('      <div class="kpi_metric_card highlight_day">')
+    html.append('        <div class="kpi_metric_label">KPI truy cập theo ngày (toàn trang)</div>')
+    html.append('        <div class="kpi_metric_val val_green" id="metric_day">976.291</div>')
+    html.append('        <div class="kpi_metric_sub">Lượt xem trung bình mỗi ngày trong Quý 4 (92 ngày)</div>')
+    html.append('      </div>')
+    # Card 2: Tháng
+    html.append('      <div class="kpi_metric_card highlight_month">')
+    html.append('        <div class="kpi_metric_label">KPI truy cập trung bình tháng</div>')
+    html.append('        <div class="kpi_metric_val val_blue" id="metric_month">29,94M</div>')
+    html.append('        <div class="kpi_metric_sub">Trung bình mỗi tháng trong Quý 4 (T10, T11, T12)</div>')
+    html.append('      </div>')
+    # Card 3: Cả Quý 4
+    html.append('      <div class="kpi_metric_card highlight_quarter">')
+    html.append('        <div class="kpi_metric_label">KPI truy cập quý 4</div>')
+    html.append('        <div class="kpi_metric_val val_purple" id="metric_q4">89,82M</div>')
+    html.append('        <div class="kpi_metric_sub">Tổng 3 tháng: T10 (31 ngày) + T11 (30 ngày) + T12 (31 ngày)</div>')
+    html.append('      </div>')
+    # Card 4: Cả năm
+    html.append('      <div class="kpi_metric_card">')
+    html.append('        <div class="kpi_metric_label">Dự kiến cả năm 2026</div>')
+    html.append('        <div class="kpi_metric_val" id="metric_year">586,28M</div>')
+    html.append('        <div class="kpi_metric_sub">')
+    html.append('          <div class="badge_kpi badge_15" id="metric_year_pct">-26,7% vs 2025</div>')
+    html.append('        </div>')
+    html.append('      </div>')
+    html.append('    </div>')
+
+    # Master KPI Table
+    html.append('    <div class="card">')
+    html.append('      <div class="dep_card_header">')
+    html.append('        <div>')
+    html.append('          <h3>Bảng tổng hợp chỉ tiêu: Ngày • tháng • quý 4/2026 & dự báo năm</h3>')
+    html.append('        </div>')
+    html.append('        <div class="controls_bar" id="master_filter_chips">')
+    html.append('          <div class="chip active" data-filter="all">Tất cả (19 đơn vị)</div>')
+    html.append('          <div class="chip" data-filter="blocks">Chỉ xem 4 khối</div>')
+    html.append('          <div class="chip" data-filter="deps">Chỉ xem 14 ban</div>')
+    html.append('        </div>')
+    html.append('      </div>')
+    html.append('      <div class="table_responsive">')
+    html.append('        <table class="kpi_table" id="master_kpi_table">')
+    html.append('          <thead>')
+    html.append('            <tr>')
+    html.append('              <th>Đơn vị / ban</th>')
+    html.append('              <th class="cell_center">Tỷ lệ tăng</th>')
+    html.append('              <th class="cell_num">Cơ sở T9 (nền)</th>')
+    html.append('              <th class="cell_num cell_day_hl">KPI ngày</th>')
+    html.append('              <th class="cell_num cell_primary">KPI tháng</th>')
+    html.append('              <th class="cell_num cell_bold">KPI quý 4</th>')
+    html.append('              <th class="cell_num cell_bold">Cả năm 2026</th>')
+    html.append('              <th class="cell_num cell_bold">So với 2025</th>')
+    html.append('            </tr>')
+    html.append('          </thead>')
+    html.append('          <tbody>')
+
+    # Pre-render initial data
+    DEPS_INFO = [
+      {"id": "xh", "name": "Xã hội", "block": "Khối Uy tín", "base": 1832748.64, "day": 70255, "th": 2154498, "q4": 6463494, "yr": 33890494, "pct": -54.1},
+      {"id": "pl", "name": "Pháp luật", "block": "Khối Uy tín", "base": 1112166.48, "day": 42633, "th": 1307413, "q4": 3922240, "yr": 28565240, "pct": -47.7},
+      {"id": "tg", "name": "Thế giới", "block": "Khối Uy tín", "base": 844548.36, "day": 32374, "th": 992814, "q4": 2978441, "yr": 45320441, "pct": 12.1},
+      {"id": "xb", "name": "Xuất bản", "block": "Khối Uy tín", "base": 1069556.27, "day": 41000, "th": 1257323, "q4": 3771968, "yr": 13632968, "pct": -1.7},
+      {"id": "kd", "name": "Kinh doanh", "block": "Khối Kinh doanh", "base": 3468334.28, "day": 132953, "th": 4077218, "q4": 12231653, "yr": 54813653, "pct": -26.5},
+      {"id": "cn", "name": "Công nghệ", "block": "Khối Kinh doanh", "base": 1674749.54, "day": 64199, "th": 1968766, "q4": 5906297, "yr": 26843297, "pct": -22.9},
+      {"id": "xe", "name": "Xe", "block": "Khối Kinh doanh", "base": 821007.29, "day": 31472, "th": 965150, "q4": 2895449, "yr": 14241449, "pct": -16.9},
+      {"id": "ds", "name": "Đời sống", "block": "Khối Lifestyle", "base": 1751488.83, "day": 67140, "th": 2059300, "q4": 6177899, "yr": 52908899, "pct": -20.2},
+      {"id": "ls", "name": "Lifestyle", "block": "Khối Lifestyle", "base": 553746.55, "day": 21227, "th": 650974, "q4": 1952923, "yr": 12319590, "pct": -26.7},
+      {"id": "sk", "name": "Sức khỏe", "block": "Khối Lifestyle", "base": 1890585.83, "day": 72472, "th": 2222822, "q4": 6668465, "yr": 34327465, "pct": -36.7},
+      {"id": "gd", "name": "Giáo dục", "block": "Khối Lifestyle", "base": 474675.62, "day": 18196, "th": 558000, "q4": 1674000, "yr": 12591000, "pct": -31.5},
+      {"id": "dl", "name": "Du lịch", "block": "Khối Lifestyle", "base": 908208.04, "day": 34815, "th": 1067645, "q4": 3202934, "yr": 20248934, "pct": -18.3},
+      {"id": "tt", "name": "Thể thao", "block": "Khối Truy cập", "base": 6452862.82, "day": 247360, "th": 7585699, "q4": 22757096, "yr": 173141096, "pct": -18.8},
+      {"id": "gt", "name": "Giải trí", "block": "Khối Truy cập", "base": 2613781.07, "day": 100195, "th": 3072645, "q4": 9217935, "yr": 63439935, "pct": -34.4}
+    ]
+
+    BLOCKS_INFO = [
+      {"id": "b_uytin", "name": "Khối Uy tín", "deps": ["xh", "pl", "tg", "xb"], "base": 4859019.74, "day": 186262, "th": 5712048, "q4": 17136143, "yr": 121409143, "pct": -33.5},
+      {"id": "b_kinhdoanh", "name": "Khối Kinh doanh", "deps": ["kd", "cn", "xe"], "base": 5964091.11, "day": 228624, "th": 7011134, "q4": 21033399, "yr": 95898399, "pct": -24.2},
+      {"id": "b_lifestyle", "name": "Khối Lifestyle", "deps": ["ds", "ls", "sk", "gd", "dl"], "base": 5578704.88, "day": 213850, "th": 6558741, "q4": 19676221, "yr": 132395775, "pct": -26.7},
+      {"id": "b_truycap", "name": "Khối Truy cập", "deps": ["tt", "gt"], "base": 9066643.89, "day": 347555, "th": 10658344, "q4": 31975031, "yr": 236581031, "pct": -23.7}
+    ]
+
+    for blk in BLOCKS_INFO:
+        html.append(f'            <tr class="row_block prog_row_block" id="row_{blk["id"]}">')
+        html.append(f'              <td><strong>{blk["name"]}</strong></td>')
+        html.append(f'              <td class="cell_center"><div class="badge_kpi badge_15" id="badge_rate_{blk["id"]}">+15,0%</div></td>')
+        html.append(f'              <td class="cell_num" id="base_{blk["id"]}">{fmt_tr(blk["base"], 2)}</td>')
+        html.append(f'              <td class="cell_num cell_day_hl" id="day_{blk["id"]}">{fmt_day(blk["day"])}</td>')
+        html.append(f'              <td class="cell_num cell_primary" id="th_{blk["id"]}">{fmt_tr(blk["th"], 2)}</td>')
+        html.append(f'              <td class="cell_num cell_bold" id="q4_{blk["id"]}">{fmt_tr(blk["q4"], 2)}</td>')
+        html.append(f'              <td class="cell_num cell_bold" id="yr_{blk["id"]}">{fmt_tr(blk["yr"], 2)}</td>')
+        html.append(f'              <td class="cell_num cell_bold" id="pct_{blk["id"]}">{fmt_pct(blk["pct"], 1)}</td>')
+        html.append('            </tr>')
+
+        for d in DEPS_INFO:
+            if d["id"] in blk["deps"]:
+                html.append(f'            <tr class="prog_row_dep" id="row_dep_{d["id"]}">')
+                html.append(f'              <td>&nbsp;&nbsp;↳ {d["name"]}</td>')
+                html.append(f'              <td class="cell_center">')
+                html.append(f'                <div class="badge_kpi badge_15" id="badge_rate_{d["id"]}">+15,0%</div>')
+                html.append(f'                <div class="table_input_cell is_hidden" id="input_wrap_table_{d["id"]}">')
+                html.append(f'                  <input type="number" class="table_dep_input" data-dep="{d["id"]}" value="15" step="0.5">')
+                html.append('                  <div class="unit_tag">%</div>')
+                html.append('                </div>')
+                html.append('              </td>')
+                html.append(f'              <td class="cell_num" id="base_{d["id"]}">{fmt_tr(d["base"], 2)}</td>')
+                html.append(f'              <td class="cell_num cell_day_hl" id="day_{d["id"]}">{fmt_day(d["day"])}</td>')
+                html.append(f'              <td class="cell_num cell_primary" id="th_{d["id"]}">{fmt_tr(d["th"], 2)}</td>')
+                html.append(f'              <td class="cell_num cell_bold" id="q4_{d["id"]}">{fmt_tr(d["q4"], 2)}</td>')
+                html.append(f'              <td class="cell_num" id="yr_{d["id"]}">{fmt_tr(d["yr"], 2)}</td>')
+                html.append(f'              <td class="cell_num" id="pct_{d["id"]}">{fmt_pct(d["pct"], 1)}</td>')
+                html.append('            </tr>')
+
+    # Total Row
+    html.append('            <tr class="row_total prog_row_total" id="row_total_znews">')
+    html.append('              <td><strong>Toàn Znews</strong></td>')
+    html.append('              <td class="cell_center"><div class="badge_kpi badge_15" id="badge_rate_total">+15,0%</div></td>')
+    html.append('              <td class="cell_num cell_bold" id="base_total">25,47M</td>')
+    html.append('              <td class="cell_num cell_day_hl cell_bold" id="day_total">976.291</td>')
+    html.append('              <td class="cell_num cell_primary cell_bold" id="th_total">29,94M</td>')
+    html.append('              <td class="cell_num cell_bold" id="q4_total">89,82M</td>')
+    html.append('              <td class="cell_num cell_bold" id="yr_total">586,28M</td>')
+    html.append('              <td class="cell_num cell_bold" id="pct_total">-26,7%</td>')
+    html.append('            </tr>')
+
+    html.append('          </tbody>')
+    html.append('        </table>')
+    html.append('      </div>')
+    html.append('    </div>')
+
+    # 14 Department Cards Grid
+    html.append('    <div class="card">')
+    html.append('      <div class="dep_card_header">')
+    html.append('        <div>')
+    html.append('          <h3>Chi tiết KPI từng ban (14 ban biên tập)</h3>')
+    html.append('        </div>')
+    html.append('      </div>')
+    html.append('      <div class="dep_grid">')
+    for d in DEPS_INFO:
+        html.append('        <div class="dep_card">')
+        html.append('          <div>')
+        html.append('            <div class="dep_card_header">')
+        html.append(f'              <div class="dep_name">{d["name"]}</div>')
+        html.append('              <div class="dep_tags">')
+        html.append(f'                <div class="dep_block_tag">{d["block"]}</div>')
+        html.append(f'                <div class="badge_kpi badge_15" id="card_badge_{d["id"]}">+15,0%</div>')
+        html.append(f'                <div class="table_input_cell is_hidden" id="card_input_wrap_{d["id"]}">')
+        html.append(f'                  <input type="number" class="card_dep_input" data-dep="{d["id"]}" value="15" step="0.5">')
+        html.append('                  <div class="unit_tag">%</div>')
+        html.append('                </div>')
+        html.append('              </div>')
+        html.append('            </div>')
+        html.append('            <div class="dep_target_boxes">')
+        html.append('              <div class="target_box box_day">')
+        html.append('                <div class="target_box_label">Mỗi ngày</div>')
+        html.append(f'                <div class="target_box_val" id="card_day_{d["id"]}">{fmt_day(d["day"])}</div>')
+        html.append('              </div>')
+        html.append('              <div class="target_box">')
+        html.append('                <div class="target_box_label">Mỗi tháng</div>')
+        html.append(f'                <div class="target_box_val" id="card_th_{d["id"]}">{fmt_tr(d["th"], 2)}</div>')
+        html.append('              </div>')
+        html.append('              <div class="target_box">')
+        html.append('                <div class="target_box_label">Cả quý 4</div>')
+        html.append(f'                <div class="target_box_val" id="card_q4_{d["id"]}">{fmt_tr(d["q4"], 2)}</div>')
+        html.append('              </div>')
+        html.append('            </div>')
+        html.append('            <div class="dep_stat_row">')
+        html.append(f'              <div>Cơ sở T9: <strong id="card_base_{d["id"]}">{fmt_tr(d["base"], 2)}</strong></div>')
+        html.append(f'              <div>Cả năm 2026: <strong id="card_yr_{d["id"]}">{fmt_tr(d["yr"], 2)}</strong> (<strong id="card_pct_{d["id"]}">{fmt_pct(d["pct"], 1)}</strong> vs 2025)</div>')
+        html.append('            </div>')
+        html.append('          </div>')
+        html.append('        </div>')
+    html.append('      </div>')
+    html.append('    </div>')
+
+    # Comparison Matrix Card (Section 3 from Excel)
+    html.append('    <div class="card">')
+    html.append('      <div class="dep_card_header">')
+    html.append('        <div>')
+    html.append('          <h3>So sánh 4 mốc tăng trưởng (+10%, +15%, +20%, +50%) theo cơ sở tháng 9</h3>')
+    html.append('        </div>')
+    html.append('      </div>')
+    html.append('      <div class="control_desc" id="compare_desc_note">KPI trung bình tháng (quy đổi 30 ngày) cho 14 ban và 4 khối theo cơ sở Zalo đang chọn.</div>')
+    html.append('      <div class="table_responsive">')
+    html.append('        <table class="kpi_table" id="comparison_matrix_table">')
+    html.append('          <thead>')
+    html.append('            <tr>')
+    html.append('              <th>Đơn vị / ban</th>')
+    html.append('              <th class="cell_num">Cơ sở T9 (nền)</th>')
+    html.append('              <th class="cell_num">Mức +10%</th>')
+    html.append('              <th class="cell_num cell_primary">Mức +15%</th>')
+    html.append('              <th class="cell_num">Mức +20%</th>')
+    html.append('              <th class="cell_num cell_challenge">Mức +50%</th>')
+    html.append('            </tr>')
+    html.append('          </thead>')
+    html.append('          <tbody id="comparison_tbody">')
+    # Pre-render comparison rows
+    for blk in BLOCKS_INFO:
+        b = blk["base"]
+        html.append(f'            <tr class="row_block prog_row_block" id="cmp_row_{blk["id"]}">')
+        html.append(f'              <td><strong>{blk["name"]}</strong></td>')
+        html.append(f'              <td class="cell_num" id="cmp_base_{blk["id"]}">{fmt_tr(b, 2)}</td>')
+        html.append(f'              <td class="cell_num" id="cmp_10_{blk["id"]}">{fmt_tr(b*1.10, 2)}</td>')
+        html.append(f'              <td class="cell_num cell_primary" id="cmp_15_{blk["id"]}">{fmt_tr(b*1.15, 2)}</td>')
+        html.append(f'              <td class="cell_num" id="cmp_20_{blk["id"]}">{fmt_tr(b*1.20, 2)}</td>')
+        html.append(f'              <td class="cell_num cell_challenge" id="cmp_50_{blk["id"]}">{fmt_tr(b*1.50, 2)}</td>')
+        html.append('            </tr>')
+        for d in DEPS_INFO:
+            if d["id"] in blk["deps"]:
+                db = d["base"]
+                html.append(f'            <tr class="prog_row_dep" id="cmp_row_dep_{d["id"]}">')
+                html.append(f'              <td>&nbsp;&nbsp;↳ {d["name"]}</td>')
+                html.append(f'              <td class="cell_num" id="cmp_base_{d["id"]}">{fmt_tr(db, 2)}</td>')
+                html.append(f'              <td class="cell_num" id="cmp_10_{d["id"]}">{fmt_tr(db*1.10, 2)}</td>')
+                html.append(f'              <td class="cell_num cell_primary" id="cmp_15_{d["id"]}">{fmt_tr(db*1.15, 2)}</td>')
+                html.append(f'              <td class="cell_num" id="cmp_20_{d["id"]}">{fmt_tr(db*1.20, 2)}</td>')
+                html.append(f'              <td class="cell_num cell_challenge" id="cmp_50_{d["id"]}">{fmt_tr(db*1.50, 2)}</td>')
+                html.append('            </tr>')
+    # Total row in comparison
+    tot_base = 25468459.62
+    html.append('            <tr class="row_total prog_row_total" id="cmp_row_total">')
+    html.append('              <td><strong>Toàn Znews</strong></td>')
+    html.append(f'              <td class="cell_num cell_bold" id="cmp_base_total">{fmt_tr(tot_base, 2)}</td>')
+    html.append(f'              <td class="cell_num cell_bold" id="cmp_10_total">{fmt_tr(tot_base*1.10, 2)}</td>')
+    html.append(f'              <td class="cell_num cell_primary cell_bold" id="cmp_15_total">{fmt_tr(tot_base*1.15, 2)}</td>')
+    html.append(f'              <td class="cell_num cell_bold" id="cmp_20_total">{fmt_tr(tot_base*1.20, 2)}</td>')
+    html.append(f'              <td class="cell_num cell_challenge cell_bold" id="cmp_50_total">{fmt_tr(tot_base*1.50, 2)}</td>')
+    html.append('            </tr>')
+    html.append('          </tbody>')
+    html.append('        </table>')
+    html.append('      </div>')
+    html.append('    </div>')
+
+    # Big CTA Footer Banner
+    html.append('    <div class="cta_footer_card">')
+    html.append('      <div class="cta_footer_content">')
+    html.append('        <div class="cta_footer_title">Tài liệu và phương án liên quan</div>')
+    html.append('        <div class="cta_footer_desc">Xem phương án đã giao chỉ tiêu chính thức theo trung bình T8–T9 hoặc đọc toàn bộ báo cáo phân tích tác động biến động truy cập.</div>')
+    html.append('      </div>')
+    html.append('      <div class="chip_group">')
+    html.append('        <a href="kpi_phe_duyet.html" class="btn_cta_large">📋 Xem phương án TB T8–T9 đã duyệt</a>')
+    html.append('        <a href="detail.html" class="btn_cta_large">📑 Xem báo cáo giải thích chi tiết</a>')
+    html.append('      </div>')
+    html.append('    </div>')
+
+    # Footer
+    html.append('    <footer class="page_footer">')
+    html.append('      <div>Bản quyền Tạp chí điện tử Tri thức - Znews • Lưu hành nội bộ Ban biên tập</div>')
+    html.append('    </footer>')
+
+    html.append('  </div>') # end wrap
+    html.append('</article>')
+
+    # Reactive JavaScript Engine
+    js = r"""
+(function() {
+  const DEPARTMENTS = [
+    { id: 'xh', name: 'Xã hội', block: 'b_uytin', t9_scaled: 1872666.21, zalo_real: 1832748.64, zalo_hypo: 1779032.90, lk_9t: 27427000, yr_2025: 73774000 },
+    { id: 'pl', name: 'Pháp luật', block: 'b_uytin', t9_scaled: 1136389.66, zalo_real: 1112166.48, zalo_hypo: 1079570.17, lk_9t: 24643000, yr_2025: 54589000 },
+    { id: 'tg', name: 'Thế giới', block: 'b_uytin', t9_scaled: 862942.76, zalo_real: 844548.36, zalo_hypo: 819795.62, lk_9t: 42342000, yr_2025: 40418000 },
+    { id: 'xb', name: 'Xuất bản', block: 'b_uytin', t9_scaled: 1092851.38, zalo_real: 1069556.27, zalo_hypo: 1038208.81, lk_9t: 9861000, yr_2025: 13870000 },
+    { id: 'kd', name: 'Kinh doanh', block: 'b_kinhdoanh', t9_scaled: 3543875.17, zalo_real: 3468334.28, zalo_hypo: 3366681.41, lk_9t: 42582000, yr_2025: 74594000 },
+    { id: 'cn', name: 'Công nghệ', block: 'b_kinhdoanh', t9_scaled: 1711225.86, zalo_real: 1674749.54, zalo_hypo: 1625664.57, lk_9t: 20937000, yr_2025: 34822000 },
+    { id: 'xe', name: 'Xe', block: 'b_kinhdoanh', t9_scaled: 838888.97, zalo_real: 821007.29, zalo_hypo: 796944.52, lk_9t: 11346000, yr_2025: 17137000 },
+    { id: 'ds', name: 'Đời sống', block: 'b_lifestyle', t9_scaled: 1789636.55, zalo_real: 1751488.83, zalo_hypo: 1700154.72, lk_9t: 46731000, yr_2025: 66302000 },
+    { id: 'ls', name: 'Lifestyle', block: 'b_lifestyle', t9_scaled: 565807.24, zalo_real: 553746.55, zalo_hypo: 537516.88, lk_9t: 10366667, yr_2025: 16816959 },
+    { id: 'sk', name: 'Sức khỏe', block: 'b_lifestyle', t9_scaled: 1931763.10, zalo_real: 1890585.83, zalo_hypo: 1835174.95, lk_9t: 27659000, yr_2025: 54215000 },
+    { id: 'gd', name: 'Giáo dục', block: 'b_lifestyle', t9_scaled: 485014.14, zalo_real: 474675.62, zalo_hypo: 460763.43, lk_9t: 10917000, yr_2025: 18389000 },
+    { id: 'dl', name: 'Du lịch', block: 'b_lifestyle', t9_scaled: 927988.97, zalo_real: 908208.04, zalo_hypo: 881589.52, lk_9t: 17046000, yr_2025: 24790000 },
+    { id: 'tt', name: 'Thể thao', block: 'b_truycap', t9_scaled: 6593407.24, zalo_real: 6452862.82, zalo_hypo: 6263736.88, lk_9t: 150384000, yr_2025: 213207000 },
+    { id: 'gt', name: 'Giải trí', block: 'b_truycap', t9_scaled: 2670709.66, zalo_real: 2613781.07, zalo_hypo: 2537174.17, lk_9t: 54222000, yr_2025: 96760000 }
+  ];
+
+  const BLOCKS = [
+    { id: 'b_uytin', name: 'Khối Uy tín', deps: ['xh', 'pl', 'tg', 'xb'], lk_9t: 104273000, yr_2025: 182651000 },
+    { id: 'b_kinhdoanh', name: 'Khối Kinh doanh', deps: ['kd', 'cn', 'xe'], lk_9t: 74865000, yr_2025: 126553000 },
+    { id: 'b_lifestyle', name: 'Khối Lifestyle', deps: ['ds', 'ls', 'sk', 'gd', 'dl'], lk_9t: 112719554, yr_2025: 180512120 },
+    { id: 'b_truycap', name: 'Khối Truy cập', deps: ['tt', 'gt'], lk_9t: 204606000, yr_2025: 309967000 }
+  ];
+
+  const TOTAL_LK_9T = 496464023;
+  const TOTAL_YR_2025 = 799681703;
+
+  let state = {
+    zaloMode: 'real',
+    rateMode: 'all',
+    globalRate: 15.0,
+    depRates: {
+      xh: 15.0, pl: 15.0, tg: 15.0, xb: 15.0,
+      kd: 15.0, cn: 15.0, xe: 15.0,
+      ds: 15.0, ls: 15.0, sk: 15.0, gd: 15.0, dl: 15.0,
+      tt: 15.0, gt: 15.0
+    }
+  };
+
+  function fmtDay(n) {
+    return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  function fmtTr(n, dec) {
+    if (dec === undefined) dec = 2;
+    const v = n / 1000000.0;
+    return v.toLocaleString('vi-VN', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + 'M';
+  }
+
+  function fmtPct(p, dec) {
+    if (dec === undefined) dec = 1;
+    const sign = p > 0 ? '+' : '';
+    return sign + p.toLocaleString('vi-VN', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + '%';
+  }
+
+  function getBadgeClass(r) {
+    if (r >= 50) return 'badge_challenge';
+    if (r >= 20) return 'badge_20';
+    if (r >= 15) return 'badge_15';
+    if (r >= 10) return 'badge_10';
+    return 'badge_bar';
+  }
+
+  function recalculate() {
+    let depRes = {};
+    let blkRes = {};
+    BLOCKS.forEach(b => {
+      blkRes[b.id] = { base: 0, day: 0, q4: 0, lk_9t: b.lk_9t, yr_25: b.yr_2025 };
+    });
+    let totRes = { base: 0, day: 0, q4: 0, lk_9t: TOTAL_LK_9T, yr_25: TOTAL_YR_2025 };
+
+    DEPARTMENTS.forEach(d => {
+      let base = d.zalo_real;
+      if (state.zaloMode === 'hypo') base = d.zalo_hypo;
+      else if (state.zaloMode === 'none') base = d.t9_scaled;
+
+      let rate = state.rateMode === 'all' ? state.globalRate : (state.depRates[d.id] !== undefined ? state.depRates[d.id] : 15.0);
+      let day = (base / 30.0) * (1.0 + rate / 100.0);
+      let q4 = day * 92.0;
+      let th = q4 / 3.0;
+      let yr_26 = d.lk_9t + q4;
+      let pct_25 = ((yr_26 - d.yr_2025) / d.yr_2025) * 100.0;
+
+      depRes[d.id] = { base, rate, day, th, q4, yr_26, pct_25 };
+
+      // Sum to block
+      let blk = blkRes[d.block];
+      blk.base += base;
+      blk.day += day;
+      blk.q4 += q4;
+
+      // Sum to total
+      totRes.base += base;
+      totRes.day += day;
+      totRes.q4 += q4;
+    });
+
+    BLOCKS.forEach(b => {
+      let blk = blkRes[b.id];
+      blk.th = blk.q4 / 3.0;
+      blk.yr_26 = blk.lk_9t + blk.q4;
+      blk.pct_25 = ((blk.yr_26 - blk.yr_25) / blk.yr_25) * 100.0;
+      blk.implied_rate = ((blk.th / blk.base) - 1.0) * 100.0;
+    });
+
+    totRes.th = totRes.q4 / 3.0;
+    totRes.yr_26 = totRes.lk_9t + totRes.q4;
+    totRes.pct_25 = ((totRes.yr_26 - totRes.yr_25) / totRes.yr_25) * 100.0;
+    totRes.implied_rate = ((totRes.th / totRes.base) - 1.0) * 100.0;
+
+    return { depRes, blkRes, totRes };
+  }
+
+  function render() {
+    const { depRes, blkRes, totRes } = recalculate();
+
+    // 1. Top 4 Metric Cards
+    const elDay = document.getElementById('metric_day');
+    const elMonth = document.getElementById('metric_month');
+    const elQ4 = document.getElementById('metric_q4');
+    const elYear = document.getElementById('metric_year');
+    const elYearPct = document.getElementById('metric_year_pct');
+
+    if (elDay) elDay.textContent = fmtDay(totRes.day);
+    if (elMonth) elMonth.textContent = fmtTr(totRes.th, 2);
+    if (elQ4) elQ4.textContent = fmtTr(totRes.q4, 2);
+    if (elYear) elYear.textContent = fmtTr(totRes.yr_26, 2);
+    if (elYearPct) {
+      elYearPct.textContent = fmtPct(totRes.pct_25, 1) + ' vs 2025';
+      elYearPct.className = 'badge_kpi ' + (totRes.pct_25 >= 0 ? 'badge_20' : 'badge_15');
+    }
+
+    // 2. Active Mode Badge in Control Header
+    const activeBadge = document.getElementById('active_mode_badge');
+    if (activeBadge) {
+      if (state.rateMode === 'all') {
+        activeBadge.textContent = 'Đang áp tỷ lệ toàn bộ: ' + fmtPct(state.globalRate, 1);
+        activeBadge.className = 'badge_kpi ' + getBadgeClass(state.globalRate);
+      } else {
+        activeBadge.textContent = 'Đang bật chế độ: Tùy chỉnh từng ban';
+        activeBadge.className = 'badge_kpi badge_challenge';
+      }
+    }
+
+    // 3. Master Table Rows
+    // Total row
+    const elBaseTot = document.getElementById('base_total');
+    const elDayTot = document.getElementById('day_total');
+    const elThTot = document.getElementById('th_total');
+    const elQ4Tot = document.getElementById('q4_total');
+    const elYrTot = document.getElementById('yr_total');
+    const elPctTot = document.getElementById('pct_total');
+    const elBadgeTot = document.getElementById('badge_rate_total');
+
+    if (elBaseTot) elBaseTot.textContent = fmtTr(totRes.base, 2);
+    if (elDayTot) elDayTot.textContent = fmtDay(totRes.day);
+    if (elThTot) elThTot.textContent = fmtTr(totRes.th, 2);
+    if (elQ4Tot) elQ4Tot.textContent = fmtTr(totRes.q4, 2);
+    if (elYrTot) elYrTot.textContent = fmtTr(totRes.yr_26, 2);
+    if (elPctTot) elPctTot.textContent = fmtPct(totRes.pct_25, 1);
+    if (elBadgeTot) {
+      elBadgeTot.textContent = fmtPct(totRes.implied_rate, 1);
+      elBadgeTot.className = 'badge_kpi ' + getBadgeClass(totRes.implied_rate);
+    }
+
+    // Blocks
+    BLOCKS.forEach(b => {
+      const blk = blkRes[b.id];
+      const elBase = document.getElementById('base_' + b.id);
+      const elDay = document.getElementById('day_' + b.id);
+      const elTh = document.getElementById('th_' + b.id);
+      const elQ4 = document.getElementById('q4_' + b.id);
+      const elYr = document.getElementById('yr_' + b.id);
+      const elPct = document.getElementById('pct_' + b.id);
+      const elBadge = document.getElementById('badge_rate_' + b.id);
+
+      if (elBase) elBase.textContent = fmtTr(blk.base, 2);
+      if (elDay) elDay.textContent = fmtDay(blk.day);
+      if (elTh) elTh.textContent = fmtTr(blk.th, 2);
+      if (elQ4) elQ4.textContent = fmtTr(blk.q4, 2);
+      if (elYr) elYr.textContent = fmtTr(blk.yr_26, 2);
+      if (elPct) elPct.textContent = fmtPct(blk.pct_25, 1);
+      if (elBadge) {
+        elBadge.textContent = fmtPct(blk.implied_rate, 1);
+        elBadge.className = 'badge_kpi ' + getBadgeClass(blk.implied_rate);
+      }
+    });
+
+    // Departments
+    DEPARTMENTS.forEach(d => {
+      const res = depRes[d.id];
+      const elBase = document.getElementById('base_' + d.id);
+      const elDay = document.getElementById('day_' + d.id);
+      const elTh = document.getElementById('th_' + d.id);
+      const elQ4 = document.getElementById('q4_' + d.id);
+      const elYr = document.getElementById('yr_' + d.id);
+      const elPct = document.getElementById('pct_' + d.id);
+      const elBadge = document.getElementById('badge_rate_' + d.id);
+      const elWrapInput = document.getElementById('input_wrap_table_' + d.id);
+
+      if (elBase) elBase.textContent = fmtTr(res.base, 2);
+      if (elDay) elDay.textContent = fmtDay(res.day);
+      if (elTh) elTh.textContent = fmtTr(res.th, 2);
+      if (elQ4) elQ4.textContent = fmtTr(res.q4, 2);
+      if (elYr) elYr.textContent = fmtTr(res.yr_26, 2);
+      if (elPct) elPct.textContent = fmtPct(res.pct_25, 1);
+
+      if (elBadge && elWrapInput) {
+        if (state.rateMode === 'all') {
+          elBadge.textContent = fmtPct(res.rate, 1);
+          elBadge.className = 'badge_kpi ' + getBadgeClass(res.rate);
+          elWrapInput.classList.add('is_hidden');
+          elBadge.classList.remove('is_hidden');
+        } else {
+          elWrapInput.classList.remove('is_hidden');
+          elBadge.classList.add('is_hidden');
+          const input = elWrapInput.querySelector('input');
+          if (input && document.activeElement !== input) {
+            input.value = res.rate;
+          }
+        }
+      }
+
+      // Department Cards
+      const cDay = document.getElementById('card_day_' + d.id);
+      const cTh = document.getElementById('card_th_' + d.id);
+      const cQ4 = document.getElementById('card_q4_' + d.id);
+      const cBase = document.getElementById('card_base_' + d.id);
+      const cYr = document.getElementById('card_yr_' + d.id);
+      const cPct = document.getElementById('card_pct_' + d.id);
+      const cBadge = document.getElementById('card_badge_' + d.id);
+      const cWrapInput = document.getElementById('card_input_wrap_' + d.id);
+
+      if (cDay) cDay.textContent = fmtDay(res.day);
+      if (cTh) cTh.textContent = fmtTr(res.th, 2);
+      if (cQ4) cQ4.textContent = fmtTr(res.q4, 2);
+      if (cBase) cBase.textContent = fmtTr(res.base, 2);
+      if (cYr) cYr.textContent = fmtTr(res.yr_26, 2);
+      if (cPct) cPct.textContent = fmtPct(res.pct_25, 1);
+
+      if (cBadge && cWrapInput) {
+        if (state.rateMode === 'all') {
+          cBadge.textContent = fmtPct(res.rate, 1);
+          cBadge.className = 'badge_kpi ' + getBadgeClass(res.rate);
+          cWrapInput.classList.add('is_hidden');
+          cBadge.classList.remove('is_hidden');
+        } else {
+          cWrapInput.classList.remove('is_hidden');
+          cBadge.classList.add('is_hidden');
+          const cInput = cWrapInput.querySelector('input');
+          if (cInput && document.activeElement !== cInput) {
+            cInput.value = res.rate;
+          }
+        }
+      }
+    });
+
+    // 4. Update Comparison Matrix Table
+    BLOCKS.forEach(b => {
+      const blk = blkRes[b.id];
+      const base = blk.base;
+      const cBase = document.getElementById('cmp_base_' + b.id);
+      const c10 = document.getElementById('cmp_10_' + b.id);
+      const c15 = document.getElementById('cmp_15_' + b.id);
+      const c20 = document.getElementById('cmp_20_' + b.id);
+      const c50 = document.getElementById('cmp_50_' + b.id);
+      if (cBase) cBase.textContent = fmtTr(base, 2);
+      if (c10) c10.textContent = fmtTr(base * 1.10, 2);
+      if (c15) c15.textContent = fmtTr(base * 1.15, 2);
+      if (c20) c20.textContent = fmtTr(base * 1.20, 2);
+      if (c50) c50.textContent = fmtTr(base * 1.50, 2);
+    });
+
+    DEPARTMENTS.forEach(d => {
+      const res = depRes[d.id];
+      const base = res.base;
+      const cBase = document.getElementById('cmp_base_' + d.id);
+      const c10 = document.getElementById('cmp_10_' + d.id);
+      const c15 = document.getElementById('cmp_15_' + d.id);
+      const c20 = document.getElementById('cmp_20_' + d.id);
+      const c50 = document.getElementById('cmp_50_' + d.id);
+      if (cBase) cBase.textContent = fmtTr(base, 2);
+      if (c10) c10.textContent = fmtTr(base * 1.10, 2);
+      if (c15) c15.textContent = fmtTr(base * 1.15, 2);
+      if (c20) c20.textContent = fmtTr(base * 1.20, 2);
+      if (c50) c50.textContent = fmtTr(base * 1.50, 2);
+    });
+
+    const cmpTotBase = totRes.base;
+    const cmpTotBaseEl = document.getElementById('cmp_base_total');
+    const cmpTot10 = document.getElementById('cmp_10_total');
+    const cmpTot15 = document.getElementById('cmp_15_total');
+    const cmpTot20 = document.getElementById('cmp_20_total');
+    const cmpTot50 = document.getElementById('cmp_50_total');
+    if (cmpTotBaseEl) cmpTotBaseEl.textContent = fmtTr(cmpTotBase, 2);
+    if (cmpTot10) cmpTot10.textContent = fmtTr(cmpTotBase * 1.10, 2);
+    if (cmpTot15) cmpTot15.textContent = fmtTr(cmpTotBase * 1.15, 2);
+    if (cmpTot20) cmpTot20.textContent = fmtTr(cmpTotBase * 1.20, 2);
+    if (cmpTot50) cmpTot50.textContent = fmtTr(cmpTotBase * 1.50, 2);
+  }
+
+  // EVENT LISTENERS
+  // 1. Zalo Chips
+  const zaloChips = document.querySelectorAll('#zalo_chips .chip');
+  const zaloNote = document.getElementById('zalo_status_note');
+  zaloChips.forEach(chip => {
+    chip.addEventListener('click', function() {
+      zaloChips.forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      state.zaloMode = this.getAttribute('data-zalo');
+      if (zaloNote) {
+        if (state.zaloMode === 'real') {
+          zaloNote.textContent = 'Mức nền T9 sau trừ Zalo thực tế (2,13%): 25,47M/tháng • 848.949 lượt/ngày (T9 gồm 29 ngày dữ liệu thực tế, quy đổi đủ 30 ngày).';
+        } else if (state.zaloMode === 'hypo') {
+          zaloNote.textContent = 'Mức nền T9 sau trừ Zalo giả định (5,0%): 24,72M/tháng • 824.067 lượt/ngày (Loại trừ 5,0% lượng truy cập do Zalo).';
+        } else {
+          zaloNote.textContent = 'Mức nền T9 gốc quy đổi đủ 30 ngày: 26,02M/tháng • 867.439 lượt/ngày (Không trừ ảnh hưởng Zalo).';
+        }
+      }
+      render();
+    });
+  });
+
+  // 2. Mode Chips
+  const modeChips = document.querySelectorAll('#mode_chips .chip');
+  const modeNote = document.getElementById('mode_desc_note');
+  modeChips.forEach(chip => {
+    chip.addEventListener('click', function() {
+      modeChips.forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      state.rateMode = this.getAttribute('data-mode');
+      if (modeNote) {
+        if (state.rateMode === 'all') {
+          modeNote.textContent = 'Áp một tỷ lệ tăng trưởng đồng nhất cho toàn bộ 14 ban biên tập.';
+        } else {
+          modeNote.textContent = 'Chế độ tùy từng ban: Bạn có thể nhập tỷ lệ riêng cho từng ban ở bảng hoặc thẻ bên dưới. Dùng nút/ô nhập ở đây để áp nhanh toàn bộ.';
+        }
+      }
+      render();
+    });
+  });
+
+  // 3. Preset Rate Chips
+  const rateChips = document.querySelectorAll('#rate_chips .chip');
+  const globalInput = document.getElementById('global_rate_input');
+  rateChips.forEach(chip => {
+    chip.addEventListener('click', function() {
+      rateChips.forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      const val = parseFloat(this.getAttribute('data-rate'));
+      state.globalRate = val;
+      if (globalInput) globalInput.value = val;
+      // If in custom mode, update all depRates
+      DEPARTMENTS.forEach(d => {
+        state.depRates[d.id] = val;
+      });
+      render();
+    });
+  });
+
+  // 4. Custom Global Rate Input
+  if (globalInput) {
+    globalInput.addEventListener('input', function() {
+      const val = parseFloat(this.value) || 0;
+      state.globalRate = val;
+      // Sync chips
+      rateChips.forEach(c => {
+        if (parseFloat(c.getAttribute('data-rate')) === val) {
+          c.classList.add('active');
+        } else {
+          c.classList.remove('active');
+        }
+      });
+      // If in custom mode, update all depRates
+      if (state.rateMode === 'custom') {
+        DEPARTMENTS.forEach(d => {
+          state.depRates[d.id] = val;
+        });
+      }
+      render();
+    });
+  }
+
+  // 5. Per-department Table & Card Inputs
+  function bindDepInput(inputEl) {
+    inputEl.addEventListener('input', function() {
+      const depId = this.getAttribute('data-dep');
+      const val = parseFloat(this.value) || 0;
+      state.depRates[depId] = val;
+
+      // Sync other input for same dep
+      document.querySelectorAll('input[data-dep="' + depId + '"]').forEach(inp => {
+        if (inp !== inputEl) inp.value = val;
+      });
+
+      // Switch to custom mode if currently 'all'
+      if (state.rateMode === 'all') {
+        state.rateMode = 'custom';
+        modeChips.forEach(c => {
+          if (c.getAttribute('data-mode') === 'custom') c.classList.add('active');
+          else c.classList.remove('active');
+        });
+        if (modeNote) modeNote.textContent = 'Chế độ tùy từng ban: Bạn có thể nhập tỷ lệ riêng cho từng ban ở bảng hoặc thẻ bên dưới.';
+      }
+
+      render();
+    });
+  }
+
+  document.querySelectorAll('.table_dep_input').forEach(bindDepInput);
+  document.querySelectorAll('.card_dep_input').forEach(bindDepInput);
+
+  // 6. Master Table Filter Chips
+  const filterChips = document.querySelectorAll('#master_filter_chips .chip');
+  filterChips.forEach(chip => {
+    chip.addEventListener('click', function() {
+      filterChips.forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      const filter = this.getAttribute('data-filter');
+      const rows = document.querySelectorAll('#master_kpi_table tbody tr');
+      rows.forEach(r => {
+        if (filter === 'all') {
+          r.classList.remove('is_hidden');
+        } else if (filter === 'blocks') {
+          if (r.classList.contains('prog_row_block') || r.classList.contains('prog_row_total')) {
+            r.classList.remove('is_hidden');
+          } else {
+            r.classList.add('is_hidden');
+          }
+        } else if (filter === 'deps') {
+          if (r.classList.contains('prog_row_dep')) {
+            r.classList.remove('is_hidden');
+          } else {
+            r.classList.add('is_hidden');
+          }
+        }
+      });
+    });
+  });
+
+  // Initial render
+  render();
+})();
+"""
+    html.append(f'<script>{js}</script>')
+    html.append('</body>')
+    html.append('</html>')
+    return "\n".join(html)
+
+
+
+def build_kpi_phe_duyet_html():
+    html = []
+    html.append('<!DOCTYPE html>')
+    html.append('<html lang="vi">')
+    html.append('<head>')
+    html.append('  <meta charset="UTF-8">')
+    html.append('  <meta name="viewport" content="width=device-width, initial-scale=1.0">')
+    html.append('  <title>Bảng giao chỉ tiêu KPI quý 4/2026 (Phương án TB T8–T9 đã phê duyệt) — Tạp chí điện tử Tri thức - Znews</title>')
+    html.append(f'  <style>{css_scoped}</style>')
+    html.append('</head>')
+    html.append('<body>')
+    html.append('<article class="container_AI">')
+    html.append('  <div class="wrap">')
+    
+    # Top Bar Navigation
+    html.append('    <nav class="top_bar_nav">')
+    html.append('      <a href="index.html" class="top_nav_link">🎯 Tính KPI từ tháng 9 (Công cụ mới)</a>')
+    html.append('      <a href="kpi_phe_duyet.html" class="top_nav_link active">📋 Phương án TB T8–T9 đã duyệt</a>')
+    html.append('      <a href="detail.html" class="top_nav_link">📑 Báo cáo giải thích chi tiết</a>')
+    html.append('    </nav>')
     
     # Header
     html.append('    <header class="top_header">')
@@ -3255,12 +4303,6 @@ def build_detail_html():
 # =========================================================================
 # GENERATE AND VALIDATE BOTH FILES
 # =========================================================================
-print("Generating index.html (Official KPI Assignment Dashboard)...")
-index_html = build_index_html()
-
-print("Generating detail.html (Full Explanatory Report)...")
-detail_html = build_detail_html()
-
 def validate_html(html_str, filename):
     print(f"Validating {filename}...")
     style_matches = re.findall(r'\bstyle\s*=', html_str)
@@ -3277,13 +4319,26 @@ def validate_html(html_str, filename):
     assert '<div class="wrap">' in html_str, f"{filename}: Missing wrap"
     print(f"PASS: {filename} 100% compliant with Znews CMS rules!")
 
+print("Generating index.html (Interactive September 2026 KPI Calculator)...")
+index_html = build_interactive_t9_index_html()
+
+print("Generating kpi_phe_duyet.html (Approved KPI Assignment Dashboard)...")
+kpi_phe_duyet_html = build_kpi_phe_duyet_html()
+
+print("Generating detail.html (Full Explanatory Report)...")
+detail_html = build_detail_html()
+
 validate_html(index_html, "index.html")
+validate_html(kpi_phe_duyet_html, "kpi_phe_duyet.html")
 validate_html(detail_html, "detail.html")
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(index_html)
 
+with open("kpi_phe_duyet.html", "w", encoding="utf-8") as f:
+    f.write(kpi_phe_duyet_html)
+
 with open("detail.html", "w", encoding="utf-8") as f:
     f.write(detail_html)
 
-print("SUCCESS: index.html and detail.html generated and saved successfully!")
+print("SUCCESS: All 3 pages (index.html, kpi_phe_duyet.html, detail.html) generated and saved successfully!")

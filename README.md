@@ -5,20 +5,32 @@
 
 ## 1. Địa chỉ truy cập trực tiếp (Live URLs)
 
-- 🔗 **Trang chính (Bảng giao chỉ tiêu KPI Quý 4/2026):**  
+- 🎯 **Trang 1 — Công cụ tính toán & đề xuất KPI từ tháng 9 (Trang chính mới):**  
   [https://latanh-ai-znews.github.io/znews-kpi-q4-2026/](https://latanh-ai-znews.github.io/znews-kpi-q4-2026/)
-- 📑 **Trang giải thích chi tiết & Bối cảnh dữ liệu:**  
+- 📋 **Trang 2 — Bảng giao chỉ tiêu đã phê duyệt (Phương án TB T8–T9):**  
+  [https://latanh-ai-znews.github.io/znews-kpi-q4-2026/kpi_phe_duyet.html](https://latanh-ai-znews.github.io/znews-kpi-q4-2026/kpi_phe_duyet.html)
+- 📑 **Trang 3 — Báo cáo giải thích chi tiết & Bối cảnh dữ liệu:**  
   [https://latanh-ai-znews.github.io/znews-kpi-q4-2026/detail.html](https://latanh-ai-znews.github.io/znews-kpi-q4-2026/detail.html)
 
 ---
 
 ## 2. Bối cảnh & Mục tiêu xây dựng
 
-Sau biến động kỹ thuật về tên miền vào đầu tháng 8/2026, lưu lượng truy cập toàn trang sụt giảm trung bình **58,1%** so với cùng kỳ năm 2025. Để vừa đảm bảo tính khả thi thực tiễn, vừa tạo động lực tái thiết lập lưu lượng truy cập cho tòa soạn trong giai đoạn cao điểm cuối năm, Ban biên tập Tạp chí điện tử Tri thức - Znews đã phê duyệt phương án KPI Quý 4/2026.
+Sau biến động kỹ thuật về tên miền vào đầu tháng 8/2026, lưu lượng truy cập toàn trang sụt giảm trung bình **58,1%** so với cùng kỳ năm 2025. Để phục vụ công tác điều hành linh hoạt và giao chỉ tiêu chính xác, hệ thống được cấu trúc thành **3 trang chuyên trách** tích hợp thanh điều hướng trực tiếp:
 
-Hệ thống website này được xây dựng theo mô hình **Portal 2 tầng (2-page architecture)**:
-1. **Trang chính (`index.html`):** Executive Dashboard tinh gọn, tập trung 100% vào số liệu giao chỉ tiêu chính thức theo Ngày (lượt xem/ngày), Tháng (M) và Cả Quý 4 (M), không chứa văn bản rườm rà.
-2. **Trang báo cáo chi tiết (`detail.html`):** Nghiên cứu chuyên sâu phân tích toàn cảnh dữ liệu 9 tháng đầu năm 2026, bảng tiến độ 19 đơn vị, 4 kịch bản mục tiêu và cơ sở tăng trưởng từ 2 đòn bẩy cốt lõi: **Kênh Zalo OA** và **Độ uy tín tên miền Google (Domain warm-up)**.
+1. **Công cụ tính toán KPI từ tháng 9 (`index.html`):**  
+   - Dựa trên dữ liệu thực tế tháng 9/2026 (29 ngày thực tế quy đổi đủ 30 ngày).
+   - Tích hợp bộ điều khiển tương tác theo thời gian thực (Zero-latency reactivity).
+   - **Tùy chọn loại bỏ ảnh hưởng Zalo:** 3 kịch bản gồm *Trừ Zalo thực tế (2,1%)*, *Trừ Zalo giả định (5,0%)*, và *Không trừ Zalo (Số gốc T9 quy đổi)*.
+   - **Chế độ phân bổ tỷ lệ:** *Áp tỷ lệ tăng toàn bộ ban* hoặc *Tùy chỉnh riêng cho từng ban*.
+   - **Tỷ lệ tăng trưởng linh hoạt:** Chọn nhanh các mốc đặt sẵn (+10%, +15%, +20%, +50%) hoặc gõ con số bất kỳ vào ô nhập.
+   - Tự động tính toán KPI Ngày (lượt/ngày), KPI Tháng (M), KPI Cả Quý 4 (92 ngày) và Dự báo Cả năm 2026 (% so với 2025).
+
+2. **Phương án KPI đã phê duyệt (`kpi_phe_duyet.html`):**  
+   - Bảng giao chỉ tiêu chính thức theo phương án Ban biên tập đã chốt dựa trên mức nền trung bình 2 tháng sau biến động (TB T8–T9: 28,28M/tháng): Khối Uy tín +15%, Khối Kinh doanh +15%, Khối Lifestyle +15% (riêng Lifestyle +10%), Khối Truy cập: Giải trí +15%, Thể thao +20%. Toàn trang đạt **98,73M** trong Quý 4 (tương ứng **1.073.185 lượt/ngày**).
+
+3. **Báo cáo giải thích chi tiết (`detail.html`):**  
+   - Phân tích toàn cảnh dữ liệu 9 tháng đầu năm 2026, bảng tiến độ 19 đơn vị qua các mốc 7T, 8T, 9T, đối chiếu 4 kịch bản mục tiêu và phân tích cơ sở tăng trưởng từ 2 đòn bẩy: **Zalo OA** và **Độ uy tín tên miền Google (Domain warm-up)**.
 
 ---
 
@@ -26,10 +38,12 @@ Hệ thống website này được xây dựng theo mô hình **Portal 2 tầng 
 
 ```text
 Tính KPI Znews Q4 2026/
-├── generate_full_dashboard.py      # Kịch bản Python tự động tạo toàn bộ index.html và detail.html
+├── generate_full_dashboard.py      # Kịch bản Python tự động tạo cả 3 trang HTML
 ├── brief_data.json                 # CSDL gốc trích xuất từ bảng số liệu tòa soạn
-├── index.html                      # Trang 1: Bảng giao chỉ tiêu điều hành chính thức
-├── detail.html                     # Trang 2: Báo cáo giải thích chi tiết & bối cảnh dữ liệu
+├── KPI thang 9.xlsx                # File dữ liệu tháng 9 gốc tòa soạn cung cấp
+├── index.html                      # Trang 1: Công cụ tính toán KPI tương tác từ T9
+├── kpi_phe_duyet.html              # Trang 2: Bảng giao chỉ tiêu TB T8–T9 đã phê duyệt
+├── detail.html                     # Trang 3: Báo cáo giải thích chi tiết & bối cảnh dữ liệu
 ├── Brief web.md.rtf                # Bản brief yêu cầu & phân tích ban đầu
 ├── Tien do KPI.rtf                 # Bảng dữ liệu tiến độ KPI 9 tháng đầu năm
 ├── README.md                       # Tài liệu tổng quan dự án (file này)
@@ -38,40 +52,30 @@ Tính KPI Znews Q4 2026/
 
 ---
 
-## 4. Bảng giao chỉ tiêu KPI Quý 4/2026 chính thức
+## 4. Công thức tính toán KPI chuẩn từ tháng 9
 
-> **Cơ sở tính toán:**  
-> - Quý 4/2026 có tổng cộng **92 ngày** (Tháng 10: 31 ngày; Tháng 11: 30 ngày; Tháng 12: 31 ngày).  
-> - Chỉ tiêu ngày: `round((Chỉ tiêu Quý 4 / 92) * 1.000.000)`.  
-> - Đơn vị tính: Triệu lượt hiển thị là **M** (ví dụ `98,73M`). Số ngày hiển thị số nguyên có dấu chấm phân cách hàng nghìn (ví dụ `1.073.185`).
+```
+1. Cơ sở tháng 9 (quy đổi 30 ngày):
+   - Mức gốc T9 = (Số lượt thực tế 29 ngày / 29) × 30
+   - Sau trừ Zalo thực tế (2,13%) = Mức gốc T9 × (1 - 0,0213159)
+   - Sau trừ Zalo giả định (5,0%) = Mức gốc T9 × (1 - 0,05)
 
-| Đơn vị / ban | KPI ngày (lượt) | KPI tháng (M) | KPI quý 4 (M) | Mức tăng chốt | TB T8–T9 nền (M) | Dự kiến cả năm 2026 (M) |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Toàn Znews** | **1.073.185** | **32,91M** | **98,73M** | **+16.4%** | **28,28M** | **595,2M (-25,6%)** |
-| **Khối Uy tín** | **205.663** | **6,31M** | **18,92M** | **+15.0%** | **5,48M** | **123,2M (-32,6%)** |
-| ↳ Xã hội | 69.489 | 2,13M | 6,39M | +15% | 1,85M | 33,8M (-54,2%) |
-| ↳ Pháp luật | 57.326 | 1,76M | 5,27M | +15% | 1,53M | 29,9M (-45,2%) |
-| ↳ Thế giới | 35.902 | 1,10M | 3,30M | +15% | 0,96M | 45,6M (+12,9%) |
-| ↳ Xuất bản | 42.946 | 1,32M | 3,95M | +15% | 1,15M | 13,8M (-0,4%) |
-| **Khối Kinh doanh** | **226.272** | **6,94M** | **20,82M** | **+15.0%** | **6,03M** | **95,7M (-24,4%)** |
-| ↳ Kinh doanh | 136.435 | 4,18M | 12,55M | +15% | 3,64M | 55,1M (-26,1%) |
-| ↳ Công nghệ | 58.826 | 1,80M | 5,41M | +15% | 1,57M | 26,3M (-24,3%) |
-| ↳ Xe | 31.011 | 0,95M | 2,85M | +15% | 0,83M | 14,2M (-17,1%) |
-| **Khối Lifestyle** | **215.087** | **6,60M** | **19,79M** | **+14.5%** | **5,76M** | **132,5M (-26,6%)** |
-| ↳ Đời sống | 69.065 | 2,12M | 6,35M | +15% | 1,84M | 53,1M (-19,9%) |
-| ↳ Sức khỏe | 70.467 | 2,16M | 6,48M | +15% | 1,88M | 34,1M (-37,0%) |
-| ↳ Du lịch | 36.326 | 1,11M | 3,34M | +15% | 0,97M | 20,4M (-17,8%) |
-| ↳ Giáo dục | 20.283 | 0,62M | 1,87M | +15% | 0,54M | 12,8M (-30,5%) |
-| ↳ Lifestyle *(Đặc thù)* | **18.946** | **0,58M** | **1,74M** | **+10%** | **0,53M** | **12,1M (-28,0%)** |
-| **Khối Truy cập** | **426.163** | **13,07M** | **39,21M** | **+18.8%** | **11,01M** | **243,8M (-21,3%)** |
-| ↳ Thể thao *(Mũi nhọn)* | **323.152** | **9,91M** | **29,73M** | **+20%** | **8,26M** | **180,1M (-15,5%)** |
-| ↳ Giải trí | 103.011 | 3,16M | 9,48M | +15% | 2,75M | 63,7M (-34,2%) |
+2. Chỉ tiêu Quý 4/2026:
+   - Cơ sở ngày = Cơ sở tháng / 30
+   - KPI ngày = Cơ sở ngày × (1 + Tỷ lệ tăng trưởng / 100)
+   - KPI Quý 4 (92 ngày) = KPI ngày × 92
+   - KPI trung bình tháng = KPI Quý 4 / 3
+
+3. Dự báo cả năm 2026:
+   - Cả năm 2026 = Lũy kế 9 tháng thực tế + KPI Quý 4
+   - % Tăng trưởng vs 2025 = ((Cả năm 2026 - Cả năm 2025) / Cả năm 2025) × 100%
+```
 
 ---
 
 ## 5. Quy chuẩn kỹ thuật Znews CMS (6 quy tắc vàng)
 
-Để mã HTML có thể nhúng trực tiếp vào CMS nội bộ hoặc chạy tĩnh độc lập với độ tương thích tuyệt đối, hệ thống tuân thủ nghiêm ngặt 6 tiêu chuẩn:
+Mọi trang HTML sinh ra bắt buộc phải vượt qua bộ kiểm thử tự động 6 tiêu chuẩn:
 1. **0 inline style (`style=""`):** 100% định dạng nằm trong thẻ `<style>` ở `<head>`, bao gói dưới namespace `.container_AI`.
 2. **0 thẻ `<span>`:** Sử dụng các thẻ ngữ nghĩa thay thế: `<strong>`, `<em>`, `<div>`, `<small>`.
 3. **0 thẻ `<button>`:** Thay thế bằng `<div class="chip">` hoặc thẻ liên kết `<a class="chip">`.
@@ -84,23 +88,23 @@ Tính KPI Znews Q4 2026/
 ## 6. Lệnh tạo trang & Quy trình triển khai
 
 ### Tái tạo mã nguồn:
-Chạy script Python để sinh tự động cả 2 file `index.html` và `detail.html`:
+Chạy script Python để sinh tự động cả 3 file `index.html`, `kpi_phe_duyet.html` và `detail.html`:
 ```bash
 python3 generate_full_dashboard.py
 ```
-*Script sẽ tự động chạy bộ kiểm tra hợp quy (Built-in CMS Validator) trước khi ghi file ra đĩa.*
+*Script sẽ tự động chạy bộ kiểm tra hợp quy (Built-in CMS Validator) trên cả 3 file trước khi ghi file ra đĩa.*
 
 ### Đẩy lên GitHub Pages:
 ```bash
 # 1. Cập nhật nhánh main
-git add generate_full_dashboard.py index.html detail.html
-git commit -m "feat: update dashboard files"
+git add generate_full_dashboard.py index.html kpi_phe_duyet.html detail.html README.md HUONG_DAN_TAO_WEBSITE_KPI.md "KPI thang 9.xlsx"
+git commit -m "feat: add interactive September KPI calculator and 3-page portal"
 git push origin main
 
 # 2. Xuất bản lên nhánh gh-pages
 git checkout gh-pages
-git checkout main -- index.html detail.html
-git commit -m "deploy: publish latest build to gh-pages"
+git checkout main -- index.html kpi_phe_duyet.html detail.html
+git commit -m "deploy: publish 3-page KPI portal to gh-pages"
 git push origin gh-pages
 git checkout main
 ```

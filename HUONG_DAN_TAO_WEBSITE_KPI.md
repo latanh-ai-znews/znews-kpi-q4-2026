@@ -5,7 +5,7 @@
 
 ## MỤC LỤC
 1. [Giới thiệu & Triết lý thiết kế](#1-giới-thiệu--triết-lý-thiết-kế)
-2. [Cấu trúc kiến trúc 2 tầng (Portal Architecture)](#2-cấu-trúc-kiến-trúc-2-tầng-portal-architecture)
+2. [Cấu trúc kiến trúc 3 tầng (Portal Architecture)](#2-cấu-trúc-kiến-trúc-2-tầng-portal-architecture)
 3. [Quy chuẩn Znews CMS (6 quy tắc vàng)](#3-quy-chuẩn-znews-cms-6-quy-tắc-vàng)
 4. [Hệ thống thiết kế UI/UX (Design System)](#4-hệ-thống-thiết-kế-uiux-design-system)
 5. [Đặc tả mô hình dữ liệu (Data Schema)](#5-đặc-tả-mô-hình-dữ-liệu-data-schema)
@@ -29,14 +29,22 @@ Tài liệu này đóng gói toàn bộ phương pháp luận, công thức toá
 
 ---
 
-## 2. Cấu trúc kiến trúc 2 tầng (Portal Architecture)
+## 2. Cấu trúc kiến trúc 3 tầng (Portal Architecture)
 
 Hệ thống được tách bạch thành 2 trang chuyên trách, liên kết qua lại bằng các nút điều hướng rõ ràng:
 
 ```
 [ Người xem ]
      │
-     ├──► [ index.html ]: Bảng Giao Chỉ Tiêu Chính Thức (Executive Dashboard)
+     ├──► [ index.html ]: Công cụ tính toán & đề xuất KPI từ tháng 9 (Interactive Calculator)
+     │         ├─ Bộ điều khiển Zalo (Trừ thực tế 2,1%, Trừ giả định 5%, Không trừ)
+     │         ├─ Chế độ phân bổ (Áp toàn bộ ban vs Tùy từng ban)
+     │         ├─ Tỷ lệ tăng (+10%, +15%, +20%, +50% hoặc nhập tùy ý)
+     │         ├─ 4 thẻ tổng quan toàn soạn: Ngày, Tháng, Quý 4, Năm
+     │         ├─ Bảng Master 19 đơn vị có input chỉnh riêng theo từng ban
+     │         └─ Bảng so sánh 4 kịch bản quy đổi theo tháng
+     │
+     ├──► [ kpi_phe_duyet.html ]: Bảng giao chỉ tiêu chính thức (Executive Dashboard) (Executive Dashboard)
      │         ├─ 4 thẻ tổng quan toàn soạn: Ngày (1.073.185), Tháng (32,91M), Quý 4 (98,73M), Năm (595,20M)
      │         ├─ Bảng Master 19 đơn vị: Có bộ lọc tương tác (Tất cả, 4 khối, 14 ban)
      │         ├─ Cột hiển thị: Đơn vị/ban | KPI ngày | KPI tháng | KPI quý 4 | Mức tăng | TB T8-T9 (nền)

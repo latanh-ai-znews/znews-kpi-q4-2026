@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bảng giao chỉ tiêu KPI quý 4/2026 — Tạp chí điện tử Tri thức - Znews</title>
+  <title>Công cụ tính toán & đề xuất KPI quý 4/2026 từ tháng 9 — Tạp chí điện tử Tri thức - Znews</title>
   <style>
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@500;600;700;800&display=swap');
 
@@ -1279,43 +1279,341 @@ html {
   .container_AI .kpi_metric_val { font-size: 28px; }
   .container_AI .cta_footer_card { flex-direction: column; align-items: flex-start; }
 }
+
+/* =========================================================================
+   TOP NAV TABS & INTERACTIVE CONTROLS (T9 CALCULATOR)
+   ========================================================================= */
+.container_AI .top_bar_nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.container_AI .top_nav_link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  transition: all 0.2s ease;
+}
+
+.container_AI .top_nav_link:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.container_AI .top_nav_link.active {
+  background: #3b56e0;
+  color: #ffffff;
+  border-color: #3b56e0;
+  box-shadow: 0 2px 8px rgba(59, 86, 224, 0.25);
+}
+
+.container_AI .control_panel_card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 28px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.container_AI .control_panel_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.container_AI .control_panel_title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.container_AI .control_grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.container_AI .control_section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.container_AI .control_section_full {
+  grid-column: 1 / -1;
+  background: #f0f7ff;
+  border-color: #bfdbfe;
+}
+
+.container_AI .control_label {
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #334155;
+}
+
+.container_AI .control_desc {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.container_AI .chip_group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.container_AI .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
+}
+
+.container_AI .chip:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.container_AI .chip.active {
+  background: #3b56e0;
+  border-color: #3b56e0;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(59, 86, 224, 0.25);
+}
+
+.container_AI .rate_input_wrap {
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.container_AI .rate_input_wrap:focus-within {
+  border-color: #3b56e0;
+  box-shadow: 0 0 0 3px rgba(59, 86, 224, 0.15);
+}
+
+.container_AI .rate_input {
+  width: 76px;
+  padding: 7px 10px;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0f172a;
+  border: none;
+  outline: none;
+  background: transparent;
+  text-align: right;
+  font-family: inherit;
+}
+
+.container_AI .rate_unit {
+  padding: 7px 12px 7px 6px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #64748b;
+  background: #f8fafc;
+  border-left: 1px solid #e2e8f0;
+}
+
+.container_AI .control_helper_text {
+  font-size: 13px;
+  color: #475569;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.container_AI .table_dep_input {
+  width: 58px;
+  padding: 4px 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  text-align: right;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+
+.container_AI .table_dep_input:focus {
+  border-color: #3b56e0;
+  box-shadow: 0 0 0 2px rgba(59, 86, 224, 0.2);
+}
+
+.container_AI .card_dep_input {
+  width: 54px;
+  padding: 3px 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  text-align: right;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+
+.container_AI .card_dep_input:focus {
+  border-color: #3b56e0;
+  box-shadow: 0 0 0 2px rgba(59, 86, 224, 0.2);
+}
+
+.container_AI .table_input_cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.container_AI .unit_tag {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.container_AI .is_hidden {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .container_AI .control_grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 </style>
 </head>
 <body>
 <article class="container_AI">
   <div class="wrap">
+    <nav class="top_bar_nav">
+      <a href="index.html" class="top_nav_link active">🎯 Tính KPI từ tháng 9 (Công cụ mới)</a>
+      <a href="kpi_phe_duyet.html" class="top_nav_link">📋 Phương án TB T8–T9 đã duyệt</a>
+      <a href="detail.html" class="top_nav_link">📑 Báo cáo giải thích chi tiết</a>
+    </nav>
     <header class="top_header">
       <div class="brand_area">
         <div class="brand_kicker">Tạp chí điện tử Tri thức - Znews • Ban biên tập</div>
-        <div class="brand_title">Bảng giao chỉ tiêu KPI quý 4/2026</div>
-        <div class="brand_sub">Chỉ tiêu chính thức theo ngày • tháng • cả quý 4 cho 14 ban & 4 khối</div>
+        <div class="brand_title">Công cụ tính toán & đề xuất KPI quý 4/2026 từ tháng 9</div>
+        <div class="brand_sub">Dựa trên dữ liệu thực tế tháng 9/2026 quy đổi 30 ngày • Tùy chỉnh tỷ lệ tăng trưởng và loại trừ ảnh hưởng Zalo theo thời gian thực</div>
       </div>
       <div>
         <a href="detail.html" class="nav_btn_main">📑 Giải thích chi tiết & bối cảnh dữ liệu →</a>
       </div>
     </header>
+    <div class="control_panel_card">
+      <div class="control_panel_header">
+        <div class="control_panel_title">Bảng điều khiển thông số tính toán KPI</div>
+        <div class="badge_kpi badge_15" id="active_mode_badge">Đang áp tỷ lệ toàn bộ: +15,0%</div>
+      </div>
+      <div class="control_grid">
+        <div class="control_section control_section_full">
+          <div class="control_label">Ảnh hưởng truy cập Zalo (Cơ sở dữ liệu tháng 9)</div>
+          <div class="chip_group" id="zalo_chips">
+            <div class="chip active" data-zalo="real">Trừ Zalo thực tế (2,1%)</div>
+            <div class="chip" data-zalo="hypo">Trừ Zalo giả định (5,0%)</div>
+            <div class="chip" data-zalo="none">Không trừ Zalo (Số gốc T9 quy đổi)</div>
+          </div>
+          <div class="control_helper_text" id="zalo_status_note">Mức nền T9 sau trừ Zalo thực tế (2,13%): 25,47M/tháng • 848.949 lượt/ngày (T9 gồm 29 ngày dữ liệu thực tế, quy đổi đủ 30 ngày).</div>
+        </div>
+        <div class="control_section">
+          <div class="control_label">Chế độ phân bổ tỷ lệ tăng trưởng</div>
+          <div class="chip_group" id="mode_chips">
+            <div class="chip active" data-mode="all">Áp tỷ lệ tăng toàn bộ ban</div>
+            <div class="chip" data-mode="custom">Tỷ lệ tăng tùy từng ban</div>
+          </div>
+          <div class="control_desc" id="mode_desc_note">Áp một tỷ lệ tăng trưởng đồng nhất cho toàn bộ 14 ban biên tập.</div>
+        </div>
+        <div class="control_section">
+          <div class="control_label">Thiết lập tỷ lệ tăng trưởng đề xuất</div>
+          <div class="chip_group" id="rate_chips">
+            <div class="chip" data-rate="10">+10%</div>
+            <div class="chip active" data-rate="15">+15%</div>
+            <div class="chip" data-rate="20">+20%</div>
+            <div class="chip" data-rate="50">+50%</div>
+            <div class="rate_input_wrap">
+              <input type="number" id="global_rate_input" class="rate_input" value="15" step="0.5" min="-50" max="200">
+              <div class="rate_unit">%</div>
+            </div>
+          </div>
+          <div class="control_helper_text" id="rate_helper_note">Chọn nhanh tỷ lệ đặt sẵn hoặc nhập con số tăng trưởng tùy ý vào ô trên.</div>
+        </div>
+      </div>
+    </div>
     <div class="kpi_grid_4">
       <div class="kpi_metric_card highlight_day">
         <div class="kpi_metric_label">KPI truy cập theo ngày (toàn trang)</div>
-        <div class="kpi_metric_val val_green">1.073.185</div>
+        <div class="kpi_metric_val val_green" id="metric_day">976.291</div>
+        <div class="kpi_metric_sub">Lượt xem trung bình mỗi ngày trong Quý 4 (92 ngày)</div>
       </div>
       <div class="kpi_metric_card highlight_month">
-        <div class="kpi_metric_label">KPI truy cập theo tháng (toàn trang)</div>
-        <div class="kpi_metric_val val_blue">32,91M</div>
+        <div class="kpi_metric_label">KPI truy cập trung bình tháng</div>
+        <div class="kpi_metric_val val_blue" id="metric_month">29,94M</div>
+        <div class="kpi_metric_sub">Trung bình mỗi tháng trong Quý 4 (T10, T11, T12)</div>
       </div>
       <div class="kpi_metric_card highlight_quarter">
         <div class="kpi_metric_label">KPI truy cập quý 4</div>
-        <div class="kpi_metric_val val_purple">98,73M</div>
+        <div class="kpi_metric_val val_purple" id="metric_q4">89,82M</div>
+        <div class="kpi_metric_sub">Tổng 3 tháng: T10 (31 ngày) + T11 (30 ngày) + T12 (31 ngày)</div>
       </div>
       <div class="kpi_metric_card">
         <div class="kpi_metric_label">Dự kiến cả năm 2026</div>
-        <div class="kpi_metric_val">595,20M</div>
+        <div class="kpi_metric_val" id="metric_year">586,28M</div>
+        <div class="kpi_metric_sub">
+          <div class="badge_kpi badge_15" id="metric_year_pct">-26,7% vs 2025</div>
+        </div>
       </div>
     </div>
     <div class="card">
       <div class="dep_card_header">
         <div>
-          <h3>Bảng giao chỉ tiêu: Ngày • tháng • quý 4/2026</h3>
+          <h3>Bảng tổng hợp chỉ tiêu: Ngày • tháng • quý 4/2026 & dự báo năm</h3>
         </div>
         <div class="controls_bar" id="master_filter_chips">
           <div class="chip active" data-filter="all">Tất cả (19 đơn vị)</div>
@@ -1328,165 +1626,289 @@ html {
           <thead>
             <tr>
               <th>Đơn vị / ban</th>
+              <th class="cell_center">Tỷ lệ tăng</th>
+              <th class="cell_num">Cơ sở T9 (nền)</th>
               <th class="cell_num cell_day_hl">KPI ngày</th>
               <th class="cell_num cell_primary">KPI tháng</th>
               <th class="cell_num cell_bold">KPI quý 4</th>
-              <th class="cell_center">Mức tăng chốt</th>
-              <th class="cell_num">TB T8–T9 (nền)</th>
+              <th class="cell_num cell_bold">Cả năm 2026</th>
+              <th class="cell_num cell_bold">So với 2025</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="row_block prog_row_block">
+            <tr class="row_block prog_row_block" id="row_b_uytin">
               <td><strong>Khối Uy tín</strong></td>
-              <td class="cell_num cell_day_hl">205.663</td>
-              <td class="cell_num cell_primary">6,31M</td>
-              <td class="cell_num cell_bold">18,92M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+15.0%</div></td>
-              <td class="cell_num cell_bold">5,48M</td>
+              <td class="cell_center"><div class="badge_kpi badge_15" id="badge_rate_b_uytin">+15,0%</div></td>
+              <td class="cell_num" id="base_b_uytin">4.859,02</td>
+              <td class="cell_num cell_day_hl" id="day_b_uytin">186.262</td>
+              <td class="cell_num cell_primary" id="th_b_uytin">5.712,05</td>
+              <td class="cell_num cell_bold" id="q4_b_uytin">17.136,14</td>
+              <td class="cell_num cell_bold" id="yr_b_uytin">121.409,14</td>
+              <td class="cell_num cell_bold" id="pct_b_uytin">-33,5%</td>
             </tr>
-            <tr class="prog_row_dep">
+            <tr class="prog_row_dep" id="row_dep_xh">
               <td>&nbsp;&nbsp;↳ Xã hội</td>
-              <td class="cell_num cell_day_hl">69.489</td>
-              <td class="cell_num cell_primary">2,13M</td>
-              <td class="cell_num cell_bold">6,39M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+15%</div></td>
-              <td class="cell_num">1,85M</td>
+              <td class="cell_center">
+                <div class="badge_kpi badge_15" id="badge_rate_xh">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="input_wrap_table_xh">
+                  <input type="number" class="table_dep_input" data-dep="xh" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
+              </td>
+              <td class="cell_num" id="base_xh">1.832,75</td>
+              <td class="cell_num cell_day_hl" id="day_xh">70.255</td>
+              <td class="cell_num cell_primary" id="th_xh">2.154,50</td>
+              <td class="cell_num cell_bold" id="q4_xh">6.463,49</td>
+              <td class="cell_num" id="yr_xh">33.890,49</td>
+              <td class="cell_num" id="pct_xh">-54,1%</td>
             </tr>
-            <tr class="prog_row_dep">
+            <tr class="prog_row_dep" id="row_dep_pl">
               <td>&nbsp;&nbsp;↳ Pháp luật</td>
-              <td class="cell_num cell_day_hl">57.326</td>
-              <td class="cell_num cell_primary">1,76M</td>
-              <td class="cell_num cell_bold">5,27M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+15%</div></td>
-              <td class="cell_num">1,53M</td>
+              <td class="cell_center">
+                <div class="badge_kpi badge_15" id="badge_rate_pl">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="input_wrap_table_pl">
+                  <input type="number" class="table_dep_input" data-dep="pl" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
+              </td>
+              <td class="cell_num" id="base_pl">1.112,17</td>
+              <td class="cell_num cell_day_hl" id="day_pl">42.633</td>
+              <td class="cell_num cell_primary" id="th_pl">1.307,41</td>
+              <td class="cell_num cell_bold" id="q4_pl">3.922,24</td>
+              <td class="cell_num" id="yr_pl">28.565,24</td>
+              <td class="cell_num" id="pct_pl">-47,7%</td>
             </tr>
-            <tr class="prog_row_dep">
+            <tr class="prog_row_dep" id="row_dep_tg">
               <td>&nbsp;&nbsp;↳ Thế giới</td>
-              <td class="cell_num cell_day_hl">35.902</td>
-              <td class="cell_num cell_primary">1,10M</td>
-              <td class="cell_num cell_bold">3,30M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+15%</div></td>
-              <td class="cell_num">0,96M</td>
+              <td class="cell_center">
+                <div class="badge_kpi badge_15" id="badge_rate_tg">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="input_wrap_table_tg">
+                  <input type="number" class="table_dep_input" data-dep="tg" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
+              </td>
+              <td class="cell_num" id="base_tg">844,55</td>
+              <td class="cell_num cell_day_hl" id="day_tg">32.374</td>
+              <td class="cell_num cell_primary" id="th_tg">992,81</td>
+              <td class="cell_num cell_bold" id="q4_tg">2.978,44</td>
+              <td class="cell_num" id="yr_tg">45.320,44</td>
+              <td class="cell_num" id="pct_tg">+12,1%</td>
             </tr>
-            <tr class="prog_row_dep">
+            <tr class="prog_row_dep" id="row_dep_xb">
               <td>&nbsp;&nbsp;↳ Xuất bản</td>
-              <td class="cell_num cell_day_hl">42.946</td>
-              <td class="cell_num cell_primary">1,32M</td>
-              <td class="cell_num cell_bold">3,95M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+15%</div></td>
-              <td class="cell_num">1,15M</td>
+              <td class="cell_center">
+                <div class="badge_kpi badge_15" id="badge_rate_xb">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="input_wrap_table_xb">
+                  <input type="number" class="table_dep_input" data-dep="xb" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
+              </td>
+              <td class="cell_num" id="base_xb">1.069,56</td>
+              <td class="cell_num cell_day_hl" id="day_xb">41.000</td>
+              <td class="cell_num cell_primary" id="th_xb">1.257,32</td>
+              <td class="cell_num cell_bold" id="q4_xb">3.771,97</td>
+              <td class="cell_num" id="yr_xb">13.632,97</td>
+              <td class="cell_num" id="pct_xb">-1,7%</td>
             </tr>
-            <tr class="row_block prog_row_block">
+            <tr class="row_block prog_row_block" id="row_b_kinhdoanh">
               <td><strong>Khối Kinh doanh</strong></td>
-              <td class="cell_num cell_day_hl">226.272</td>
-              <td class="cell_num cell_primary">6,94M</td>
-              <td class="cell_num cell_bold">20,82M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+15.0%</div></td>
-              <td class="cell_num cell_bold">6,03M</td>
+              <td class="cell_center"><div class="badge_kpi badge_15" id="badge_rate_b_kinhdoanh">+15,0%</div></td>
+              <td class="cell_num" id="base_b_kinhdoanh">5.964,09</td>
+              <td class="cell_num cell_day_hl" id="day_b_kinhdoanh">228.624</td>
+              <td class="cell_num cell_primary" id="th_b_kinhdoanh">7.011,13</td>
+              <td class="cell_num cell_bold" id="q4_b_kinhdoanh">21.033,40</td>
+              <td class="cell_num cell_bold" id="yr_b_kinhdoanh">95.898,40</td>
+              <td class="cell_num cell_bold" id="pct_b_kinhdoanh">-24,2%</td>
             </tr>
-            <tr class="prog_row_dep">
+            <tr class="prog_row_dep" id="row_dep_kd">
               <td>&nbsp;&nbsp;↳ Kinh doanh</td>
-              <td class="cell_num cell_day_hl">136.435</td>
-              <td class="cell_num cell_primary">4,18M</td>
-              <td class="cell_num cell_bold">12,55M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+15%</div></td>
-              <td class="cell_num">3,64M</td>
+              <td class="cell_center">
+                <div class="badge_kpi badge_15" id="badge_rate_kd">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="input_wrap_table_kd">
+                  <input type="number" class="table_dep_input" data-dep="kd" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
+              </td>
+              <td class="cell_num" id="base_kd">3.468,33</td>
+              <td class="cell_num cell_day_hl" id="day_kd">132.953</td>
+              <td class="cell_num cell_primary" id="th_kd">4.077,22</td>
+              <td class="cell_num cell_bold" id="q4_kd">12.231,65</td>
+              <td class="cell_num" id="yr_kd">54.813,65</td>
+              <td class="cell_num" id="pct_kd">-26,5%</td>
             </tr>
-            <tr class="prog_row_dep">
+            <tr class="prog_row_dep" id="row_dep_cn">
               <td>&nbsp;&nbsp;↳ Công nghệ</td>
-              <td class="cell_num cell_day_hl">58.826</td>
-              <td class="cell_num cell_primary">1,80M</td>
-              <td class="cell_num cell_bold">5,41M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+15%</div></td>
-              <td class="cell_num">1,57M</td>
+              <td class="cell_center">
+                <div class="badge_kpi badge_15" id="badge_rate_cn">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="input_wrap_table_cn">
+                  <input type="number" class="table_dep_input" data-dep="cn" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
+              </td>
+              <td class="cell_num" id="base_cn">1.674,75</td>
+              <td class="cell_num cell_day_hl" id="day_cn">64.199</td>
+              <td class="cell_num cell_primary" id="th_cn">1.968,77</td>
+              <td class="cell_num cell_bold" id="q4_cn">5.906,30</td>
+              <td class="cell_num" id="yr_cn">26.843,30</td>
+              <td class="cell_num" id="pct_cn">-22,9%</td>
             </tr>
-            <tr class="prog_row_dep">
+            <tr class="prog_row_dep" id="row_dep_xe">
               <td>&nbsp;&nbsp;↳ Xe</td>
-              <td class="cell_num cell_day_hl">31.011</td>
-              <td class="cell_num cell_primary">0,95M</td>
-              <td class="cell_num cell_bold">2,85M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+15%</div></td>
-              <td class="cell_num">0,83M</td>
+              <td class="cell_center">
+                <div class="badge_kpi badge_15" id="badge_rate_xe">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="input_wrap_table_xe">
+                  <input type="number" class="table_dep_input" data-dep="xe" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
+              </td>
+              <td class="cell_num" id="base_xe">821,01</td>
+              <td class="cell_num cell_day_hl" id="day_xe">31.472</td>
+              <td class="cell_num cell_primary" id="th_xe">965,15</td>
+              <td class="cell_num cell_bold" id="q4_xe">2.895,45</td>
+              <td class="cell_num" id="yr_xe">14.241,45</td>
+              <td class="cell_num" id="pct_xe">-16,9%</td>
             </tr>
-            <tr class="row_block prog_row_block">
+            <tr class="row_block prog_row_block" id="row_b_lifestyle">
               <td><strong>Khối Lifestyle</strong></td>
-              <td class="cell_num cell_day_hl">215.087</td>
-              <td class="cell_num cell_primary">6,60M</td>
-              <td class="cell_num cell_bold">19,79M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+14.5%</div></td>
-              <td class="cell_num cell_bold">5,76M</td>
+              <td class="cell_center"><div class="badge_kpi badge_15" id="badge_rate_b_lifestyle">+15,0%</div></td>
+              <td class="cell_num" id="base_b_lifestyle">5.578,70</td>
+              <td class="cell_num cell_day_hl" id="day_b_lifestyle">213.850</td>
+              <td class="cell_num cell_primary" id="th_b_lifestyle">6.558,74</td>
+              <td class="cell_num cell_bold" id="q4_b_lifestyle">19.676,22</td>
+              <td class="cell_num cell_bold" id="yr_b_lifestyle">132.395,77</td>
+              <td class="cell_num cell_bold" id="pct_b_lifestyle">-26,7%</td>
             </tr>
-            <tr class="prog_row_dep">
+            <tr class="prog_row_dep" id="row_dep_ds">
               <td>&nbsp;&nbsp;↳ Đời sống</td>
-              <td class="cell_num cell_day_hl">69.065</td>
-              <td class="cell_num cell_primary">2,12M</td>
-              <td class="cell_num cell_bold">6,35M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+15%</div></td>
-              <td class="cell_num">1,84M</td>
+              <td class="cell_center">
+                <div class="badge_kpi badge_15" id="badge_rate_ds">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="input_wrap_table_ds">
+                  <input type="number" class="table_dep_input" data-dep="ds" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
+              </td>
+              <td class="cell_num" id="base_ds">1.751,49</td>
+              <td class="cell_num cell_day_hl" id="day_ds">67.140</td>
+              <td class="cell_num cell_primary" id="th_ds">2.059,30</td>
+              <td class="cell_num cell_bold" id="q4_ds">6.177,90</td>
+              <td class="cell_num" id="yr_ds">52.908,90</td>
+              <td class="cell_num" id="pct_ds">-20,2%</td>
             </tr>
-            <tr class="prog_row_dep">
+            <tr class="prog_row_dep" id="row_dep_ls">
               <td>&nbsp;&nbsp;↳ Lifestyle</td>
-              <td class="cell_num cell_day_hl">18.946</td>
-              <td class="cell_num cell_primary">0,58M</td>
-              <td class="cell_num cell_bold">1,74M</td>
-              <td class="cell_center"><div class="badge_kpi badge_10">+10%</div></td>
-              <td class="cell_num">0,53M</td>
+              <td class="cell_center">
+                <div class="badge_kpi badge_15" id="badge_rate_ls">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="input_wrap_table_ls">
+                  <input type="number" class="table_dep_input" data-dep="ls" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
+              </td>
+              <td class="cell_num" id="base_ls">553,75</td>
+              <td class="cell_num cell_day_hl" id="day_ls">21.227</td>
+              <td class="cell_num cell_primary" id="th_ls">650,97</td>
+              <td class="cell_num cell_bold" id="q4_ls">1.952,92</td>
+              <td class="cell_num" id="yr_ls">12.319,59</td>
+              <td class="cell_num" id="pct_ls">-26,7%</td>
             </tr>
-            <tr class="prog_row_dep">
+            <tr class="prog_row_dep" id="row_dep_sk">
               <td>&nbsp;&nbsp;↳ Sức khỏe</td>
-              <td class="cell_num cell_day_hl">70.467</td>
-              <td class="cell_num cell_primary">2,16M</td>
-              <td class="cell_num cell_bold">6,48M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+15%</div></td>
-              <td class="cell_num">1,88M</td>
+              <td class="cell_center">
+                <div class="badge_kpi badge_15" id="badge_rate_sk">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="input_wrap_table_sk">
+                  <input type="number" class="table_dep_input" data-dep="sk" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
+              </td>
+              <td class="cell_num" id="base_sk">1.890,59</td>
+              <td class="cell_num cell_day_hl" id="day_sk">72.472</td>
+              <td class="cell_num cell_primary" id="th_sk">2.222,82</td>
+              <td class="cell_num cell_bold" id="q4_sk">6.668,47</td>
+              <td class="cell_num" id="yr_sk">34.327,46</td>
+              <td class="cell_num" id="pct_sk">-36,7%</td>
             </tr>
-            <tr class="prog_row_dep">
+            <tr class="prog_row_dep" id="row_dep_gd">
               <td>&nbsp;&nbsp;↳ Giáo dục</td>
-              <td class="cell_num cell_day_hl">20.283</td>
-              <td class="cell_num cell_primary">0,62M</td>
-              <td class="cell_num cell_bold">1,87M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+15%</div></td>
-              <td class="cell_num">0,54M</td>
+              <td class="cell_center">
+                <div class="badge_kpi badge_15" id="badge_rate_gd">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="input_wrap_table_gd">
+                  <input type="number" class="table_dep_input" data-dep="gd" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
+              </td>
+              <td class="cell_num" id="base_gd">474,68</td>
+              <td class="cell_num cell_day_hl" id="day_gd">18.196</td>
+              <td class="cell_num cell_primary" id="th_gd">558,00</td>
+              <td class="cell_num cell_bold" id="q4_gd">1.674,00</td>
+              <td class="cell_num" id="yr_gd">12.591,00</td>
+              <td class="cell_num" id="pct_gd">-31,5%</td>
             </tr>
-            <tr class="prog_row_dep">
+            <tr class="prog_row_dep" id="row_dep_dl">
               <td>&nbsp;&nbsp;↳ Du lịch</td>
-              <td class="cell_num cell_day_hl">36.326</td>
-              <td class="cell_num cell_primary">1,11M</td>
-              <td class="cell_num cell_bold">3,34M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+15%</div></td>
-              <td class="cell_num">0,97M</td>
+              <td class="cell_center">
+                <div class="badge_kpi badge_15" id="badge_rate_dl">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="input_wrap_table_dl">
+                  <input type="number" class="table_dep_input" data-dep="dl" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
+              </td>
+              <td class="cell_num" id="base_dl">908,21</td>
+              <td class="cell_num cell_day_hl" id="day_dl">34.815</td>
+              <td class="cell_num cell_primary" id="th_dl">1.067,64</td>
+              <td class="cell_num cell_bold" id="q4_dl">3.202,93</td>
+              <td class="cell_num" id="yr_dl">20.248,93</td>
+              <td class="cell_num" id="pct_dl">-18,3%</td>
             </tr>
-            <tr class="row_block prog_row_block">
+            <tr class="row_block prog_row_block" id="row_b_truycap">
               <td><strong>Khối Truy cập</strong></td>
-              <td class="cell_num cell_day_hl">426.163</td>
-              <td class="cell_num cell_primary">13,07M</td>
-              <td class="cell_num cell_bold">39,21M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+18.8%</div></td>
-              <td class="cell_num cell_bold">11,01M</td>
+              <td class="cell_center"><div class="badge_kpi badge_15" id="badge_rate_b_truycap">+15,0%</div></td>
+              <td class="cell_num" id="base_b_truycap">9.066,64</td>
+              <td class="cell_num cell_day_hl" id="day_b_truycap">347.555</td>
+              <td class="cell_num cell_primary" id="th_b_truycap">10.658,34</td>
+              <td class="cell_num cell_bold" id="q4_b_truycap">31.975,03</td>
+              <td class="cell_num cell_bold" id="yr_b_truycap">236.581,03</td>
+              <td class="cell_num cell_bold" id="pct_b_truycap">-23,7%</td>
             </tr>
-            <tr class="prog_row_dep">
+            <tr class="prog_row_dep" id="row_dep_tt">
               <td>&nbsp;&nbsp;↳ Thể thao</td>
-              <td class="cell_num cell_day_hl">323.152</td>
-              <td class="cell_num cell_primary">9,91M</td>
-              <td class="cell_num cell_bold">29,73M</td>
-              <td class="cell_center"><div class="badge_kpi badge_20">+20%</div></td>
-              <td class="cell_num">8,26M</td>
+              <td class="cell_center">
+                <div class="badge_kpi badge_15" id="badge_rate_tt">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="input_wrap_table_tt">
+                  <input type="number" class="table_dep_input" data-dep="tt" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
+              </td>
+              <td class="cell_num" id="base_tt">6.452,86</td>
+              <td class="cell_num cell_day_hl" id="day_tt">247.360</td>
+              <td class="cell_num cell_primary" id="th_tt">7.585,70</td>
+              <td class="cell_num cell_bold" id="q4_tt">22.757,10</td>
+              <td class="cell_num" id="yr_tt">173.141,10</td>
+              <td class="cell_num" id="pct_tt">-18,8%</td>
             </tr>
-            <tr class="prog_row_dep">
+            <tr class="prog_row_dep" id="row_dep_gt">
               <td>&nbsp;&nbsp;↳ Giải trí</td>
-              <td class="cell_num cell_day_hl">103.011</td>
-              <td class="cell_num cell_primary">3,16M</td>
-              <td class="cell_num cell_bold">9,48M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+15%</div></td>
-              <td class="cell_num">2,75M</td>
+              <td class="cell_center">
+                <div class="badge_kpi badge_15" id="badge_rate_gt">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="input_wrap_table_gt">
+                  <input type="number" class="table_dep_input" data-dep="gt" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
+              </td>
+              <td class="cell_num" id="base_gt">2.613,78</td>
+              <td class="cell_num cell_day_hl" id="day_gt">100.195</td>
+              <td class="cell_num cell_primary" id="th_gt">3.072,64</td>
+              <td class="cell_num cell_bold" id="q4_gt">9.217,93</td>
+              <td class="cell_num" id="yr_gt">63.439,93</td>
+              <td class="cell_num" id="pct_gt">-34,4%</td>
             </tr>
-            <tr class="row_total prog_row_total">
+            <tr class="row_total prog_row_total" id="row_total_znews">
               <td><strong>Toàn Znews</strong></td>
-              <td class="cell_num cell_day_hl">1.073.185</td>
-              <td class="cell_num cell_primary cell_bold">32,91M</td>
-              <td class="cell_num cell_bold">98,73M</td>
-              <td class="cell_center"><div class="badge_kpi badge_15">+16.4%</div></td>
-              <td class="cell_num cell_bold">28,28M</td>
+              <td class="cell_center"><div class="badge_kpi badge_15" id="badge_rate_total">+15,0%</div></td>
+              <td class="cell_num cell_bold" id="base_total">25,47M</td>
+              <td class="cell_num cell_day_hl cell_bold" id="day_total">976.291</td>
+              <td class="cell_num cell_primary cell_bold" id="th_total">29,94M</td>
+              <td class="cell_num cell_bold" id="q4_total">89,82M</td>
+              <td class="cell_num cell_bold" id="yr_total">586,28M</td>
+              <td class="cell_num cell_bold" id="pct_total">-26,7%</td>
             </tr>
           </tbody>
         </table>
@@ -1495,7 +1917,7 @@ html {
     <div class="card">
       <div class="dep_card_header">
         <div>
-          <h3>Chi tiết KPI từng ban</h3>
+          <h3>Chi tiết KPI từng ban (14 ban biên tập)</h3>
         </div>
       </div>
       <div class="dep_grid">
@@ -1505,26 +1927,30 @@ html {
               <div class="dep_name">Xã hội</div>
               <div class="dep_tags">
                 <div class="dep_block_tag">Khối Uy tín</div>
-                <div class="badge_kpi badge_15">+15%</div>
+                <div class="badge_kpi badge_15" id="card_badge_xh">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="card_input_wrap_xh">
+                  <input type="number" class="card_dep_input" data-dep="xh" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
               </div>
             </div>
             <div class="dep_target_boxes">
               <div class="target_box box_day">
                 <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">69.489</div>
+                <div class="target_box_val" id="card_day_xh">70.255</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">2,13M</div>
+                <div class="target_box_val" id="card_th_xh">2.154,50</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">6,39M</div>
+                <div class="target_box_val" id="card_q4_xh">6.463,49</div>
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>TB T8–T9 (nền): <strong>1,85M</strong></div>
-              <div>Cả năm 2026: <strong>33,82M (-54,2%)</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_xh">1.832,75</strong></div>
+              <div>Cả năm 2026: <strong id="card_yr_xh">33.890,49</strong> (<strong id="card_pct_xh">-54,1%</strong> vs 2025)</div>
             </div>
           </div>
         </div>
@@ -1534,26 +1960,30 @@ html {
               <div class="dep_name">Pháp luật</div>
               <div class="dep_tags">
                 <div class="dep_block_tag">Khối Uy tín</div>
-                <div class="badge_kpi badge_15">+15%</div>
+                <div class="badge_kpi badge_15" id="card_badge_pl">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="card_input_wrap_pl">
+                  <input type="number" class="card_dep_input" data-dep="pl" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
               </div>
             </div>
             <div class="dep_target_boxes">
               <div class="target_box box_day">
                 <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">57.326</div>
+                <div class="target_box_val" id="card_day_pl">42.633</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">1,76M</div>
+                <div class="target_box_val" id="card_th_pl">1.307,41</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">5,27M</div>
+                <div class="target_box_val" id="card_q4_pl">3.922,24</div>
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>TB T8–T9 (nền): <strong>1,53M</strong></div>
-              <div>Cả năm 2026: <strong>29,92M (-45,2%)</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_pl">1.112,17</strong></div>
+              <div>Cả năm 2026: <strong id="card_yr_pl">28.565,24</strong> (<strong id="card_pct_pl">-47,7%</strong> vs 2025)</div>
             </div>
           </div>
         </div>
@@ -1563,26 +1993,30 @@ html {
               <div class="dep_name">Thế giới</div>
               <div class="dep_tags">
                 <div class="dep_block_tag">Khối Uy tín</div>
-                <div class="badge_kpi badge_15">+15%</div>
+                <div class="badge_kpi badge_15" id="card_badge_tg">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="card_input_wrap_tg">
+                  <input type="number" class="card_dep_input" data-dep="tg" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
               </div>
             </div>
             <div class="dep_target_boxes">
               <div class="target_box box_day">
                 <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">35.902</div>
+                <div class="target_box_val" id="card_day_tg">32.374</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">1,10M</div>
+                <div class="target_box_val" id="card_th_tg">992,81</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">3,30M</div>
+                <div class="target_box_val" id="card_q4_tg">2.978,44</div>
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>TB T8–T9 (nền): <strong>0,96M</strong></div>
-              <div>Cả năm 2026: <strong>45,65M (+12,9%)</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_tg">844,55</strong></div>
+              <div>Cả năm 2026: <strong id="card_yr_tg">45.320,44</strong> (<strong id="card_pct_tg">+12,1%</strong> vs 2025)</div>
             </div>
           </div>
         </div>
@@ -1592,26 +2026,30 @@ html {
               <div class="dep_name">Xuất bản</div>
               <div class="dep_tags">
                 <div class="dep_block_tag">Khối Uy tín</div>
-                <div class="badge_kpi badge_15">+15%</div>
+                <div class="badge_kpi badge_15" id="card_badge_xb">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="card_input_wrap_xb">
+                  <input type="number" class="card_dep_input" data-dep="xb" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
               </div>
             </div>
             <div class="dep_target_boxes">
               <div class="target_box box_day">
                 <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">42.946</div>
+                <div class="target_box_val" id="card_day_xb">41.000</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">1,32M</div>
+                <div class="target_box_val" id="card_th_xb">1.257,32</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">3,95M</div>
+                <div class="target_box_val" id="card_q4_xb">3.771,97</div>
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>TB T8–T9 (nền): <strong>1,15M</strong></div>
-              <div>Cả năm 2026: <strong>13,81M (-0,4%)</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_xb">1.069,56</strong></div>
+              <div>Cả năm 2026: <strong id="card_yr_xb">13.632,97</strong> (<strong id="card_pct_xb">-1,7%</strong> vs 2025)</div>
             </div>
           </div>
         </div>
@@ -1621,26 +2059,30 @@ html {
               <div class="dep_name">Kinh doanh</div>
               <div class="dep_tags">
                 <div class="dep_block_tag">Khối Kinh doanh</div>
-                <div class="badge_kpi badge_15">+15%</div>
+                <div class="badge_kpi badge_15" id="card_badge_kd">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="card_input_wrap_kd">
+                  <input type="number" class="card_dep_input" data-dep="kd" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
               </div>
             </div>
             <div class="dep_target_boxes">
               <div class="target_box box_day">
                 <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">136.435</div>
+                <div class="target_box_val" id="card_day_kd">132.953</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">4,18M</div>
+                <div class="target_box_val" id="card_th_kd">4.077,22</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">12,55M</div>
+                <div class="target_box_val" id="card_q4_kd">12.231,65</div>
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>TB T8–T9 (nền): <strong>3,64M</strong></div>
-              <div>Cả năm 2026: <strong>55,13M (-26,1%)</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_kd">3.468,33</strong></div>
+              <div>Cả năm 2026: <strong id="card_yr_kd">54.813,65</strong> (<strong id="card_pct_kd">-26,5%</strong> vs 2025)</div>
             </div>
           </div>
         </div>
@@ -1650,26 +2092,30 @@ html {
               <div class="dep_name">Công nghệ</div>
               <div class="dep_tags">
                 <div class="dep_block_tag">Khối Kinh doanh</div>
-                <div class="badge_kpi badge_15">+15%</div>
+                <div class="badge_kpi badge_15" id="card_badge_cn">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="card_input_wrap_cn">
+                  <input type="number" class="card_dep_input" data-dep="cn" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
               </div>
             </div>
             <div class="dep_target_boxes">
               <div class="target_box box_day">
                 <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">58.826</div>
+                <div class="target_box_val" id="card_day_cn">64.199</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">1,80M</div>
+                <div class="target_box_val" id="card_th_cn">1.968,77</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">5,41M</div>
+                <div class="target_box_val" id="card_q4_cn">5.906,30</div>
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>TB T8–T9 (nền): <strong>1,57M</strong></div>
-              <div>Cả năm 2026: <strong>26,35M (-24,3%)</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_cn">1.674,75</strong></div>
+              <div>Cả năm 2026: <strong id="card_yr_cn">26.843,30</strong> (<strong id="card_pct_cn">-22,9%</strong> vs 2025)</div>
             </div>
           </div>
         </div>
@@ -1679,26 +2125,30 @@ html {
               <div class="dep_name">Xe</div>
               <div class="dep_tags">
                 <div class="dep_block_tag">Khối Kinh doanh</div>
-                <div class="badge_kpi badge_15">+15%</div>
+                <div class="badge_kpi badge_15" id="card_badge_xe">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="card_input_wrap_xe">
+                  <input type="number" class="card_dep_input" data-dep="xe" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
               </div>
             </div>
             <div class="dep_target_boxes">
               <div class="target_box box_day">
                 <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">31.011</div>
+                <div class="target_box_val" id="card_day_xe">31.472</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">0,95M</div>
+                <div class="target_box_val" id="card_th_xe">965,15</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">2,85M</div>
+                <div class="target_box_val" id="card_q4_xe">2.895,45</div>
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>TB T8–T9 (nền): <strong>0,83M</strong></div>
-              <div>Cả năm 2026: <strong>14,20M (-17,1%)</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_xe">821,01</strong></div>
+              <div>Cả năm 2026: <strong id="card_yr_xe">14.241,45</strong> (<strong id="card_pct_xe">-16,9%</strong> vs 2025)</div>
             </div>
           </div>
         </div>
@@ -1708,26 +2158,30 @@ html {
               <div class="dep_name">Đời sống</div>
               <div class="dep_tags">
                 <div class="dep_block_tag">Khối Lifestyle</div>
-                <div class="badge_kpi badge_15">+15%</div>
+                <div class="badge_kpi badge_15" id="card_badge_ds">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="card_input_wrap_ds">
+                  <input type="number" class="card_dep_input" data-dep="ds" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
               </div>
             </div>
             <div class="dep_target_boxes">
               <div class="target_box box_day">
                 <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">69.065</div>
+                <div class="target_box_val" id="card_day_ds">67.140</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">2,12M</div>
+                <div class="target_box_val" id="card_th_ds">2.059,30</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">6,35M</div>
+                <div class="target_box_val" id="card_q4_ds">6.177,90</div>
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>TB T8–T9 (nền): <strong>1,84M</strong></div>
-              <div>Cả năm 2026: <strong>53,09M (-19,9%)</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_ds">1.751,49</strong></div>
+              <div>Cả năm 2026: <strong id="card_yr_ds">52.908,90</strong> (<strong id="card_pct_ds">-20,2%</strong> vs 2025)</div>
             </div>
           </div>
         </div>
@@ -1737,26 +2191,30 @@ html {
               <div class="dep_name">Lifestyle</div>
               <div class="dep_tags">
                 <div class="dep_block_tag">Khối Lifestyle</div>
-                <div class="badge_kpi badge_10">+10%</div>
+                <div class="badge_kpi badge_15" id="card_badge_ls">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="card_input_wrap_ls">
+                  <input type="number" class="card_dep_input" data-dep="ls" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
               </div>
             </div>
             <div class="dep_target_boxes">
               <div class="target_box box_day">
                 <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">18.946</div>
+                <div class="target_box_val" id="card_day_ls">21.227</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">0,58M</div>
+                <div class="target_box_val" id="card_th_ls">650,97</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">1,74M</div>
+                <div class="target_box_val" id="card_q4_ls">1.952,92</div>
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>TB T8–T9 (nền): <strong>0,53M</strong></div>
-              <div>Cả năm 2026: <strong>12,11M (-28,0%)</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_ls">553,75</strong></div>
+              <div>Cả năm 2026: <strong id="card_yr_ls">12.319,59</strong> (<strong id="card_pct_ls">-26,7%</strong> vs 2025)</div>
             </div>
           </div>
         </div>
@@ -1766,26 +2224,30 @@ html {
               <div class="dep_name">Sức khỏe</div>
               <div class="dep_tags">
                 <div class="dep_block_tag">Khối Lifestyle</div>
-                <div class="badge_kpi badge_15">+15%</div>
+                <div class="badge_kpi badge_15" id="card_badge_sk">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="card_input_wrap_sk">
+                  <input type="number" class="card_dep_input" data-dep="sk" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
               </div>
             </div>
             <div class="dep_target_boxes">
               <div class="target_box box_day">
                 <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">70.467</div>
+                <div class="target_box_val" id="card_day_sk">72.472</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">2,16M</div>
+                <div class="target_box_val" id="card_th_sk">2.222,82</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">6,48M</div>
+                <div class="target_box_val" id="card_q4_sk">6.668,47</div>
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>TB T8–T9 (nền): <strong>1,88M</strong></div>
-              <div>Cả năm 2026: <strong>34,14M (-37,0%)</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_sk">1.890,59</strong></div>
+              <div>Cả năm 2026: <strong id="card_yr_sk">34.327,46</strong> (<strong id="card_pct_sk">-36,7%</strong> vs 2025)</div>
             </div>
           </div>
         </div>
@@ -1795,26 +2257,30 @@ html {
               <div class="dep_name">Giáo dục</div>
               <div class="dep_tags">
                 <div class="dep_block_tag">Khối Lifestyle</div>
-                <div class="badge_kpi badge_15">+15%</div>
+                <div class="badge_kpi badge_15" id="card_badge_gd">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="card_input_wrap_gd">
+                  <input type="number" class="card_dep_input" data-dep="gd" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
               </div>
             </div>
             <div class="dep_target_boxes">
               <div class="target_box box_day">
                 <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">20.283</div>
+                <div class="target_box_val" id="card_day_gd">18.196</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">0,62M</div>
+                <div class="target_box_val" id="card_th_gd">558,00</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">1,87M</div>
+                <div class="target_box_val" id="card_q4_gd">1.674,00</div>
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>TB T8–T9 (nền): <strong>0,54M</strong></div>
-              <div>Cả năm 2026: <strong>12,78M (-30,5%)</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_gd">474,68</strong></div>
+              <div>Cả năm 2026: <strong id="card_yr_gd">12.591,00</strong> (<strong id="card_pct_gd">-31,5%</strong> vs 2025)</div>
             </div>
           </div>
         </div>
@@ -1824,26 +2290,30 @@ html {
               <div class="dep_name">Du lịch</div>
               <div class="dep_tags">
                 <div class="dep_block_tag">Khối Lifestyle</div>
-                <div class="badge_kpi badge_15">+15%</div>
+                <div class="badge_kpi badge_15" id="card_badge_dl">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="card_input_wrap_dl">
+                  <input type="number" class="card_dep_input" data-dep="dl" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
               </div>
             </div>
             <div class="dep_target_boxes">
               <div class="target_box box_day">
                 <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">36.326</div>
+                <div class="target_box_val" id="card_day_dl">34.815</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">1,11M</div>
+                <div class="target_box_val" id="card_th_dl">1.067,64</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">3,34M</div>
+                <div class="target_box_val" id="card_q4_dl">3.202,93</div>
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>TB T8–T9 (nền): <strong>0,97M</strong></div>
-              <div>Cả năm 2026: <strong>20,39M (-17,8%)</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_dl">908,21</strong></div>
+              <div>Cả năm 2026: <strong id="card_yr_dl">20.248,93</strong> (<strong id="card_pct_dl">-18,3%</strong> vs 2025)</div>
             </div>
           </div>
         </div>
@@ -1853,26 +2323,30 @@ html {
               <div class="dep_name">Thể thao</div>
               <div class="dep_tags">
                 <div class="dep_block_tag">Khối Truy cập</div>
-                <div class="badge_kpi badge_20">+20%</div>
+                <div class="badge_kpi badge_15" id="card_badge_tt">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="card_input_wrap_tt">
+                  <input type="number" class="card_dep_input" data-dep="tt" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
               </div>
             </div>
             <div class="dep_target_boxes">
               <div class="target_box box_day">
                 <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">323.152</div>
+                <div class="target_box_val" id="card_day_tt">247.360</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">9,91M</div>
+                <div class="target_box_val" id="card_th_tt">7.585,70</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">29,73M</div>
+                <div class="target_box_val" id="card_q4_tt">22.757,10</div>
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>TB T8–T9 (nền): <strong>8,26M</strong></div>
-              <div>Cả năm 2026: <strong>180,11M (-15,5%)</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_tt">6.452,86</strong></div>
+              <div>Cả năm 2026: <strong id="card_yr_tt">173.141,10</strong> (<strong id="card_pct_tt">-18,8%</strong> vs 2025)</div>
             </div>
           </div>
         </div>
@@ -1882,73 +2356,670 @@ html {
               <div class="dep_name">Giải trí</div>
               <div class="dep_tags">
                 <div class="dep_block_tag">Khối Truy cập</div>
-                <div class="badge_kpi badge_15">+15%</div>
+                <div class="badge_kpi badge_15" id="card_badge_gt">+15,0%</div>
+                <div class="table_input_cell is_hidden" id="card_input_wrap_gt">
+                  <input type="number" class="card_dep_input" data-dep="gt" value="15" step="0.5">
+                  <div class="unit_tag">%</div>
+                </div>
               </div>
             </div>
             <div class="dep_target_boxes">
               <div class="target_box box_day">
                 <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">103.011</div>
+                <div class="target_box_val" id="card_day_gt">100.195</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">3,16M</div>
+                <div class="target_box_val" id="card_th_gt">3.072,64</div>
               </div>
               <div class="target_box">
                 <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">9,48M</div>
+                <div class="target_box_val" id="card_q4_gt">9.217,93</div>
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>TB T8–T9 (nền): <strong>2,75M</strong></div>
-              <div>Cả năm 2026: <strong>63,70M (-34,2%)</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_gt">2.613,78</strong></div>
+              <div>Cả năm 2026: <strong id="card_yr_gt">63.439,93</strong> (<strong id="card_pct_gt">-34,4%</strong> vs 2025)</div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="card">
+      <div class="dep_card_header">
+        <div>
+          <h3>So sánh 4 mốc tăng trưởng (+10%, +15%, +20%, +50%) theo cơ sở tháng 9</h3>
+        </div>
+      </div>
+      <div class="control_desc" id="compare_desc_note">KPI trung bình tháng (quy đổi 30 ngày) cho 14 ban và 4 khối theo cơ sở Zalo đang chọn.</div>
+      <div class="table_responsive">
+        <table class="kpi_table" id="comparison_matrix_table">
+          <thead>
+            <tr>
+              <th>Đơn vị / ban</th>
+              <th class="cell_num">Cơ sở T9 (nền)</th>
+              <th class="cell_num">Mức +10%</th>
+              <th class="cell_num cell_primary">Mức +15%</th>
+              <th class="cell_num">Mức +20%</th>
+              <th class="cell_num cell_challenge">Mức +50%</th>
+            </tr>
+          </thead>
+          <tbody id="comparison_tbody">
+            <tr class="row_block prog_row_block" id="cmp_row_b_uytin">
+              <td><strong>Khối Uy tín</strong></td>
+              <td class="cell_num" id="cmp_base_b_uytin">4.859,02</td>
+              <td class="cell_num" id="cmp_10_b_uytin">5.344,92</td>
+              <td class="cell_num cell_primary" id="cmp_15_b_uytin">5.587,87</td>
+              <td class="cell_num" id="cmp_20_b_uytin">5.830,82</td>
+              <td class="cell_num cell_challenge" id="cmp_50_b_uytin">7.288,53</td>
+            </tr>
+            <tr class="prog_row_dep" id="cmp_row_dep_xh">
+              <td>&nbsp;&nbsp;↳ Xã hội</td>
+              <td class="cell_num" id="cmp_base_xh">1.832,75</td>
+              <td class="cell_num" id="cmp_10_xh">2.016,02</td>
+              <td class="cell_num cell_primary" id="cmp_15_xh">2.107,66</td>
+              <td class="cell_num" id="cmp_20_xh">2.199,30</td>
+              <td class="cell_num cell_challenge" id="cmp_50_xh">2.749,12</td>
+            </tr>
+            <tr class="prog_row_dep" id="cmp_row_dep_pl">
+              <td>&nbsp;&nbsp;↳ Pháp luật</td>
+              <td class="cell_num" id="cmp_base_pl">1.112,17</td>
+              <td class="cell_num" id="cmp_10_pl">1.223,38</td>
+              <td class="cell_num cell_primary" id="cmp_15_pl">1.278,99</td>
+              <td class="cell_num" id="cmp_20_pl">1.334,60</td>
+              <td class="cell_num cell_challenge" id="cmp_50_pl">1.668,25</td>
+            </tr>
+            <tr class="prog_row_dep" id="cmp_row_dep_tg">
+              <td>&nbsp;&nbsp;↳ Thế giới</td>
+              <td class="cell_num" id="cmp_base_tg">844,55</td>
+              <td class="cell_num" id="cmp_10_tg">929,00</td>
+              <td class="cell_num cell_primary" id="cmp_15_tg">971,23</td>
+              <td class="cell_num" id="cmp_20_tg">1.013,46</td>
+              <td class="cell_num cell_challenge" id="cmp_50_tg">1.266,82</td>
+            </tr>
+            <tr class="prog_row_dep" id="cmp_row_dep_xb">
+              <td>&nbsp;&nbsp;↳ Xuất bản</td>
+              <td class="cell_num" id="cmp_base_xb">1.069,56</td>
+              <td class="cell_num" id="cmp_10_xb">1.176,51</td>
+              <td class="cell_num cell_primary" id="cmp_15_xb">1.229,99</td>
+              <td class="cell_num" id="cmp_20_xb">1.283,47</td>
+              <td class="cell_num cell_challenge" id="cmp_50_xb">1.604,33</td>
+            </tr>
+            <tr class="row_block prog_row_block" id="cmp_row_b_kinhdoanh">
+              <td><strong>Khối Kinh doanh</strong></td>
+              <td class="cell_num" id="cmp_base_b_kinhdoanh">5.964,09</td>
+              <td class="cell_num" id="cmp_10_b_kinhdoanh">6.560,50</td>
+              <td class="cell_num cell_primary" id="cmp_15_b_kinhdoanh">6.858,70</td>
+              <td class="cell_num" id="cmp_20_b_kinhdoanh">7.156,91</td>
+              <td class="cell_num cell_challenge" id="cmp_50_b_kinhdoanh">8.946,14</td>
+            </tr>
+            <tr class="prog_row_dep" id="cmp_row_dep_kd">
+              <td>&nbsp;&nbsp;↳ Kinh doanh</td>
+              <td class="cell_num" id="cmp_base_kd">3.468,33</td>
+              <td class="cell_num" id="cmp_10_kd">3.815,17</td>
+              <td class="cell_num cell_primary" id="cmp_15_kd">3.988,58</td>
+              <td class="cell_num" id="cmp_20_kd">4.162,00</td>
+              <td class="cell_num cell_challenge" id="cmp_50_kd">5.202,50</td>
+            </tr>
+            <tr class="prog_row_dep" id="cmp_row_dep_cn">
+              <td>&nbsp;&nbsp;↳ Công nghệ</td>
+              <td class="cell_num" id="cmp_base_cn">1.674,75</td>
+              <td class="cell_num" id="cmp_10_cn">1.842,22</td>
+              <td class="cell_num cell_primary" id="cmp_15_cn">1.925,96</td>
+              <td class="cell_num" id="cmp_20_cn">2.009,70</td>
+              <td class="cell_num cell_challenge" id="cmp_50_cn">2.512,12</td>
+            </tr>
+            <tr class="prog_row_dep" id="cmp_row_dep_xe">
+              <td>&nbsp;&nbsp;↳ Xe</td>
+              <td class="cell_num" id="cmp_base_xe">821,01</td>
+              <td class="cell_num" id="cmp_10_xe">903,11</td>
+              <td class="cell_num cell_primary" id="cmp_15_xe">944,16</td>
+              <td class="cell_num" id="cmp_20_xe">985,21</td>
+              <td class="cell_num cell_challenge" id="cmp_50_xe">1.231,51</td>
+            </tr>
+            <tr class="row_block prog_row_block" id="cmp_row_b_lifestyle">
+              <td><strong>Khối Lifestyle</strong></td>
+              <td class="cell_num" id="cmp_base_b_lifestyle">5.578,70</td>
+              <td class="cell_num" id="cmp_10_b_lifestyle">6.136,58</td>
+              <td class="cell_num cell_primary" id="cmp_15_b_lifestyle">6.415,51</td>
+              <td class="cell_num" id="cmp_20_b_lifestyle">6.694,45</td>
+              <td class="cell_num cell_challenge" id="cmp_50_b_lifestyle">8.368,06</td>
+            </tr>
+            <tr class="prog_row_dep" id="cmp_row_dep_ds">
+              <td>&nbsp;&nbsp;↳ Đời sống</td>
+              <td class="cell_num" id="cmp_base_ds">1.751,49</td>
+              <td class="cell_num" id="cmp_10_ds">1.926,64</td>
+              <td class="cell_num cell_primary" id="cmp_15_ds">2.014,21</td>
+              <td class="cell_num" id="cmp_20_ds">2.101,79</td>
+              <td class="cell_num cell_challenge" id="cmp_50_ds">2.627,23</td>
+            </tr>
+            <tr class="prog_row_dep" id="cmp_row_dep_ls">
+              <td>&nbsp;&nbsp;↳ Lifestyle</td>
+              <td class="cell_num" id="cmp_base_ls">553,75</td>
+              <td class="cell_num" id="cmp_10_ls">609,12</td>
+              <td class="cell_num cell_primary" id="cmp_15_ls">636,81</td>
+              <td class="cell_num" id="cmp_20_ls">664,50</td>
+              <td class="cell_num cell_challenge" id="cmp_50_ls">830,62</td>
+            </tr>
+            <tr class="prog_row_dep" id="cmp_row_dep_sk">
+              <td>&nbsp;&nbsp;↳ Sức khỏe</td>
+              <td class="cell_num" id="cmp_base_sk">1.890,59</td>
+              <td class="cell_num" id="cmp_10_sk">2.079,64</td>
+              <td class="cell_num cell_primary" id="cmp_15_sk">2.174,17</td>
+              <td class="cell_num" id="cmp_20_sk">2.268,70</td>
+              <td class="cell_num cell_challenge" id="cmp_50_sk">2.835,88</td>
+            </tr>
+            <tr class="prog_row_dep" id="cmp_row_dep_gd">
+              <td>&nbsp;&nbsp;↳ Giáo dục</td>
+              <td class="cell_num" id="cmp_base_gd">474,68</td>
+              <td class="cell_num" id="cmp_10_gd">522,14</td>
+              <td class="cell_num cell_primary" id="cmp_15_gd">545,88</td>
+              <td class="cell_num" id="cmp_20_gd">569,61</td>
+              <td class="cell_num cell_challenge" id="cmp_50_gd">712,01</td>
+            </tr>
+            <tr class="prog_row_dep" id="cmp_row_dep_dl">
+              <td>&nbsp;&nbsp;↳ Du lịch</td>
+              <td class="cell_num" id="cmp_base_dl">908,21</td>
+              <td class="cell_num" id="cmp_10_dl">999,03</td>
+              <td class="cell_num cell_primary" id="cmp_15_dl">1.044,44</td>
+              <td class="cell_num" id="cmp_20_dl">1.089,85</td>
+              <td class="cell_num cell_challenge" id="cmp_50_dl">1.362,31</td>
+            </tr>
+            <tr class="row_block prog_row_block" id="cmp_row_b_truycap">
+              <td><strong>Khối Truy cập</strong></td>
+              <td class="cell_num" id="cmp_base_b_truycap">9.066,64</td>
+              <td class="cell_num" id="cmp_10_b_truycap">9.973,31</td>
+              <td class="cell_num cell_primary" id="cmp_15_b_truycap">10.426,64</td>
+              <td class="cell_num" id="cmp_20_b_truycap">10.879,97</td>
+              <td class="cell_num cell_challenge" id="cmp_50_b_truycap">13.599,97</td>
+            </tr>
+            <tr class="prog_row_dep" id="cmp_row_dep_tt">
+              <td>&nbsp;&nbsp;↳ Thể thao</td>
+              <td class="cell_num" id="cmp_base_tt">6.452,86</td>
+              <td class="cell_num" id="cmp_10_tt">7.098,15</td>
+              <td class="cell_num cell_primary" id="cmp_15_tt">7.420,79</td>
+              <td class="cell_num" id="cmp_20_tt">7.743,44</td>
+              <td class="cell_num cell_challenge" id="cmp_50_tt">9.679,29</td>
+            </tr>
+            <tr class="prog_row_dep" id="cmp_row_dep_gt">
+              <td>&nbsp;&nbsp;↳ Giải trí</td>
+              <td class="cell_num" id="cmp_base_gt">2.613,78</td>
+              <td class="cell_num" id="cmp_10_gt">2.875,16</td>
+              <td class="cell_num cell_primary" id="cmp_15_gt">3.005,85</td>
+              <td class="cell_num" id="cmp_20_gt">3.136,54</td>
+              <td class="cell_num cell_challenge" id="cmp_50_gt">3.920,67</td>
+            </tr>
+            <tr class="row_total prog_row_total" id="cmp_row_total">
+              <td><strong>Toàn Znews</strong></td>
+              <td class="cell_num cell_bold" id="cmp_base_total">25.468,46</td>
+              <td class="cell_num cell_bold" id="cmp_10_total">28.015,31</td>
+              <td class="cell_num cell_primary cell_bold" id="cmp_15_total">29.288,73</td>
+              <td class="cell_num cell_bold" id="cmp_20_total">30.562,15</td>
+              <td class="cell_num cell_challenge cell_bold" id="cmp_50_total">38.202,69</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
     <div class="cta_footer_card">
       <div class="cta_footer_content">
-        <div class="cta_footer_title">Báo cáo giải thích chi tiết & bối cảnh dữ liệu</div>
-        <div class="cta_footer_desc">Xem phân tích bối cảnh biến động tháng 8, tiến độ 9 tháng và căn cứ đề xuất mục tiêu quý 4.</div>
+        <div class="cta_footer_title">Tài liệu và phương án liên quan</div>
+        <div class="cta_footer_desc">Xem phương án đã giao chỉ tiêu chính thức theo trung bình T8–T9 hoặc đọc toàn bộ báo cáo phân tích tác động biến động truy cập.</div>
       </div>
-      <div>
-        <a href="detail.html" class="btn_cta_large">📑 Mở trang giải thích chi tiết & bối cảnh dữ liệu →</a>
+      <div class="chip_group">
+        <a href="kpi_phe_duyet.html" class="btn_cta_large">📋 Xem phương án TB T8–T9 đã duyệt</a>
+        <a href="detail.html" class="btn_cta_large">📑 Xem báo cáo giải thích chi tiết</a>
       </div>
     </div>
     <footer class="page_footer">
-      <div>Bản quyền Tạp chí điện tử Tri thức - Znews &bull; Lưu hành nội bộ Ban biên tập</div>
+      <div>Bản quyền Tạp chí điện tử Tri thức - Znews • Lưu hành nội bộ Ban biên tập</div>
     </footer>
   </div>
 </article>
 <script>
 (function() {
-  const chips = document.querySelectorAll('#master_filter_chips .chip');
-  chips.forEach(chip => {
+  const DEPARTMENTS = [
+    { id: 'xh', name: 'Xã hội', block: 'b_uytin', t9_scaled: 1872666.21, zalo_real: 1832748.64, zalo_hypo: 1779032.90, lk_9t: 27427000, yr_2025: 73774000 },
+    { id: 'pl', name: 'Pháp luật', block: 'b_uytin', t9_scaled: 1136389.66, zalo_real: 1112166.48, zalo_hypo: 1079570.17, lk_9t: 24643000, yr_2025: 54589000 },
+    { id: 'tg', name: 'Thế giới', block: 'b_uytin', t9_scaled: 862942.76, zalo_real: 844548.36, zalo_hypo: 819795.62, lk_9t: 42342000, yr_2025: 40418000 },
+    { id: 'xb', name: 'Xuất bản', block: 'b_uytin', t9_scaled: 1092851.38, zalo_real: 1069556.27, zalo_hypo: 1038208.81, lk_9t: 9861000, yr_2025: 13870000 },
+    { id: 'kd', name: 'Kinh doanh', block: 'b_kinhdoanh', t9_scaled: 3543875.17, zalo_real: 3468334.28, zalo_hypo: 3366681.41, lk_9t: 42582000, yr_2025: 74594000 },
+    { id: 'cn', name: 'Công nghệ', block: 'b_kinhdoanh', t9_scaled: 1711225.86, zalo_real: 1674749.54, zalo_hypo: 1625664.57, lk_9t: 20937000, yr_2025: 34822000 },
+    { id: 'xe', name: 'Xe', block: 'b_kinhdoanh', t9_scaled: 838888.97, zalo_real: 821007.29, zalo_hypo: 796944.52, lk_9t: 11346000, yr_2025: 17137000 },
+    { id: 'ds', name: 'Đời sống', block: 'b_lifestyle', t9_scaled: 1789636.55, zalo_real: 1751488.83, zalo_hypo: 1700154.72, lk_9t: 46731000, yr_2025: 66302000 },
+    { id: 'ls', name: 'Lifestyle', block: 'b_lifestyle', t9_scaled: 565807.24, zalo_real: 553746.55, zalo_hypo: 537516.88, lk_9t: 10366667, yr_2025: 16816959 },
+    { id: 'sk', name: 'Sức khỏe', block: 'b_lifestyle', t9_scaled: 1931763.10, zalo_real: 1890585.83, zalo_hypo: 1835174.95, lk_9t: 27659000, yr_2025: 54215000 },
+    { id: 'gd', name: 'Giáo dục', block: 'b_lifestyle', t9_scaled: 485014.14, zalo_real: 474675.62, zalo_hypo: 460763.43, lk_9t: 10917000, yr_2025: 18389000 },
+    { id: 'dl', name: 'Du lịch', block: 'b_lifestyle', t9_scaled: 927988.97, zalo_real: 908208.04, zalo_hypo: 881589.52, lk_9t: 17046000, yr_2025: 24790000 },
+    { id: 'tt', name: 'Thể thao', block: 'b_truycap', t9_scaled: 6593407.24, zalo_real: 6452862.82, zalo_hypo: 6263736.88, lk_9t: 150384000, yr_2025: 213207000 },
+    { id: 'gt', name: 'Giải trí', block: 'b_truycap', t9_scaled: 2670709.66, zalo_real: 2613781.07, zalo_hypo: 2537174.17, lk_9t: 54222000, yr_2025: 96760000 }
+  ];
+
+  const BLOCKS = [
+    { id: 'b_uytin', name: 'Khối Uy tín', deps: ['xh', 'pl', 'tg', 'xb'], lk_9t: 104273000, yr_2025: 182651000 },
+    { id: 'b_kinhdoanh', name: 'Khối Kinh doanh', deps: ['kd', 'cn', 'xe'], lk_9t: 74865000, yr_2025: 126553000 },
+    { id: 'b_lifestyle', name: 'Khối Lifestyle', deps: ['ds', 'ls', 'sk', 'gd', 'dl'], lk_9t: 112719554, yr_2025: 180512120 },
+    { id: 'b_truycap', name: 'Khối Truy cập', deps: ['tt', 'gt'], lk_9t: 204606000, yr_2025: 309967000 }
+  ];
+
+  const TOTAL_LK_9T = 496464023;
+  const TOTAL_YR_2025 = 799681703;
+
+  let state = {
+    zaloMode: 'real',
+    rateMode: 'all',
+    globalRate: 15.0,
+    depRates: {
+      xh: 15.0, pl: 15.0, tg: 15.0, xb: 15.0,
+      kd: 15.0, cn: 15.0, xe: 15.0,
+      ds: 15.0, ls: 15.0, sk: 15.0, gd: 15.0, dl: 15.0,
+      tt: 15.0, gt: 15.0
+    }
+  };
+
+  function fmtDay(n) {
+    return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  function fmtTr(n, dec) {
+    if (dec === undefined) dec = 2;
+    const v = n / 1000000.0;
+    return v.toLocaleString('vi-VN', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + 'M';
+  }
+
+  function fmtPct(p, dec) {
+    if (dec === undefined) dec = 1;
+    const sign = p > 0 ? '+' : '';
+    return sign + p.toLocaleString('vi-VN', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + '%';
+  }
+
+  function getBadgeClass(r) {
+    if (r >= 50) return 'badge_challenge';
+    if (r >= 20) return 'badge_20';
+    if (r >= 15) return 'badge_15';
+    if (r >= 10) return 'badge_10';
+    return 'badge_bar';
+  }
+
+  function recalculate() {
+    let depRes = {};
+    let blkRes = {};
+    BLOCKS.forEach(b => {
+      blkRes[b.id] = { base: 0, day: 0, q4: 0, lk_9t: b.lk_9t, yr_25: b.yr_2025 };
+    });
+    let totRes = { base: 0, day: 0, q4: 0, lk_9t: TOTAL_LK_9T, yr_25: TOTAL_YR_2025 };
+
+    DEPARTMENTS.forEach(d => {
+      let base = d.zalo_real;
+      if (state.zaloMode === 'hypo') base = d.zalo_hypo;
+      else if (state.zaloMode === 'none') base = d.t9_scaled;
+
+      let rate = state.rateMode === 'all' ? state.globalRate : (state.depRates[d.id] !== undefined ? state.depRates[d.id] : 15.0);
+      let day = (base / 30.0) * (1.0 + rate / 100.0);
+      let q4 = day * 92.0;
+      let th = q4 / 3.0;
+      let yr_26 = d.lk_9t + q4;
+      let pct_25 = ((yr_26 - d.yr_2025) / d.yr_2025) * 100.0;
+
+      depRes[d.id] = { base, rate, day, th, q4, yr_26, pct_25 };
+
+      // Sum to block
+      let blk = blkRes[d.block];
+      blk.base += base;
+      blk.day += day;
+      blk.q4 += q4;
+
+      // Sum to total
+      totRes.base += base;
+      totRes.day += day;
+      totRes.q4 += q4;
+    });
+
+    BLOCKS.forEach(b => {
+      let blk = blkRes[b.id];
+      blk.th = blk.q4 / 3.0;
+      blk.yr_26 = blk.lk_9t + blk.q4;
+      blk.pct_25 = ((blk.yr_26 - blk.yr_25) / blk.yr_25) * 100.0;
+      blk.implied_rate = ((blk.th / blk.base) - 1.0) * 100.0;
+    });
+
+    totRes.th = totRes.q4 / 3.0;
+    totRes.yr_26 = totRes.lk_9t + totRes.q4;
+    totRes.pct_25 = ((totRes.yr_26 - totRes.yr_25) / totRes.yr_25) * 100.0;
+    totRes.implied_rate = ((totRes.th / totRes.base) - 1.0) * 100.0;
+
+    return { depRes, blkRes, totRes };
+  }
+
+  function render() {
+    const { depRes, blkRes, totRes } = recalculate();
+
+    // 1. Top 4 Metric Cards
+    const elDay = document.getElementById('metric_day');
+    const elMonth = document.getElementById('metric_month');
+    const elQ4 = document.getElementById('metric_q4');
+    const elYear = document.getElementById('metric_year');
+    const elYearPct = document.getElementById('metric_year_pct');
+
+    if (elDay) elDay.textContent = fmtDay(totRes.day);
+    if (elMonth) elMonth.textContent = fmtTr(totRes.th, 2);
+    if (elQ4) elQ4.textContent = fmtTr(totRes.q4, 2);
+    if (elYear) elYear.textContent = fmtTr(totRes.yr_26, 2);
+    if (elYearPct) {
+      elYearPct.textContent = fmtPct(totRes.pct_25, 1) + ' vs 2025';
+      elYearPct.className = 'badge_kpi ' + (totRes.pct_25 >= 0 ? 'badge_20' : 'badge_15');
+    }
+
+    // 2. Active Mode Badge in Control Header
+    const activeBadge = document.getElementById('active_mode_badge');
+    if (activeBadge) {
+      if (state.rateMode === 'all') {
+        activeBadge.textContent = 'Đang áp tỷ lệ toàn bộ: ' + fmtPct(state.globalRate, 1);
+        activeBadge.className = 'badge_kpi ' + getBadgeClass(state.globalRate);
+      } else {
+        activeBadge.textContent = 'Đang bật chế độ: Tùy chỉnh từng ban';
+        activeBadge.className = 'badge_kpi badge_challenge';
+      }
+    }
+
+    // 3. Master Table Rows
+    // Total row
+    const elBaseTot = document.getElementById('base_total');
+    const elDayTot = document.getElementById('day_total');
+    const elThTot = document.getElementById('th_total');
+    const elQ4Tot = document.getElementById('q4_total');
+    const elYrTot = document.getElementById('yr_total');
+    const elPctTot = document.getElementById('pct_total');
+    const elBadgeTot = document.getElementById('badge_rate_total');
+
+    if (elBaseTot) elBaseTot.textContent = fmtTr(totRes.base, 2);
+    if (elDayTot) elDayTot.textContent = fmtDay(totRes.day);
+    if (elThTot) elThTot.textContent = fmtTr(totRes.th, 2);
+    if (elQ4Tot) elQ4Tot.textContent = fmtTr(totRes.q4, 2);
+    if (elYrTot) elYrTot.textContent = fmtTr(totRes.yr_26, 2);
+    if (elPctTot) elPctTot.textContent = fmtPct(totRes.pct_25, 1);
+    if (elBadgeTot) {
+      elBadgeTot.textContent = fmtPct(totRes.implied_rate, 1);
+      elBadgeTot.className = 'badge_kpi ' + getBadgeClass(totRes.implied_rate);
+    }
+
+    // Blocks
+    BLOCKS.forEach(b => {
+      const blk = blkRes[b.id];
+      const elBase = document.getElementById('base_' + b.id);
+      const elDay = document.getElementById('day_' + b.id);
+      const elTh = document.getElementById('th_' + b.id);
+      const elQ4 = document.getElementById('q4_' + b.id);
+      const elYr = document.getElementById('yr_' + b.id);
+      const elPct = document.getElementById('pct_' + b.id);
+      const elBadge = document.getElementById('badge_rate_' + b.id);
+
+      if (elBase) elBase.textContent = fmtTr(blk.base, 2);
+      if (elDay) elDay.textContent = fmtDay(blk.day);
+      if (elTh) elTh.textContent = fmtTr(blk.th, 2);
+      if (elQ4) elQ4.textContent = fmtTr(blk.q4, 2);
+      if (elYr) elYr.textContent = fmtTr(blk.yr_26, 2);
+      if (elPct) elPct.textContent = fmtPct(blk.pct_25, 1);
+      if (elBadge) {
+        elBadge.textContent = fmtPct(blk.implied_rate, 1);
+        elBadge.className = 'badge_kpi ' + getBadgeClass(blk.implied_rate);
+      }
+    });
+
+    // Departments
+    DEPARTMENTS.forEach(d => {
+      const res = depRes[d.id];
+      const elBase = document.getElementById('base_' + d.id);
+      const elDay = document.getElementById('day_' + d.id);
+      const elTh = document.getElementById('th_' + d.id);
+      const elQ4 = document.getElementById('q4_' + d.id);
+      const elYr = document.getElementById('yr_' + d.id);
+      const elPct = document.getElementById('pct_' + d.id);
+      const elBadge = document.getElementById('badge_rate_' + d.id);
+      const elWrapInput = document.getElementById('input_wrap_table_' + d.id);
+
+      if (elBase) elBase.textContent = fmtTr(res.base, 2);
+      if (elDay) elDay.textContent = fmtDay(res.day);
+      if (elTh) elTh.textContent = fmtTr(res.th, 2);
+      if (elQ4) elQ4.textContent = fmtTr(res.q4, 2);
+      if (elYr) elYr.textContent = fmtTr(res.yr_26, 2);
+      if (elPct) elPct.textContent = fmtPct(res.pct_25, 1);
+
+      if (elBadge && elWrapInput) {
+        if (state.rateMode === 'all') {
+          elBadge.textContent = fmtPct(res.rate, 1);
+          elBadge.className = 'badge_kpi ' + getBadgeClass(res.rate);
+          elWrapInput.classList.add('is_hidden');
+          elBadge.classList.remove('is_hidden');
+        } else {
+          elWrapInput.classList.remove('is_hidden');
+          elBadge.classList.add('is_hidden');
+          const input = elWrapInput.querySelector('input');
+          if (input && document.activeElement !== input) {
+            input.value = res.rate;
+          }
+        }
+      }
+
+      // Department Cards
+      const cDay = document.getElementById('card_day_' + d.id);
+      const cTh = document.getElementById('card_th_' + d.id);
+      const cQ4 = document.getElementById('card_q4_' + d.id);
+      const cBase = document.getElementById('card_base_' + d.id);
+      const cYr = document.getElementById('card_yr_' + d.id);
+      const cPct = document.getElementById('card_pct_' + d.id);
+      const cBadge = document.getElementById('card_badge_' + d.id);
+      const cWrapInput = document.getElementById('card_input_wrap_' + d.id);
+
+      if (cDay) cDay.textContent = fmtDay(res.day);
+      if (cTh) cTh.textContent = fmtTr(res.th, 2);
+      if (cQ4) cQ4.textContent = fmtTr(res.q4, 2);
+      if (cBase) cBase.textContent = fmtTr(res.base, 2);
+      if (cYr) cYr.textContent = fmtTr(res.yr_26, 2);
+      if (cPct) cPct.textContent = fmtPct(res.pct_25, 1);
+
+      if (cBadge && cWrapInput) {
+        if (state.rateMode === 'all') {
+          cBadge.textContent = fmtPct(res.rate, 1);
+          cBadge.className = 'badge_kpi ' + getBadgeClass(res.rate);
+          cWrapInput.classList.add('is_hidden');
+          cBadge.classList.remove('is_hidden');
+        } else {
+          cWrapInput.classList.remove('is_hidden');
+          cBadge.classList.add('is_hidden');
+          const cInput = cWrapInput.querySelector('input');
+          if (cInput && document.activeElement !== cInput) {
+            cInput.value = res.rate;
+          }
+        }
+      }
+    });
+
+    // 4. Update Comparison Matrix Table
+    BLOCKS.forEach(b => {
+      const blk = blkRes[b.id];
+      const base = blk.base;
+      const cBase = document.getElementById('cmp_base_' + b.id);
+      const c10 = document.getElementById('cmp_10_' + b.id);
+      const c15 = document.getElementById('cmp_15_' + b.id);
+      const c20 = document.getElementById('cmp_20_' + b.id);
+      const c50 = document.getElementById('cmp_50_' + b.id);
+      if (cBase) cBase.textContent = fmtTr(base, 2);
+      if (c10) c10.textContent = fmtTr(base * 1.10, 2);
+      if (c15) c15.textContent = fmtTr(base * 1.15, 2);
+      if (c20) c20.textContent = fmtTr(base * 1.20, 2);
+      if (c50) c50.textContent = fmtTr(base * 1.50, 2);
+    });
+
+    DEPARTMENTS.forEach(d => {
+      const res = depRes[d.id];
+      const base = res.base;
+      const cBase = document.getElementById('cmp_base_' + d.id);
+      const c10 = document.getElementById('cmp_10_' + d.id);
+      const c15 = document.getElementById('cmp_15_' + d.id);
+      const c20 = document.getElementById('cmp_20_' + d.id);
+      const c50 = document.getElementById('cmp_50_' + d.id);
+      if (cBase) cBase.textContent = fmtTr(base, 2);
+      if (c10) c10.textContent = fmtTr(base * 1.10, 2);
+      if (c15) c15.textContent = fmtTr(base * 1.15, 2);
+      if (c20) c20.textContent = fmtTr(base * 1.20, 2);
+      if (c50) c50.textContent = fmtTr(base * 1.50, 2);
+    });
+
+    const cmpTotBase = totRes.base;
+    const cmpTotBaseEl = document.getElementById('cmp_base_total');
+    const cmpTot10 = document.getElementById('cmp_10_total');
+    const cmpTot15 = document.getElementById('cmp_15_total');
+    const cmpTot20 = document.getElementById('cmp_20_total');
+    const cmpTot50 = document.getElementById('cmp_50_total');
+    if (cmpTotBaseEl) cmpTotBaseEl.textContent = fmtTr(cmpTotBase, 2);
+    if (cmpTot10) cmpTot10.textContent = fmtTr(cmpTotBase * 1.10, 2);
+    if (cmpTot15) cmpTot15.textContent = fmtTr(cmpTotBase * 1.15, 2);
+    if (cmpTot20) cmpTot20.textContent = fmtTr(cmpTotBase * 1.20, 2);
+    if (cmpTot50) cmpTot50.textContent = fmtTr(cmpTotBase * 1.50, 2);
+  }
+
+  // EVENT LISTENERS
+  // 1. Zalo Chips
+  const zaloChips = document.querySelectorAll('#zalo_chips .chip');
+  const zaloNote = document.getElementById('zalo_status_note');
+  zaloChips.forEach(chip => {
     chip.addEventListener('click', function() {
-      chips.forEach(c => c.classList.remove('active'));
+      zaloChips.forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      state.zaloMode = this.getAttribute('data-zalo');
+      if (zaloNote) {
+        if (state.zaloMode === 'real') {
+          zaloNote.textContent = 'Mức nền T9 sau trừ Zalo thực tế (2,13%): 25,47M/tháng • 848.949 lượt/ngày (T9 gồm 29 ngày dữ liệu thực tế, quy đổi đủ 30 ngày).';
+        } else if (state.zaloMode === 'hypo') {
+          zaloNote.textContent = 'Mức nền T9 sau trừ Zalo giả định (5,0%): 24,72M/tháng • 824.067 lượt/ngày (Loại trừ 5,0% lượng truy cập do Zalo).';
+        } else {
+          zaloNote.textContent = 'Mức nền T9 gốc quy đổi đủ 30 ngày: 26,02M/tháng • 867.439 lượt/ngày (Không trừ ảnh hưởng Zalo).';
+        }
+      }
+      render();
+    });
+  });
+
+  // 2. Mode Chips
+  const modeChips = document.querySelectorAll('#mode_chips .chip');
+  const modeNote = document.getElementById('mode_desc_note');
+  modeChips.forEach(chip => {
+    chip.addEventListener('click', function() {
+      modeChips.forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      state.rateMode = this.getAttribute('data-mode');
+      if (modeNote) {
+        if (state.rateMode === 'all') {
+          modeNote.textContent = 'Áp một tỷ lệ tăng trưởng đồng nhất cho toàn bộ 14 ban biên tập.';
+        } else {
+          modeNote.textContent = 'Chế độ tùy từng ban: Bạn có thể nhập tỷ lệ riêng cho từng ban ở bảng hoặc thẻ bên dưới. Dùng nút/ô nhập ở đây để áp nhanh toàn bộ.';
+        }
+      }
+      render();
+    });
+  });
+
+  // 3. Preset Rate Chips
+  const rateChips = document.querySelectorAll('#rate_chips .chip');
+  const globalInput = document.getElementById('global_rate_input');
+  rateChips.forEach(chip => {
+    chip.addEventListener('click', function() {
+      rateChips.forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      const val = parseFloat(this.getAttribute('data-rate'));
+      state.globalRate = val;
+      if (globalInput) globalInput.value = val;
+      // If in custom mode, update all depRates
+      DEPARTMENTS.forEach(d => {
+        state.depRates[d.id] = val;
+      });
+      render();
+    });
+  });
+
+  // 4. Custom Global Rate Input
+  if (globalInput) {
+    globalInput.addEventListener('input', function() {
+      const val = parseFloat(this.value) || 0;
+      state.globalRate = val;
+      // Sync chips
+      rateChips.forEach(c => {
+        if (parseFloat(c.getAttribute('data-rate')) === val) {
+          c.classList.add('active');
+        } else {
+          c.classList.remove('active');
+        }
+      });
+      // If in custom mode, update all depRates
+      if (state.rateMode === 'custom') {
+        DEPARTMENTS.forEach(d => {
+          state.depRates[d.id] = val;
+        });
+      }
+      render();
+    });
+  }
+
+  // 5. Per-department Table & Card Inputs
+  function bindDepInput(inputEl) {
+    inputEl.addEventListener('input', function() {
+      const depId = this.getAttribute('data-dep');
+      const val = parseFloat(this.value) || 0;
+      state.depRates[depId] = val;
+
+      // Sync other input for same dep
+      document.querySelectorAll('input[data-dep="' + depId + '"]').forEach(inp => {
+        if (inp !== inputEl) inp.value = val;
+      });
+
+      // Switch to custom mode if currently 'all'
+      if (state.rateMode === 'all') {
+        state.rateMode = 'custom';
+        modeChips.forEach(c => {
+          if (c.getAttribute('data-mode') === 'custom') c.classList.add('active');
+          else c.classList.remove('active');
+        });
+        if (modeNote) modeNote.textContent = 'Chế độ tùy từng ban: Bạn có thể nhập tỷ lệ riêng cho từng ban ở bảng hoặc thẻ bên dưới.';
+      }
+
+      render();
+    });
+  }
+
+  document.querySelectorAll('.table_dep_input').forEach(bindDepInput);
+  document.querySelectorAll('.card_dep_input').forEach(bindDepInput);
+
+  // 6. Master Table Filter Chips
+  const filterChips = document.querySelectorAll('#master_filter_chips .chip');
+  filterChips.forEach(chip => {
+    chip.addEventListener('click', function() {
+      filterChips.forEach(c => c.classList.remove('active'));
       this.classList.add('active');
       const filter = this.getAttribute('data-filter');
       const rows = document.querySelectorAll('#master_kpi_table tbody tr');
       rows.forEach(r => {
         if (filter === 'all') {
-          r.classList.remove('hidden_element');
+          r.classList.remove('is_hidden');
         } else if (filter === 'blocks') {
           if (r.classList.contains('prog_row_block') || r.classList.contains('prog_row_total')) {
-            r.classList.remove('hidden_element');
+            r.classList.remove('is_hidden');
           } else {
-            r.classList.add('hidden_element');
+            r.classList.add('is_hidden');
           }
         } else if (filter === 'deps') {
           if (r.classList.contains('prog_row_dep')) {
-            r.classList.remove('hidden_element');
+            r.classList.remove('is_hidden');
           } else {
-            r.classList.add('hidden_element');
+            r.classList.add('is_hidden');
           }
         }
       });
     });
   });
+
+  // Initial render
+  render();
 })();
 </script>
 </body>
