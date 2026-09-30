@@ -47,6 +47,7 @@ Tính KPI Znews Q4 2026/
 ├── Brief web.md.rtf                # Bản brief yêu cầu & phân tích ban đầu
 ├── Tien do KPI.rtf                 # Bảng dữ liệu tiến độ KPI 9 tháng đầu năm
 ├── README.md                       # Tài liệu tổng quan dự án (file này)
+├── CHANGELOG.md                    # Nhật ký ghi lại chi tiết từng lần cập nhật của hệ thống
 └── HUONG_DAN_TAO_WEBSITE_KPI.md   # Hướng dẫn kỹ thuật & đặc tả chi tiết để tái lập website
 ```
 
@@ -109,3 +110,18 @@ git push origin gh-pages
 git checkout main
 ```
 Sau khoảng 30–60 giây, GitHub Pages sẽ tự động kích hoạt build và cập nhật giao diện mới nhất.
+
+---
+
+## 7. Lịch sử cập nhật hệ thống (Changelog)
+
+Toàn bộ các lần thay đổi, tinh chỉnh số liệu, sửa đổi giao diện và cập nhật tính năng được ghi chép đầy đủ tại tài liệu riêng:
+👉 **[Xem chi tiết toàn bộ lịch sử cập nhật tại CHANGELOG.md](CHANGELOG.md)**
+
+### Tóm tắt các mốc phiên bản gần nhất:
+- **v2.5 (30/09 22:46):** Đặt mặc định trừ Zalo 5,0%; bổ sung ô và nút tùy chỉnh % ảnh hưởng Zalo linh hoạt theo thời gian thực (`Tùy chỉnh: [ 5 ] %`).
+- **v2.4 (30/09 22:34):** Chuẩn hóa tiêu đề "Đề xuất KPI từng ban (14 ban)"; đưa khối 4 thẻ chỉ số tổng quan xuống cuối trang.
+- **v2.3 (30/09 22:26):** Tái cấu trúc layout: Thẻ 14 ban lên đầu $\rightarrow$ Bảng tổng hợp $\rightarrow$ Bảng điều khiển $\rightarrow$ 4 thẻ chỉ số.
+- **v2.2 (30/09 22:16):** Lược bỏ bảng so sánh 4 kịch bản tĩnh ở trang chủ để tối ưu chiều dài trang.
+- **v2.1 (30/09 22:09):** Khắc phục sai số ngày lịch (92 ngày vs 90 ngày) khi tính tỷ lệ tăng trưởng khối/toàn trang.
+- **v2.0 (30/09 22:03):** Tích hợp dữ liệu `KPI thang 9.xlsx`, kiến trúc 3 trang chuyên trách với công cụ tính toán thời gian thực.
