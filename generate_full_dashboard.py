@@ -1245,8 +1245,7 @@ html {
   color: #475569;
   font-size: 12px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   padding: 12px 14px;
   border-bottom: 2px solid #e2e8f0;
   white-space: nowrap;
@@ -1736,10 +1735,9 @@ html {
 }
 
 .container_AI .brand_kicker {
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   color: #3b56e0;
 }
 
@@ -1844,10 +1842,8 @@ html {
 }
 
 .container_AI .kpi_metric_label {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
   color: #64748b;
   margin-bottom: 6px;
 }
@@ -2002,9 +1998,8 @@ html {
 }
 
 .container_AI .target_box_label {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
-  text-transform: uppercase;
   color: #64748b;
   margin-bottom: 3px;
 }
@@ -2108,7 +2103,7 @@ def build_index_html():
     html.append('<head>')
     html.append('  <meta charset="UTF-8">')
     html.append('  <meta name="viewport" content="width=device-width, initial-scale=1.0">')
-    html.append('  <title>Bảng Giao Chỉ Tiêu KPI Quý 4/2026 — Báo Điện Tử Znews</title>')
+    html.append('  <title>Bảng giao chỉ tiêu KPI quý 4/2026 — Báo điện tử Znews</title>')
     html.append(f'  <style>{css_scoped}</style>')
     html.append('</head>')
     html.append('<body>')
@@ -2118,12 +2113,12 @@ def build_index_html():
     # Header
     html.append('    <header class="top_header">')
     html.append('      <div class="brand_area">')
-    html.append('        <div class="brand_kicker">Báo Điện Tử Znews • Ban Biên Tập</div>')
-    html.append('        <div class="brand_title">BẢNG GIAO CHỈ TIÊU KPI QUÝ 4/2026</div>')
-    html.append('        <div class="brand_sub">Chỉ tiêu chính thức theo Ngày • Tháng • Cả Quý 4 cho 14 Ban & 4 Khối</div>')
+    html.append('        <div class="brand_kicker">Báo điện tử Znews • Ban biên tập</div>')
+    html.append('        <div class="brand_title">Bảng giao chỉ tiêu KPI quý 4/2026</div>')
+    html.append('        <div class="brand_sub">Chỉ tiêu chính thức theo ngày • tháng • cả quý 4 cho 14 ban & 4 khối</div>')
     html.append('      </div>')
     html.append('      <div>')
-    html.append('        <a href="detail.html" class="nav_btn_main">📑 Giải thích chi tiết & Bối cảnh dữ liệu →</a>')
+    html.append('        <a href="detail.html" class="nav_btn_main">📑 Giải thích chi tiết & bối cảnh dữ liệu →</a>')
     html.append('      </div>')
     html.append('    </header>')
 
@@ -2131,17 +2126,17 @@ def build_index_html():
     html.append('    <div class="kpi_grid_4">')
     # Card 1: Ngày
     html.append('      <div class="kpi_metric_card highlight_day">')
-    html.append('        <div class="kpi_metric_label">KPI truy cập theo ngày (Toàn trang)</div>')
+    html.append('        <div class="kpi_metric_label">KPI truy cập theo ngày (toàn trang)</div>')
     html.append(f'        <div class="kpi_metric_val val_green">{fmt_day(approved_total["day"])}</div>')
     html.append('      </div>')
     # Card 2: Tháng
     html.append('      <div class="kpi_metric_card highlight_month">')
-    html.append('        <div class="kpi_metric_label">KPI truy cập theo tháng (Toàn trang)</div>')
+    html.append('        <div class="kpi_metric_label">KPI truy cập theo tháng (toàn trang)</div>')
     html.append(f'        <div class="kpi_metric_val val_blue">{fmt_tr(approved_total["th"], 2)}M</div>')
     html.append('      </div>')
     # Card 3: Cả Quý 4
     html.append('      <div class="kpi_metric_card highlight_quarter">')
-    html.append('        <div class="kpi_metric_label">KPI truy cập Q4</div>')
+    html.append('        <div class="kpi_metric_label">KPI truy cập quý 4</div>')
     html.append(f'        <div class="kpi_metric_val val_purple">{fmt_tr(approved_total["q4"], 2)}M</div>')
     html.append('      </div>')
     # Card 4: Cả năm
@@ -2155,24 +2150,24 @@ def build_index_html():
     html.append('    <div class="card">')
     html.append('      <div class="dep_card_header">')
     html.append('        <div>')
-    html.append('          <h3>Bảng Giao Chỉ Tiêu: Ngày • Tháng • Quý 4/2026</h3>')
+    html.append('          <h3>Bảng giao chỉ tiêu: Ngày • tháng • quý 4/2026</h3>')
     html.append('        </div>')
     html.append('        <div class="controls_bar" id="master_filter_chips">')
     html.append('          <div class="chip active" data-filter="all">Tất cả (19 đơn vị)</div>')
-    html.append('          <div class="chip" data-filter="blocks">Chỉ xem 4 Khối</div>')
-    html.append('          <div class="chip" data-filter="deps">Chỉ xem 14 Ban</div>')
+    html.append('          <div class="chip" data-filter="blocks">Chỉ xem 4 khối</div>')
+    html.append('          <div class="chip" data-filter="deps">Chỉ xem 14 ban</div>')
     html.append('        </div>')
     html.append('      </div>')
     html.append('      <div class="table_responsive">')
     html.append('        <table class="kpi_table" id="master_kpi_table">')
     html.append('          <thead>')
     html.append('            <tr>')
-    html.append('              <th>Đơn vị / Ban</th>')
-    html.append('              <th class="cell_num cell_day_hl">KPI Ngày</th>')
-    html.append('              <th class="cell_num cell_primary">KPI Tháng</th>')
-    html.append('              <th class="cell_num cell_bold">KPI Quý 4</th>')
+    html.append('              <th>Đơn vị / ban</th>')
+    html.append('              <th class="cell_num cell_day_hl">KPI ngày</th>')
+    html.append('              <th class="cell_num cell_primary">KPI tháng</th>')
+    html.append('              <th class="cell_num cell_bold">KPI quý 4</th>')
     html.append('              <th class="cell_center">Mức tăng chốt</th>')
-    html.append('              <th class="cell_num">TB T8–T9 (Nền)</th>')
+    html.append('              <th class="cell_num">TB T8–T9 (nền)</th>')
     html.append('            </tr>')
     html.append('          </thead>')
     html.append('          <tbody>')
@@ -2219,7 +2214,7 @@ def build_index_html():
     html.append('    <div class="card">')
     html.append('      <div class="dep_card_header">')
     html.append('        <div>')
-    html.append('          <h3>Thẻ Giao Chỉ Tiêu Từng Ban Biên Tập (14 Ban)</h3>')
+    html.append('          <h3>Chi tiết KPI từng ban</h3>')
     html.append('        </div>')
     html.append('      </div>')
     html.append('      <div class="dep_grid">')
@@ -2237,20 +2232,20 @@ def build_index_html():
         html.append('            </div>')
         html.append('            <div class="dep_target_boxes">')
         html.append('              <div class="target_box box_day">')
-        html.append('                <div class="target_box_label">Mỗi Ngày</div>')
+        html.append('                <div class="target_box_label">Mỗi ngày</div>')
         html.append(f'                <div class="target_box_val">{fmt_day(d_item["day"])}</div>')
         html.append('              </div>')
         html.append('              <div class="target_box">')
-        html.append('                <div class="target_box_label">Mỗi Tháng</div>')
+        html.append('                <div class="target_box_label">Mỗi tháng</div>')
         html.append(f'                <div class="target_box_val">{fmt_tr(d_item["th"], 2)}M</div>')
         html.append('              </div>')
         html.append('              <div class="target_box">')
-        html.append('                <div class="target_box_label">Cả Quý 4</div>')
+        html.append('                <div class="target_box_label">Cả quý 4</div>')
         html.append(f'                <div class="target_box_val">{fmt_tr(d_item["q4"], 2)}M</div>')
         html.append('              </div>')
         html.append('            </div>')
         html.append('            <div class="dep_stat_row">')
-        html.append(f'              <div>TB T8–T9 (Nền): <strong>{fmt_tr(d_item["tb"], 2)}M</strong></div>')
+        html.append(f'              <div>TB T8–T9 (nền): <strong>{fmt_tr(d_item["tb"], 2)}M</strong></div>')
         html.append(f'              <div>Cả năm 2026: <strong>{fmt_tr(d_item["yr_26"], 2)}M ({fmt_pct(d_item["pct_yr"])})</strong></div>')
         html.append('            </div>')
         html.append('          </div>')
@@ -2261,11 +2256,11 @@ def build_index_html():
     # Big CTA Footer Banner linking to detail.html
     html.append('    <div class="cta_footer_card">')
     html.append('      <div class="cta_footer_content">')
-    html.append('        <div class="cta_footer_title">Báo cáo Giải thích Chi tiết & Bối cảnh Dữ liệu</div>')
-    html.append('        <div class="cta_footer_desc">Xem phân tích bối cảnh biến động tháng 8, tiến độ 9 tháng và căn cứ đề xuất mục tiêu Quý 4.</div>')
+    html.append('        <div class="cta_footer_title">Báo cáo giải thích chi tiết & bối cảnh dữ liệu</div>')
+    html.append('        <div class="cta_footer_desc">Xem phân tích bối cảnh biến động tháng 8, tiến độ 9 tháng và căn cứ đề xuất mục tiêu quý 4.</div>')
     html.append('      </div>')
     html.append('      <div>')
-    html.append('        <a href="detail.html" class="btn_cta_large">📑 Mở Trang Giải Thích Chi Tiết & Bối Cảnh Dữ Liệu →</a>')
+    html.append('        <a href="detail.html" class="btn_cta_large">📑 Mở trang giải thích chi tiết & bối cảnh dữ liệu →</a>')
     html.append('      </div>')
     html.append('    </div>')
 
@@ -2319,7 +2314,7 @@ def build_detail_html():
     html.append('<head>')
     html.append('  <meta charset="UTF-8">')
     html.append('  <meta name="viewport" content="width=device-width, initial-scale=1.0">')
-    html.append('  <title>Truy cập Znews 2025–2026 & Báo cáo KPI Quý 4/2026</title>')
+    html.append('  <title>Truy cập Znews 2025–2026 & báo cáo KPI quý 4/2026</title>')
     html.append(f'  <style>{css_scoped}</style>')
     html.append('</head>')
     html.append('<body>')
@@ -2328,18 +2323,18 @@ def build_detail_html():
     
     # Top Nav Bar linking to index.html
     html.append('    <div class="top_nav_back_bar">')
-    html.append('      <div class="brand_kicker">Báo Cáo Phân Tích Chi Tiết • Znews</div>')
-    html.append('      <div><a href="index.html" class="nav_btn_back">← Về Bảng Giao Chỉ Tiêu KPI Quý 4 Chính Thức</a></div>')
+    html.append('      <div class="brand_kicker">Báo cáo phân tích chi tiết • Znews</div>')
+    html.append('      <div><a href="index.html" class="nav_btn_back">← Về bảng giao chỉ tiêu KPI quý 4 chính thức</a></div>')
     html.append('    </div>')
     
     # Top Alert Banner explaining approved policy
     html.append('    <div class="policy_banner">')
     html.append('      <div class="policy_header">')
     html.append('        <div>')
-    html.append('          <div class="policy_title">THÔNG BÁO: CHỈ TIÊU KPI QUÝ 4/2026 ĐÃ ĐƯỢC PHÊ DUYỆT CHÍNH THỨC</div>')
-    html.append('          <div class="policy_sub">Ban Biên tập đã chốt phương án: Khối Uy tín +15%, Khối Kinh doanh +15%, Khối Lifestyle +15% (riêng Lifestyle +10%), Khối Truy cập: Giải trí +15%, Thể thao +20%.</div>')
+    html.append('          <div class="policy_title">Thông báo: Chỉ tiêu KPI quý 4/2026 đã được phê duyệt chính thức</div>')
+    html.append('          <div class="policy_sub">Ban biên tập đã chốt phương án: Khối Uy tín +15%, Khối Kinh doanh +15%, Khối Lifestyle +15% (riêng Lifestyle +10%), Khối Truy cập: Giải trí +15%, Thể thao +20%.</div>')
     html.append('        </div>')
-    html.append('        <div><a href="index.html" class="nav_btn_main">Xem Bảng Giao Chỉ Tiêu Theo Ngày & Tháng →</a></div>')
+    html.append('        <div><a href="index.html" class="nav_btn_main">Xem bảng giao chỉ tiêu theo ngày & tháng →</a></div>')
     html.append('      </div>')
     html.append('    </div>')
     
@@ -2349,7 +2344,7 @@ def build_detail_html():
     html.append('        <div class="meta_badge">Báo cáo dữ liệu Ban biên tập</div>')
     html.append('        <div class="meta_subtext">Dữ liệu chốt đến 29/09/2026 • Đơn vị: Triệu lượt truy cập</div>')
     html.append('      </div>')
-    html.append('      <h1>Truy cập Znews 2025–2026 & Mục tiêu KPI Quý 4/2026</h1>')
+    html.append('      <h1>Truy cập Znews 2025–2026 & mục tiêu KPI quý 4/2026</h1>')
     html.append('      <p class="page_desc">Đánh giá toàn cảnh tăng trưởng 7 tháng đầu năm, phân tích mức độ sụt giảm sâu sau biến động T8–T9/2026, đối chiếu tiến độ KPI 9 tháng và chi tiết <strong>4 kịch bản KPI Quý 4/2026</strong> cùng các động lực tăng trưởng cốt lõi.</p>')
     html.append('    </header>')
     
@@ -2357,25 +2352,25 @@ def build_detail_html():
     html.append('    <section class="grid_4col">')
     # Card 1: 7T Growth
     html.append('      <div class="kpi_card_head">')
-    html.append('        <div class="kpi_label">7 Tháng Đầu 2026 vs Cùng Kỳ</div>')
+    html.append('        <div class="kpi_label">7 tháng đầu 2026 vs cùng kỳ</div>')
     html.append(f'        <div class="kpi_value_huge negative">{fmt_pct(toan_t7["pct_7t"])}</div>')
     html.append(f'        <div class="kpi_sub">Đạt <strong class="num">{fmt_tr(toan_t7["t7_2026"], 2)} tr</strong> (vs {fmt_tr(toan_t7["t7_2025"], 2)} tr 2025)</div>')
     html.append('      </div>')
     # Card 2: T8-T9 Drop
     html.append('      <div class="kpi_card_head alert_card">')
-    html.append('        <div class="kpi_label">Biến Động T8–T9/2026</div>')
+    html.append('        <div class="kpi_label">Biến động T8–T9/2026</div>')
     html.append(f'        <div class="kpi_value_huge negative">{fmt_pct(toan_t7["pct_T8T9_2026_vs_cung_ky"])}</div>')
     html.append(f'        <div class="kpi_sub">Trung bình đạt <strong class="num">{fmt_tr(toan_tb, 2)} tr</strong>/tháng</div>')
     html.append('      </div>')
     # Card 3: Q4 KPI Target (HIGHLIGHT)
     html.append('      <div class="kpi_card_head highlight">')
-    html.append('        <div class="kpi_label">Mục Tiêu KPI Quý 4 (4 Kịch Bản)</div>')
+    html.append('        <div class="kpi_label">Mục tiêu KPI quý 4 (4 kịch bản)</div>')
     html.append(f'        <div class="kpi_value_huge accent">{fmt_tr(toan_m10_q4, 2)}–{fmt_tr(toan_m50_q4, 2)} tr</div>')
     html.append(f'        <div class="kpi_sub">Mỗi tháng: <strong class="num cell_primary">{fmt_tr(toan_m10_th, 2)}–{fmt_tr(toan_m50_th, 2)} tr</strong> (+10% đến +50%)</div>')
     html.append('      </div>')
     # Card 4: Full Year Forecast
     html.append('      <div class="kpi_card_head">')
-    html.append('        <div class="kpi_label">Kịch Bản Cả Năm 2026 Dự Kiến</div>')
+    html.append('        <div class="kpi_label">Kịch bản cả năm 2026 dự kiến</div>')
     html.append(f'        <div class="kpi_value_huge">{fmt_tr(toan_m10_yr, 2)}–{fmt_tr(toan_m50_yr, 2)} tr</div>')
     html.append(f'        <div class="kpi_sub">{fmt_pct(toan_m10_pct_yr)} – {fmt_pct(toan_m50_pct_yr)} vs 2025 ({fmt_tr(toan_yr_25, 1)} tr)</div>')
     html.append('      </div>')
@@ -2457,7 +2452,7 @@ def build_detail_html():
     html.append(build_t7_growth_bar_svg())
     html.append('          </div>')
     html.append('          <div class="card">')
-    html.append('            <h3>Quy mô truy cập 4 Khối & Toàn trang (7T/2025 vs 7T/2026)</h3>')
+    html.append('            <h3>Quy mô truy cập 4 khối & toàn trang (7T/2025 vs 7T/2026)</h3>')
     html.append('            <p>Điểm xám: 7T/2025 | Điểm xanh: 7T/2026 (triệu lượt)</p>')
     html.append(build_t7_dumbbell_svg())
     html.append('          </div>')
@@ -2498,25 +2493,25 @@ def build_detail_html():
     html.append('        <div class="grid_4col">')
     # Card 1: 7T Progress
     html.append('          <div class="kpi_card_head">')
-    html.append('            <div class="kpi_label">Tiến Độ 7 Tháng (Trước Biến Động)</div>')
+    html.append('            <div class="kpi_label">Tiến độ 7 tháng (trước biến động)</div>')
     html.append('            <div class="kpi_value_huge">52,7%</div>')
     html.append('            <div class="kpi_sub">Mốc chuẩn: <strong>58,3%</strong> (Đạt 439,9 / 834,2 tr. Thể thao 61,4%, Đời sống 59,4%, Thế giới 90,0% vượt chuẩn)</div>')
     html.append('          </div>')
     # Card 2: Shock Month 8
     html.append('          <div class="kpi_card_head warn_card">')
-    html.append('            <div class="kpi_label">Bước Ngoặt Tháng 8 (Chững Lại)</div>')
+    html.append('            <div class="kpi_label">Bước ngoặt tháng 8 (chững lại)</div>')
     html.append('            <div class="kpi_value_huge warning_val">56,5%</div>')
     html.append('            <div class="kpi_sub">Mốc chuẩn: <strong>66,7%</strong> (Hụt 10,2 điểm %. Tháng 8 chỉ nhích thêm 3,8% so với mức tăng 7,5%/tháng trước đó)</div>')
     html.append('          </div>')
     # Card 3: 9M Status
     html.append('          <div class="kpi_card_head alert_card">')
-    html.append('            <div class="kpi_label">Hiện Trạng Sau 9 Tháng</div>')
+    html.append('            <div class="kpi_label">Hiện trạng sau 9 tháng</div>')
     html.append('            <div class="kpi_value_huge negative">59,5%</div>')
     html.append('            <div class="kpi_sub">Mốc chuẩn: <strong>75,0%</strong> (Hụt 15,5 điểm %. 13/14 chuyên mục chậm tiến độ, Xã hội 31,9%, Pháp luật 39,5%)</div>')
     html.append('          </div>')
     # Card 4: Q4 Impossible Gap
     html.append('          <div class="kpi_card_head alert_card">')
-    html.append('            <div class="kpi_label">Thách Thức Q4 Nếu Giữ KPI Cũ</div>')
+    html.append('            <div class="kpi_label">Thách thức quý 4 nếu giữ KPI cũ</div>')
     html.append('            <div class="kpi_value_huge negative">+298,1%</div>')
     html.append('            <div class="kpi_sub">Còn thiếu <strong>337,74 tr</strong>. Mỗi tháng cần <strong>112,58 tr</strong> (gấp 4 lần thực tế T8–T9: 28,28 tr) — Bất khả thi!</div>')
     html.append('          </div>')
@@ -2531,8 +2526,8 @@ def build_detail_html():
     html.append('            </div>')
     html.append('            <div class="controls_bar" id="prog_filter_chips">')
     html.append('              <div class="chip active" data-filter="all">Tất cả (19)</div>')
-    html.append('              <div class="chip" data-filter="blocks">Chỉ xem Khối</div>')
-    html.append('              <div class="chip" data-filter="deps">Chỉ xem Ban</div>')
+    html.append('              <div class="chip" data-filter="blocks">Chỉ xem khối</div>')
+    html.append('              <div class="chip" data-filter="deps">Chỉ xem ban</div>')
     html.append('              <div class="chip" data-filter="heavy_lag">Chậm nặng (&gt;300%)</div>')
     html.append('            </div>')
     html.append('          </div>')
