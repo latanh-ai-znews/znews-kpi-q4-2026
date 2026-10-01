@@ -9,6 +9,7 @@ Tài liệu này ghi lại toàn bộ lịch sử các lần cập nhật, sửa
 
 | Phiên bản | Thời gian | Mã Commit | Nội dung cập nhật chính | Người thực hiện |
 | :--- | :--- | :--- | :--- | :--- |
+| **v2.9** | 01/10/2026 12:45 | `ec28193` | Tạo trang mới riêng biệt (kpi_14_ban.html), link độc lập, không liên hệ tài liệu cũ, chỉ gồm box bối cảnh & 14 thẻ ban | Antigravity AI |
 | **v2.8** | 01/10/2026 12:15 | `4d81713` | Bổ sung số lượt truy cập theo ngày vào mục Cơ sở T9 của 14 thẻ ban biên tập (chia đúng 29 ngày) | Antigravity AI |
 | **v2.7** | 30/09/2026 23:38 | `19ae396` | Đồng bộ toàn bộ dòng tổng các khối về màu xanh trong Bảng tổng hợp; chạy code xác thực số liệu | Antigravity AI |
 | **v2.6** | 30/09/2026 23:22 | `1532730` | Thêm box giải thích bối cảnh và nguyên tắc đề xuất KPI mới ở đầu trang | Antigravity AI |
@@ -34,6 +35,30 @@ Tài liệu này ghi lại toàn bộ lịch sử các lần cập nhật, sửa
 ---
 
 ## 🔍 Chi Tiết Từng Lần Cập Nhật
+
+---
+
+### [Cập nhật #26] — Phiên bản v2.9 (01/10/2026 12:45:00)
+- **Mã Commit:** `ec28193` (`main` và `gh-pages`)
+- **Yêu cầu từ người dùng:**
+  > *"Tạo một trang mới, dùng link khác, không có bất cứ liên hệ nào với các trang tài liệu cũ.*
+  > *Trang này chỉ gồm các nội dung sau của trang index:*
+  > *Bối cảnh và nguyên tắc đề xuất KPI mới:*
+  > *Đề xuất KPI từng ban (14 ban)"*
+- **Các thay đổi thực hiện:**
+  1. **Khởi tạo trang web độc lập mới:**
+     - Tạo tệp `kpi_14_ban.html` (đồng thời tạo đường dẫn alias `de_xuat_kpi_14_ban.html`).
+     - Trang có link URL độc lập trên GitHub Pages: `https://latanh-ai-znews.github.io/znews-kpi-q4-2026/kpi_14_ban.html`.
+  2. **Cách ly hoàn toàn, không liên hệ tài liệu cũ:**
+     - Loại bỏ toàn bộ thanh điều hướng (`top_bar_nav`), không có link dẫn tới `index.html`, `kpi_phe_duyet.html`, `detail.html`.
+     - Không có nút chuyển trang (`nav_btn_main`), không chứa breadcrumb hay backlink nào liên quan đến các báo cáo trước đây.
+     - Header và Footer độc lập, thuần túy hiển thị danh xưng Tạp chí Tri thức - Znews và dữ liệu đề xuất KPI Quý 4/2026.
+  3. **Chỉ giữ đúng 2 nội dung theo yêu cầu:**
+     - **Box bối cảnh & nguyên tắc:** Giữ nguyên 3 gạch đầu dòng giải thích việc giảm truy cập do đổi tên miền, cơ sở T9 trừ 5% Zalo và mức đề xuất +15%.
+     - **14 thẻ ban biên tập:** Hiển thị trọn vẹn chỉ tiêu đề xuất Quý 4 (+15%) theo ngày, theo tháng, cả quý 4, số nền Cơ sở T9 (tổng tháng + lượt/ngày), dự báo cả năm 2026 và % so với 2025.
+     - Lược bỏ toàn bộ Bảng tổng hợp chỉ tiêu, Bảng điều khiển tính toán và 4 thẻ chỉ số toàn trang ở cuối.
+  4. **Quy chuẩn kỹ thuật Znews CMS:**
+     - 100% tuân thủ CSS scoped trong `.container_AI`, 0 inline styles, 0 thẻ `<span>`, 0 thẻ `<button>`, 0 ảnh base64.
 
 ---
 
