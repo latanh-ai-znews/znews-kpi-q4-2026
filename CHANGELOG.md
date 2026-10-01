@@ -59,6 +59,9 @@ Tài liệu này ghi lại toàn bộ lịch sử các lần cập nhật, sửa
      - Lược bỏ toàn bộ Bảng tổng hợp chỉ tiêu, Bảng điều khiển tính toán và 4 thẻ chỉ số toàn trang ở cuối.
   4. **Quy chuẩn kỹ thuật Znews CMS:**
      - 100% tuân thủ CSS scoped trong `.container_AI`, 0 inline styles, 0 thẻ `<span>`, 0 thẻ `<button>`, 0 ảnh base64.
+  5. **Xuất bản định dạng ASPX / APX cho SharePoint:**
+     - Tạo sẵn các tệp `kpi_14_ban.aspx`, `kpi_14_ban.apx`, `de_xuat_kpi_14_ban.aspx`, `de_xuat_kpi_14_ban.apx`.
+     - Tự động lưu về thư mục `~/Downloads` trên máy tính để người dùng có thể tải thẳng lên thư viện tài liệu SharePoint (Site Assets/Site Pages) chia sẻ nội bộ mà không bị lỗi tải tệp về.
 
 ---
 

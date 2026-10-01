@@ -22,6 +22,7 @@ Production-grade generator for Znews Q4 2026 Static Dashboard:
 """
 import json
 import re
+import os
 
 # 1. Load data
 with open("brief_data.json", "r", encoding="utf-8") as f:
@@ -4526,5 +4527,20 @@ with open("kpi_14_ban.html", "w", encoding="utf-8") as f:
 with open("de_xuat_kpi_14_ban.html", "w", encoding="utf-8") as f:
     f.write(kpi_14_ban_html)
 
-print("SUCCESS: All pages (index.html, kpi_phe_duyet.html, detail.html, kpi_14_ban.html, de_xuat_kpi_14_ban.html) generated and saved successfully!")
+# Export for SharePoint (.aspx & .apx)
+for ext in [".aspx", ".apx"]:
+    with open(f"kpi_14_ban{ext}", "w", encoding="utf-8") as f:
+        f.write(kpi_14_ban_html)
+    with open(f"de_xuat_kpi_14_ban{ext}", "w", encoding="utf-8") as f:
+        f.write(kpi_14_ban_html)
+
+# Copy to user's Downloads folder for convenient SharePoint uploading
+dl_dir = os.path.expanduser("~/Downloads")
+if os.path.exists(dl_dir):
+    for fname in ["kpi_14_ban.aspx", "kpi_14_ban.apx", "de_xuat_kpi_14_ban.aspx", "de_xuat_kpi_14_ban.apx"]:
+        with open(os.path.join(dl_dir, fname), "w", encoding="utf-8") as f:
+            f.write(kpi_14_ban_html)
+
+print("SUCCESS: All pages (HTML, ASPX, APX) generated and saved to workspace and Downloads successfully!")
+
 
