@@ -801,10 +801,19 @@ html {
 }
 
 .container_AI .dep_stat_row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
   margin-bottom: 12px;
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.container_AI .dep_stat_row strong {
+  color: #1e293b;
 }
 
 .container_AI .stat_box {
@@ -1692,7 +1701,7 @@ html {
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong id="card_base_xh">1,78M</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_xh">1,78M</strong> • <strong id="card_base_day_xh">59.301</strong> lượt/ngày</div>
               <div>Cả năm 2026: <strong id="card_yr_xh">33,70M</strong> (<strong id="card_pct_xh">-54,3%</strong> vs 2025)</div>
             </div>
           </div>
@@ -1725,7 +1734,7 @@ html {
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong id="card_base_pl">1,08M</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_pl">1,08M</strong> • <strong id="card_base_day_pl">35.986</strong> lượt/ngày</div>
               <div>Cả năm 2026: <strong id="card_yr_pl">28,45M</strong> (<strong id="card_pct_pl">-47,9%</strong> vs 2025)</div>
             </div>
           </div>
@@ -1758,7 +1767,7 @@ html {
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong id="card_base_tg">0,82M</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_tg">0,82M</strong> • <strong id="card_base_day_tg">27.327</strong> lượt/ngày</div>
               <div>Cả năm 2026: <strong id="card_yr_tg">45,23M</strong> (<strong id="card_pct_tg">+11,9%</strong> vs 2025)</div>
             </div>
           </div>
@@ -1791,7 +1800,7 @@ html {
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong id="card_base_xb">1,04M</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_xb">1,04M</strong> • <strong id="card_base_day_xb">34.607</strong> lượt/ngày</div>
               <div>Cả năm 2026: <strong id="card_yr_xb">13,52M</strong> (<strong id="card_pct_xb">-2,5%</strong> vs 2025)</div>
             </div>
           </div>
@@ -1824,7 +1833,7 @@ html {
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong id="card_base_kd">3,37M</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_kd">3,37M</strong> • <strong id="card_base_day_kd">112.223</strong> lượt/ngày</div>
               <div>Cả năm 2026: <strong id="card_yr_kd">54,46M</strong> (<strong id="card_pct_kd">-27,0%</strong> vs 2025)</div>
             </div>
           </div>
@@ -1857,7 +1866,7 @@ html {
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong id="card_base_cn">1,63M</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_cn">1,63M</strong> • <strong id="card_base_day_cn">54.189</strong> lượt/ngày</div>
               <div>Cả năm 2026: <strong id="card_yr_cn">26,67M</strong> (<strong id="card_pct_cn">-23,4%</strong> vs 2025)</div>
             </div>
           </div>
@@ -1890,7 +1899,7 @@ html {
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong id="card_base_xe">0,80M</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_xe">0,80M</strong> • <strong id="card_base_day_xe">26.565</strong> lượt/ngày</div>
               <div>Cả năm 2026: <strong id="card_yr_xe">14,16M</strong> (<strong id="card_pct_xe">-17,4%</strong> vs 2025)</div>
             </div>
           </div>
@@ -1923,7 +1932,7 @@ html {
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong id="card_base_ds">1,70M</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_ds">1,70M</strong> • <strong id="card_base_day_ds">56.672</strong> lượt/ngày</div>
               <div>Cả năm 2026: <strong id="card_yr_ds">52,73M</strong> (<strong id="card_pct_ds">-20,5%</strong> vs 2025)</div>
             </div>
           </div>
@@ -1956,7 +1965,7 @@ html {
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong id="card_base_ls">0,54M</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_ls">0,54M</strong> • <strong id="card_base_day_ls">17.917</strong> lượt/ngày</div>
               <div>Cả năm 2026: <strong id="card_yr_ls">12,26M</strong> (<strong id="card_pct_ls">-27,1%</strong> vs 2025)</div>
             </div>
           </div>
@@ -1989,7 +1998,7 @@ html {
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong id="card_base_sk">1,84M</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_sk">1,84M</strong> • <strong id="card_base_day_sk">61.172</strong> lượt/ngày</div>
               <div>Cả năm 2026: <strong id="card_yr_sk">34,13M</strong> (<strong id="card_pct_sk">-37,0%</strong> vs 2025)</div>
             </div>
           </div>
@@ -2022,7 +2031,7 @@ html {
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong id="card_base_gd">0,46M</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_gd">0,46M</strong> • <strong id="card_base_day_gd">15.359</strong> lượt/ngày</div>
               <div>Cả năm 2026: <strong id="card_yr_gd">12,54M</strong> (<strong id="card_pct_gd">-31,8%</strong> vs 2025)</div>
             </div>
           </div>
@@ -2055,7 +2064,7 @@ html {
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong id="card_base_dl">0,88M</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_dl">0,88M</strong> • <strong id="card_base_day_dl">29.386</strong> lượt/ngày</div>
               <div>Cả năm 2026: <strong id="card_yr_dl">20,16M</strong> (<strong id="card_pct_dl">-18,7%</strong> vs 2025)</div>
             </div>
           </div>
@@ -2088,7 +2097,7 @@ html {
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong id="card_base_tt">6,26M</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_tt">6,26M</strong> • <strong id="card_base_day_tt">208.791</strong> lượt/ngày</div>
               <div>Cả năm 2026: <strong id="card_yr_tt">172,47M</strong> (<strong id="card_pct_tt">-19,1%</strong> vs 2025)</div>
             </div>
           </div>
@@ -2121,7 +2130,7 @@ html {
               </div>
             </div>
             <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong id="card_base_gt">2,54M</strong></div>
+              <div>Cơ sở T9: <strong id="card_base_gt">2,54M</strong> • <strong id="card_base_day_gt">84.572</strong> lượt/ngày</div>
               <div>Cả năm 2026: <strong id="card_yr_gt">63,17M</strong> (<strong id="card_pct_gt">-34,7%</strong> vs 2025)</div>
             </div>
           </div>
@@ -2590,6 +2599,7 @@ html {
 
     DEPARTMENTS.forEach(d => {
       let base = d.t9_scaled * (1.0 - state.zaloRate / 100.0);
+      let base_day = base / 30.0;
 
       let rate = state.rateMode === 'all' ? state.globalRate : (state.depRates[d.id] !== undefined ? state.depRates[d.id] : 15.0);
       let day = (base / 30.0) * (1.0 + rate / 100.0);
@@ -2598,7 +2608,7 @@ html {
       let yr_26 = d.lk_9t + q4;
       let pct_25 = ((yr_26 - d.yr_2025) / d.yr_2025) * 100.0;
 
-      depRes[d.id] = { base, rate, day, th, q4, yr_26, pct_25 };
+      depRes[d.id] = { base, base_day, rate, day, th, q4, yr_26, pct_25 };
 
       // Sum to block
       let blk = blkRes[d.block];
@@ -2743,6 +2753,7 @@ html {
       const cTh = document.getElementById('card_th_' + d.id);
       const cQ4 = document.getElementById('card_q4_' + d.id);
       const cBase = document.getElementById('card_base_' + d.id);
+      const cBaseDay = document.getElementById('card_base_day_' + d.id);
       const cYr = document.getElementById('card_yr_' + d.id);
       const cPct = document.getElementById('card_pct_' + d.id);
       const cBadge = document.getElementById('card_badge_' + d.id);
@@ -2752,6 +2763,7 @@ html {
       if (cTh) cTh.textContent = fmtTr(res.th, 2);
       if (cQ4) cQ4.textContent = fmtTr(res.q4, 2);
       if (cBase) cBase.textContent = fmtTr(res.base, 2);
+      if (cBaseDay) cBaseDay.textContent = fmtDay(res.base_day);
       if (cYr) cYr.textContent = fmtTr(res.yr_26, 2);
       if (cPct) cPct.textContent = fmtPct(res.pct_25, 1);
 

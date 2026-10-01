@@ -9,7 +9,8 @@ Tài liệu này ghi lại toàn bộ lịch sử các lần cập nhật, sửa
 
 | Phiên bản | Thời gian | Mã Commit | Nội dung cập nhật chính | Người thực hiện |
 | :--- | :--- | :--- | :--- | :--- |
-| **v2.7** | 30/09/2026 23:38 | `aeff07f` | Đồng bộ toàn bộ dòng tổng các khối về màu xanh trong Bảng tổng hợp; chạy code xác thực số liệu | Antigravity AI |
+| **v2.8** | 01/10/2026 12:15 | `4d81713` | Bổ sung số lượt truy cập theo ngày vào mục Cơ sở T9 của 14 thẻ ban biên tập (chia đúng 29 ngày) | Antigravity AI |
+| **v2.7** | 30/09/2026 23:38 | `19ae396` | Đồng bộ toàn bộ dòng tổng các khối về màu xanh trong Bảng tổng hợp; chạy code xác thực số liệu | Antigravity AI |
 | **v2.6** | 30/09/2026 23:22 | `1532730` | Thêm box giải thích bối cảnh và nguyên tắc đề xuất KPI mới ở đầu trang | Antigravity AI |
 | **v2.5** | 30/09/2026 22:46 | `0dc4c28` | Đặt mặc định trừ Zalo 5,0%; thêm ô tùy chỉnh % ảnh hưởng Zalo linh hoạt | Antigravity AI |
 | **v2.4** | 30/09/2026 22:34 | `2646ad7` | Đổi tên "Đề xuất KPI từng ban (14 ban)"; đưa 4 thẻ chỉ số tổng quan xuống cuối trang | Antigravity AI |
@@ -33,6 +34,27 @@ Tài liệu này ghi lại toàn bộ lịch sử các lần cập nhật, sửa
 ---
 
 ## 🔍 Chi Tiết Từng Lần Cập Nhật
+
+---
+
+### [Cập nhật #25] — Phiên bản v2.8 (01/10/2026 12:15:00)
+- **Mã Commit:** `4d81713` (`main` và `gh-pages`)
+- **Yêu cầu từ người dùng:**
+  > *"Đề xuất KPI từng ban (14 ban)*
+  > *Trong phần này, ở mục Cơ sở T9, ngoài số tổng thì tính thêm số theo ngày (chia theo đúng 29 ngày, không cần note việc chia 29)"*
+- **Các thay đổi thực hiện:**
+  1. **Hiển thị số truy cập theo ngày của Cơ sở T9:**
+     - Trong 14 thẻ ban biên tập ở mục "Đề xuất KPI từng ban (14 ban)", tại dòng thông tin nền tháng 9, bổ sung số theo ngày bên cạnh số tổng tháng.
+     - Cấu trúc hiển thị: `Cơ sở T9: [Số tổng]M • [Số theo ngày] lượt/ngày` (ví dụ Xã hội: `Cơ sở T9: 1,78M • 59.301 lượt/ngày`).
+     - Không kèm theo ghi chú về việc chia 29 ngày theo đúng yêu cầu người dùng, giữ giao diện gọn gàng, tinh tế.
+  2. **Công thức toán học & tính phản ứng hai chiều (Reactive):**
+     - Số theo ngày của Cơ sở T9 được tính chuẩn xác: $\text{Số ngày} = \frac{\text{Lượt thực tế 29 ngày} \times (1 - \text{Tỷ lệ trừ Zalo})}{29}$.
+     - Phép tính này đồng nhất tuyệt đối với $\frac{\text{Cơ sở tháng (quy đổi 30 ngày)}}{30}$.
+     - Tích hợp vào hàm Javascript `recalculate()` và `render()`, tự động cập nhật ngay lập tức khi người dùng thay đổi mức trừ Zalo (5%, 2,1%, 0% hoặc tùy chỉnh).
+  3. **Tối ưu giao diện & kiểu dáng:**
+     - Tinh chỉnh CSS `.dep_stat_row` sang `display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 14px;` giúp các chỉ số dàn đều đẹp mắt trên desktop và tự động co giãn, xuống hàng mượt mà trên mobile.
+  4. **Tuân thủ quy chuẩn Znews CMS:**
+     - 100% tuân thủ CSS scoped, 0 inline styles, 0 thẻ `<span>`, 0 thẻ `<button>`, 0 ảnh base64.
 
 ---
 
