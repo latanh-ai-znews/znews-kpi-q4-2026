@@ -9,6 +9,7 @@ Tài liệu này ghi lại toàn bộ lịch sử các lần cập nhật, sửa
 
 | Phiên bản | Thời gian | Mã Commit | Nội dung cập nhật chính | Người thực hiện |
 | :--- | :--- | :--- | :--- | :--- |
+| **v2.11**| 01/10/2026 14:05 | `be1b7d9` | Tinh chỉnh bảng màu KPI Z sang phong cách nhẹ nhàng, nhã nhặn (Soft Pastel Palette), bỏ màu gắt | Antigravity AI |
 | **v2.10**| 01/10/2026 13:45 | `836354d` | Bổ sung tab KPI Z (Bài viết chất lượng Z3 & tốc độ Z4), tích hợp box bối cảnh bài viết & bảng 14 ban chuẩn hình ảnh | Antigravity AI |
 | **v2.9** | 01/10/2026 12:45 | `ec28193` | Tạo trang mới riêng biệt (kpi_14_ban.html), link độc lập, không liên hệ tài liệu cũ, chỉ gồm box bối cảnh & 14 thẻ ban | Antigravity AI |
 | **v2.8** | 01/10/2026 12:15 | `4d81713` | Bổ sung số lượt truy cập theo ngày vào mục Cơ sở T9 của 14 thẻ ban biên tập (chia đúng 29 ngày) | Antigravity AI |
@@ -36,6 +37,29 @@ Tài liệu này ghi lại toàn bộ lịch sử các lần cập nhật, sửa
 ---
 
 ## 🔍 Chi Tiết Từng Lần Cập Nhật
+
+---
+
+### [Cập nhật #28] — Phiên bản v2.11 (01/10/2026 14:05:00)
+- **Mã Commit:** `be1b7d9` (`main` và `gh-pages`)
+- **Yêu cầu từ người dùng:**
+  > *"Bảng KPI Z cần làm lại màu nhẹ nhàng, nhã nhặn hơn"*
+- **Các thay đổi thực hiện:**
+  1. **Thiết kế lại bảng màu theo phong cách Soft Pastel & Minimalist:**
+     - Loại bỏ các khối màu đậm tương phản gắt (xanh navy đậm, xanh dương hoàng gia rực rỡ, xanh lá cây chói mắt và các đường viền đen đậm).
+     - **Tiêu đề nhóm cột:**
+       * Cột `Ban`: Nền xám nhạt trung tính `#f1f5f9`, chữ đen xám sang trọng `#1e293b`.
+       * Nhóm `Z3 – Bài chất lượng`: Nền xanh phấn nhạt dịu mắt `#f0f7ff`, chữ xanh thẫm thanh lịch `#1e40af`, viền gạch chân mảnh `#dbeafe`.
+       * Nhóm `Z4 – Bài tốc độ`: Nền xanh bạc hà phấn nhạt `#f0fdf4`, chữ xanh lá đậm nhã nhặn `#166534`, viền gạch chân mảnh `#dcfce7`.
+       * Hàng phụ (`KPI cả năm`, `Mỗi tháng`): Nền `#f8faff` / `#f9fdfa`, chữ xám `#475569`, tạo độ chuyển tiếp êm ái.
+  2. **Tinh chỉnh các ô dữ liệu & số liệu:**
+     - Nền các ô mang sắc thái pastel tinh tế (`#fafcff` cho Z3, `#fbfdfc` cho Z4; hàng so le `#f1f6fe` và `#f2faf5`).
+     - Màu số liệu dịu mắt: Số cả năm dùng xanh navy `#1e40af` và xanh rừng `#166534`; số mỗi tháng chuyển từ đỏ tươi chói sang đỏ gạch/terracotta trầm sang trọng `#b91c1c`.
+     - Đường viền giữa các ô được làm mảnh mềm mại (`#f1f5f9`), đường phân cách giữa hai nhóm Z3 và Z4 là dải viền thanh lịch `#cbd5e1`.
+  3. **Hàng tổng cộng (Tổng 14 ban):**
+     - Chuyển sang nền pastel kết hợp `#eef5fc` và `#effaf3`, đường phân cách trên mảnh `2px solid #cbd5e1`.
+  4. **Đồng bộ tự động ra các tệp:**
+     - Cập nhật tức thời sang `kpi_14_ban.html`, `de_xuat_kpi_14_ban.html`, cùng các file `.aspx` và `.apx` trong thư mục dự án và `~/Downloads`.
 
 ---
 
