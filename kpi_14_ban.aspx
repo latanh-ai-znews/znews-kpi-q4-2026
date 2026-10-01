@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Đề xuất KPI Quý 4/2026 (14 ban) — Tạp chí điện tử Tri thức - Znews</title>
+  <title>Đề xuất KPI Quý 4/2026 & KPI Z (14 ban) — Tạp chí điện tử Tri thức - Znews</title>
   <style>
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@500;600;700;800&display=swap');
 
@@ -1633,6 +1633,255 @@ html {
   }
 }
 
+
+
+/* Internal Tab Bar */
+.container_AI .page_internal_tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #cbd5e1;
+}
+
+.container_AI .internal_tab_btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 10px 10px 0 0;
+  font-size: 15px;
+  font-weight: 800;
+  color: #64748b;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-bottom: none;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  margin-bottom: -2px;
+}
+
+.container_AI .internal_tab_btn:hover {
+  color: #0f172a;
+  background: #e2e8f0;
+}
+
+.container_AI .internal_tab_btn.active {
+  color: #1d4ed8;
+  background: #ffffff;
+  border-color: #3b56e0;
+  border-bottom: 3px solid #ffffff;
+  box-shadow: 0 -3px 12px rgba(59, 86, 224, 0.08);
+}
+
+.container_AI .tab_pane {
+  display: none;
+}
+
+.container_AI .tab_pane.active {
+  display: block;
+}
+
+/* Criteria List in Context Box */
+.container_AI .kpi_criteria_box {
+  margin-top: 12px;
+  background: #ffffff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.container_AI .criteria_item {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1e3a8a;
+}
+
+.container_AI .criteria_item strong {
+  color: #0f172a;
+}
+
+.container_AI .criteria_ext {
+  color: #047857;
+}
+
+.container_AI .criteria_ext strong {
+  color: #065f46;
+}
+
+/* KPI Z Table Styles */
+.container_AI .kpi_z_table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: 'Manrope', -apple-system, sans-serif;
+  border: 1.5px solid #0f172a;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.container_AI .kpi_z_table th,
+.container_AI .kpi_z_table td {
+  padding: 12px 14px;
+  font-size: 14.5px;
+  border-right: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.container_AI .kpi_z_table th:last-child,
+.container_AI .kpi_z_table td:last-child {
+  border-right: none;
+}
+
+.container_AI .kpi_z_th_ban {
+  background: #172554;
+  color: #ffffff;
+  font-weight: 800;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 15px;
+  border-right: 1.5px solid #334155;
+  width: 22%;
+}
+
+.container_AI .kpi_z_th_z3_group {
+  background: #1d4ed8;
+  color: #ffffff;
+  font-weight: 800;
+  text-align: center;
+  font-size: 15px;
+  border-right: 2px solid #0f172a;
+  border-bottom: 1.5px solid #3b82f6;
+  width: 39%;
+}
+
+.container_AI .kpi_z_th_z4_group {
+  background: #15803d;
+  color: #ffffff;
+  font-weight: 800;
+  text-align: center;
+  font-size: 15px;
+  border-bottom: 1.5px solid #22c55e;
+  width: 39%;
+}
+
+.container_AI .kpi_z_th_sub_z3 {
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 700;
+  text-align: center;
+  font-size: 13.5px;
+  border-bottom: 2px solid #0f172a;
+}
+
+.container_AI .kpi_z_th_sub_z3_sep {
+  border-right: 2px solid #0f172a;
+}
+
+.container_AI .kpi_z_th_sub_z4 {
+  background: #16a34a;
+  color: #ffffff;
+  font-weight: 700;
+  text-align: center;
+  font-size: 13.5px;
+  border-bottom: 2px solid #0f172a;
+}
+
+.container_AI .kpi_z_td_ban {
+  font-weight: 800;
+  color: #0f172a;
+  text-align: left;
+  background: #ffffff;
+  border-right: 1.5px solid #cbd5e1;
+}
+
+.container_AI .kpi_z_tr_alt .kpi_z_td_ban {
+  background: #f8fafc;
+}
+
+.container_AI .kpi_z_td_z3_yr {
+  text-align: center;
+  font-weight: 800;
+  color: #1d4ed8;
+  background: #eff6ff;
+  font-size: 15px;
+}
+
+.container_AI .kpi_z_tr_alt .kpi_z_td_z3_yr {
+  background: #dbeafe;
+}
+
+.container_AI .kpi_z_td_z3_mo {
+  text-align: center;
+  font-weight: 800;
+  color: #dc2626;
+  background: #eff6ff;
+  font-size: 15px;
+  border-right: 2px solid #0f172a;
+}
+
+.container_AI .kpi_z_tr_alt .kpi_z_td_z3_mo {
+  background: #dbeafe;
+}
+
+.container_AI .kpi_z_td_z4_yr {
+  text-align: center;
+  font-weight: 800;
+  color: #15803d;
+  background: #f0fdf4;
+  font-size: 15px;
+}
+
+.container_AI .kpi_z_tr_alt .kpi_z_td_z4_yr {
+  background: #dcfce7;
+}
+
+.container_AI .kpi_z_td_z4_mo {
+  text-align: center;
+  font-weight: 800;
+  color: #dc2626;
+  background: #f0fdf4;
+  font-size: 15px;
+}
+
+.container_AI .kpi_z_tr_alt .kpi_z_td_z4_mo {
+  background: #dcfce7;
+}
+
+.container_AI .kpi_z_tr_total td {
+  font-weight: 900;
+  border-top: 2.5px solid #0f172a;
+  border-bottom: 2.5px solid #0f172a;
+  font-size: 15px;
+}
+
+.container_AI .kpi_z_tr_total .kpi_z_td_ban {
+  background: #e2e8f0;
+}
+
+.container_AI .kpi_z_tr_total .kpi_z_td_z3_yr {
+  background: #bfdbfe;
+  color: #1e40af;
+}
+
+.container_AI .kpi_z_tr_total .kpi_z_td_z3_mo {
+  background: #bfdbfe;
+  color: #b91c1c;
+}
+
+.container_AI .kpi_z_tr_total .kpi_z_td_z4_yr {
+  background: #bbf7d0;
+  color: #14532d;
+}
+
+.container_AI .kpi_z_tr_total .kpi_z_td_z4_mo {
+  background: #bbf7d0;
+  color: #b91c1c;
+}
 </style>
 </head>
 <body>
@@ -1642,442 +1891,628 @@ html {
       <div class="brand_area">
         <div class="brand_kicker">Tạp chí điện tử Tri thức - Znews • Ban biên tập</div>
         <div class="brand_title">Đề xuất KPI Quý 4/2026 (14 ban)</div>
-        <div class="brand_sub">Cơ sở tính toán theo mức trung bình tháng 9/2026 • Giảm trừ 5% ảnh hưởng Zalo • Mức tăng trưởng đề xuất +15%</div>
+        <div class="brand_sub">Chỉ tiêu đề xuất lượt truy cập Quý 4/2026 & Chỉ tiêu bài viết KPI Z (Z3 – Chất lượng & Z4 – Tốc độ)</div>
       </div>
     </header>
-    <div class="intro_context_card">
-      <div class="intro_context_header">
-        <div class="intro_context_icon">📌</div>
-        <div class="intro_context_title">Bối cảnh và nguyên tắc đề xuất KPI mới:</div>
+    <nav class="page_internal_tabs">
+      <div class="internal_tab_btn active" data-tab="tab_traffic">🎯 Đề xuất KPI truy cập (14 ban)</div>
+      <div class="internal_tab_btn" data-tab="tab_kpiz">📝 KPI Z (Bài viết chất lượng & tốc độ)</div>
+    </nav>
+    <div id="tab_traffic" class="tab_pane active">
+      <div class="intro_context_card">
+        <div class="intro_context_header">
+          <div class="intro_context_icon">📌</div>
+          <div class="intro_context_title">Bối cảnh và nguyên tắc đề xuất KPI mới:</div>
+        </div>
+        <div class="intro_context_body">
+          <ul class="intro_context_list">
+            <li>Từ tháng 8, việc thay đổi tên miền khiến truy cập giảm mạnh. Mức giảm trung bình là <strong>58%</strong>, nhưng có những ban giảm tới <strong>70%</strong>. Tòa soạn cần đề xuất KPI mới vừa phản ánh được mặt bằng truy cập mới, vừa là con số để các ban phấn đấu.</li>
+            <li>KPI mới được xây dựng dựa trên mức trung bình truy cập của tháng 9, đồng thời giảm trừ khoảng <strong>5%</strong> ảnh hưởng truy cập từ Zalo, yếu tố hiện tại tòa soạn chưa chủ động kiểm soát.</li>
+            <li>Cụ thể, con số đề xuất cho toàn bộ Quý IV là <strong>tăng 15% so với mức trung bình</strong>.</li>
+          </ul>
+        </div>
       </div>
-      <div class="intro_context_body">
-        <ul class="intro_context_list">
-          <li>Từ tháng 8, việc thay đổi tên miền khiến truy cập giảm mạnh. Mức giảm trung bình là <strong>58%</strong>, nhưng có những ban giảm tới <strong>70%</strong>. Tòa soạn cần đề xuất KPI mới vừa phản ánh được mặt bằng truy cập mới, vừa là con số để các ban phấn đấu.</li>
-          <li>KPI mới được xây dựng dựa trên mức trung bình truy cập của tháng 9, đồng thời giảm trừ khoảng <strong>5%</strong> ảnh hưởng truy cập từ Zalo, yếu tố hiện tại tòa soạn chưa chủ động kiểm soát.</li>
-          <li>Cụ thể, con số đề xuất cho toàn bộ Quý IV là <strong>tăng 15% so với mức trung bình</strong>.</li>
-        </ul>
+      <div class="card">
+        <div class="dep_card_header">
+          <div>
+            <h3>Đề xuất KPI từng ban (14 ban)</h3>
+          </div>
+        </div>
+        <div class="dep_grid">
+          <div class="dep_card">
+            <div>
+              <div class="dep_card_header">
+                <div class="dep_name">Xã hội</div>
+                <div class="dep_tags">
+                  <div class="dep_block_tag">Khối Uy tín</div>
+                  <div class="badge_kpi badge_15">+15,0%</div>
+                </div>
+              </div>
+              <div class="dep_target_boxes">
+                <div class="target_box box_day">
+                  <div class="target_box_label">Mỗi ngày</div>
+                  <div class="target_box_val">68.196</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Mỗi tháng</div>
+                  <div class="target_box_val">2,09M</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Cả quý 4</div>
+                  <div class="target_box_val">6,27M</div>
+                </div>
+              </div>
+              <div class="dep_stat_row">
+                <div>Cơ sở T9: <strong>1,78M</strong> • <strong>59.301</strong> lượt/ngày</div>
+                <div>Cả năm 2026: <strong>33,70M</strong> (<strong>-54,3%</strong> vs 2025)</div>
+              </div>
+            </div>
+          </div>
+          <div class="dep_card">
+            <div>
+              <div class="dep_card_header">
+                <div class="dep_name">Pháp luật</div>
+                <div class="dep_tags">
+                  <div class="dep_block_tag">Khối Uy tín</div>
+                  <div class="badge_kpi badge_15">+15,0%</div>
+                </div>
+              </div>
+              <div class="dep_target_boxes">
+                <div class="target_box box_day">
+                  <div class="target_box_label">Mỗi ngày</div>
+                  <div class="target_box_val">41.384</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Mỗi tháng</div>
+                  <div class="target_box_val">1,27M</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Cả quý 4</div>
+                  <div class="target_box_val">3,81M</div>
+                </div>
+              </div>
+              <div class="dep_stat_row">
+                <div>Cơ sở T9: <strong>1,08M</strong> • <strong>35.986</strong> lượt/ngày</div>
+                <div>Cả năm 2026: <strong>28,45M</strong> (<strong>-47,9%</strong> vs 2025)</div>
+              </div>
+            </div>
+          </div>
+          <div class="dep_card">
+            <div>
+              <div class="dep_card_header">
+                <div class="dep_name">Thế giới</div>
+                <div class="dep_tags">
+                  <div class="dep_block_tag">Khối Uy tín</div>
+                  <div class="badge_kpi badge_15">+15,0%</div>
+                </div>
+              </div>
+              <div class="dep_target_boxes">
+                <div class="target_box box_day">
+                  <div class="target_box_label">Mỗi ngày</div>
+                  <div class="target_box_val">31.425</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Mỗi tháng</div>
+                  <div class="target_box_val">0,96M</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Cả quý 4</div>
+                  <div class="target_box_val">2,89M</div>
+                </div>
+              </div>
+              <div class="dep_stat_row">
+                <div>Cơ sở T9: <strong>0,82M</strong> • <strong>27.327</strong> lượt/ngày</div>
+                <div>Cả năm 2026: <strong>45,23M</strong> (<strong>+11,9%</strong> vs 2025)</div>
+              </div>
+            </div>
+          </div>
+          <div class="dep_card">
+            <div>
+              <div class="dep_card_header">
+                <div class="dep_name">Xuất bản</div>
+                <div class="dep_tags">
+                  <div class="dep_block_tag">Khối Uy tín</div>
+                  <div class="badge_kpi badge_15">+15,0%</div>
+                </div>
+              </div>
+              <div class="dep_target_boxes">
+                <div class="target_box box_day">
+                  <div class="target_box_label">Mỗi ngày</div>
+                  <div class="target_box_val">39.798</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Mỗi tháng</div>
+                  <div class="target_box_val">1,22M</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Cả quý 4</div>
+                  <div class="target_box_val">3,66M</div>
+                </div>
+              </div>
+              <div class="dep_stat_row">
+                <div>Cơ sở T9: <strong>1,04M</strong> • <strong>34.607</strong> lượt/ngày</div>
+                <div>Cả năm 2026: <strong>13,52M</strong> (<strong>-2,5%</strong> vs 2025)</div>
+              </div>
+            </div>
+          </div>
+          <div class="dep_card">
+            <div>
+              <div class="dep_card_header">
+                <div class="dep_name">Kinh doanh</div>
+                <div class="dep_tags">
+                  <div class="dep_block_tag">Khối Kinh doanh</div>
+                  <div class="badge_kpi badge_15">+15,0%</div>
+                </div>
+              </div>
+              <div class="dep_target_boxes">
+                <div class="target_box box_day">
+                  <div class="target_box_label">Mỗi ngày</div>
+                  <div class="target_box_val">129.056</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Mỗi tháng</div>
+                  <div class="target_box_val">3,96M</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Cả quý 4</div>
+                  <div class="target_box_val">11,87M</div>
+                </div>
+              </div>
+              <div class="dep_stat_row">
+                <div>Cơ sở T9: <strong>3,37M</strong> • <strong>112.223</strong> lượt/ngày</div>
+                <div>Cả năm 2026: <strong>54,46M</strong> (<strong>-27,0%</strong> vs 2025)</div>
+              </div>
+            </div>
+          </div>
+          <div class="dep_card">
+            <div>
+              <div class="dep_card_header">
+                <div class="dep_name">Công nghệ</div>
+                <div class="dep_tags">
+                  <div class="dep_block_tag">Khối Kinh doanh</div>
+                  <div class="badge_kpi badge_15">+15,0%</div>
+                </div>
+              </div>
+              <div class="dep_target_boxes">
+                <div class="target_box box_day">
+                  <div class="target_box_label">Mỗi ngày</div>
+                  <div class="target_box_val">62.317</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Mỗi tháng</div>
+                  <div class="target_box_val">1,91M</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Cả quý 4</div>
+                  <div class="target_box_val">5,73M</div>
+                </div>
+              </div>
+              <div class="dep_stat_row">
+                <div>Cơ sở T9: <strong>1,63M</strong> • <strong>54.189</strong> lượt/ngày</div>
+                <div>Cả năm 2026: <strong>26,67M</strong> (<strong>-23,4%</strong> vs 2025)</div>
+              </div>
+            </div>
+          </div>
+          <div class="dep_card">
+            <div>
+              <div class="dep_card_header">
+                <div class="dep_name">Xe</div>
+                <div class="dep_tags">
+                  <div class="dep_block_tag">Khối Kinh doanh</div>
+                  <div class="badge_kpi badge_15">+15,0%</div>
+                </div>
+              </div>
+              <div class="dep_target_boxes">
+                <div class="target_box box_day">
+                  <div class="target_box_label">Mỗi ngày</div>
+                  <div class="target_box_val">30.550</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Mỗi tháng</div>
+                  <div class="target_box_val">0,94M</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Cả quý 4</div>
+                  <div class="target_box_val">2,81M</div>
+                </div>
+              </div>
+              <div class="dep_stat_row">
+                <div>Cơ sở T9: <strong>0,80M</strong> • <strong>26.565</strong> lượt/ngày</div>
+                <div>Cả năm 2026: <strong>14,16M</strong> (<strong>-17,4%</strong> vs 2025)</div>
+              </div>
+            </div>
+          </div>
+          <div class="dep_card">
+            <div>
+              <div class="dep_card_header">
+                <div class="dep_name">Đời sống</div>
+                <div class="dep_tags">
+                  <div class="dep_block_tag">Khối Lifestyle</div>
+                  <div class="badge_kpi badge_15">+15,0%</div>
+                </div>
+              </div>
+              <div class="dep_target_boxes">
+                <div class="target_box box_day">
+                  <div class="target_box_label">Mỗi ngày</div>
+                  <div class="target_box_val">65.173</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Mỗi tháng</div>
+                  <div class="target_box_val">2,00M</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Cả quý 4</div>
+                  <div class="target_box_val">6,00M</div>
+                </div>
+              </div>
+              <div class="dep_stat_row">
+                <div>Cơ sở T9: <strong>1,70M</strong> • <strong>56.672</strong> lượt/ngày</div>
+                <div>Cả năm 2026: <strong>52,73M</strong> (<strong>-20,5%</strong> vs 2025)</div>
+              </div>
+            </div>
+          </div>
+          <div class="dep_card">
+            <div>
+              <div class="dep_card_header">
+                <div class="dep_name">Lifestyle</div>
+                <div class="dep_tags">
+                  <div class="dep_block_tag">Khối Lifestyle</div>
+                  <div class="badge_kpi badge_15">+15,0%</div>
+                </div>
+              </div>
+              <div class="dep_target_boxes">
+                <div class="target_box box_day">
+                  <div class="target_box_label">Mỗi ngày</div>
+                  <div class="target_box_val">20.605</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Mỗi tháng</div>
+                  <div class="target_box_val">0,63M</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Cả quý 4</div>
+                  <div class="target_box_val">1,90M</div>
+                </div>
+              </div>
+              <div class="dep_stat_row">
+                <div>Cơ sở T9: <strong>0,54M</strong> • <strong>17.917</strong> lượt/ngày</div>
+                <div>Cả năm 2026: <strong>12,26M</strong> (<strong>-27,1%</strong> vs 2025)</div>
+              </div>
+            </div>
+          </div>
+          <div class="dep_card">
+            <div>
+              <div class="dep_card_header">
+                <div class="dep_name">Sức khỏe</div>
+                <div class="dep_tags">
+                  <div class="dep_block_tag">Khối Lifestyle</div>
+                  <div class="badge_kpi badge_15">+15,0%</div>
+                </div>
+              </div>
+              <div class="dep_target_boxes">
+                <div class="target_box box_day">
+                  <div class="target_box_label">Mỗi ngày</div>
+                  <div class="target_box_val">70.348</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Mỗi tháng</div>
+                  <div class="target_box_val">2,16M</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Cả quý 4</div>
+                  <div class="target_box_val">6,47M</div>
+                </div>
+              </div>
+              <div class="dep_stat_row">
+                <div>Cơ sở T9: <strong>1,84M</strong> • <strong>61.172</strong> lượt/ngày</div>
+                <div>Cả năm 2026: <strong>34,13M</strong> (<strong>-37,0%</strong> vs 2025)</div>
+              </div>
+            </div>
+          </div>
+          <div class="dep_card">
+            <div>
+              <div class="dep_card_header">
+                <div class="dep_name">Giáo dục</div>
+                <div class="dep_tags">
+                  <div class="dep_block_tag">Khối Lifestyle</div>
+                  <div class="badge_kpi badge_15">+15,0%</div>
+                </div>
+              </div>
+              <div class="dep_target_boxes">
+                <div class="target_box box_day">
+                  <div class="target_box_label">Mỗi ngày</div>
+                  <div class="target_box_val">17.663</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Mỗi tháng</div>
+                  <div class="target_box_val">0,54M</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Cả quý 4</div>
+                  <div class="target_box_val">1,62M</div>
+                </div>
+              </div>
+              <div class="dep_stat_row">
+                <div>Cơ sở T9: <strong>0,46M</strong> • <strong>15.359</strong> lượt/ngày</div>
+                <div>Cả năm 2026: <strong>12,54M</strong> (<strong>-31,8%</strong> vs 2025)</div>
+              </div>
+            </div>
+          </div>
+          <div class="dep_card">
+            <div>
+              <div class="dep_card_header">
+                <div class="dep_name">Du lịch</div>
+                <div class="dep_tags">
+                  <div class="dep_block_tag">Khối Lifestyle</div>
+                  <div class="badge_kpi badge_15">+15,0%</div>
+                </div>
+              </div>
+              <div class="dep_target_boxes">
+                <div class="target_box box_day">
+                  <div class="target_box_label">Mỗi ngày</div>
+                  <div class="target_box_val">33.794</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Mỗi tháng</div>
+                  <div class="target_box_val">1,04M</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Cả quý 4</div>
+                  <div class="target_box_val">3,11M</div>
+                </div>
+              </div>
+              <div class="dep_stat_row">
+                <div>Cơ sở T9: <strong>0,88M</strong> • <strong>29.386</strong> lượt/ngày</div>
+                <div>Cả năm 2026: <strong>20,16M</strong> (<strong>-18,7%</strong> vs 2025)</div>
+              </div>
+            </div>
+          </div>
+          <div class="dep_card">
+            <div>
+              <div class="dep_card_header">
+                <div class="dep_name">Thể thao</div>
+                <div class="dep_tags">
+                  <div class="dep_block_tag">Khối Truy cập</div>
+                  <div class="badge_kpi badge_15">+15,0%</div>
+                </div>
+              </div>
+              <div class="dep_target_boxes">
+                <div class="target_box box_day">
+                  <div class="target_box_label">Mỗi ngày</div>
+                  <div class="target_box_val">240.110</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Mỗi tháng</div>
+                  <div class="target_box_val">7,36M</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Cả quý 4</div>
+                  <div class="target_box_val">22,09M</div>
+                </div>
+              </div>
+              <div class="dep_stat_row">
+                <div>Cơ sở T9: <strong>6,26M</strong> • <strong>208.791</strong> lượt/ngày</div>
+                <div>Cả năm 2026: <strong>172,47M</strong> (<strong>-19,1%</strong> vs 2025)</div>
+              </div>
+            </div>
+          </div>
+          <div class="dep_card">
+            <div>
+              <div class="dep_card_header">
+                <div class="dep_name">Giải trí</div>
+                <div class="dep_tags">
+                  <div class="dep_block_tag">Khối Truy cập</div>
+                  <div class="badge_kpi badge_15">+15,0%</div>
+                </div>
+              </div>
+              <div class="dep_target_boxes">
+                <div class="target_box box_day">
+                  <div class="target_box_label">Mỗi ngày</div>
+                  <div class="target_box_val">97.258</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Mỗi tháng</div>
+                  <div class="target_box_val">2,98M</div>
+                </div>
+                <div class="target_box">
+                  <div class="target_box_label">Cả quý 4</div>
+                  <div class="target_box_val">8,95M</div>
+                </div>
+              </div>
+              <div class="dep_stat_row">
+                <div>Cơ sở T9: <strong>2,54M</strong> • <strong>84.572</strong> lượt/ngày</div>
+                <div>Cả năm 2026: <strong>63,17M</strong> (<strong>-34,7%</strong> vs 2025)</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="card">
-      <div class="dep_card_header">
-        <div>
-          <h3>Đề xuất KPI từng ban (14 ban)</h3>
+    <div id="tab_kpiz" class="tab_pane">
+      <div class="intro_context_card">
+        <div class="intro_context_header">
+          <div class="intro_context_icon">📌</div>
+          <div class="intro_context_title">Bối cảnh và nguyên tắc đề xuất KPI mới:</div>
+        </div>
+        <div class="intro_context_body">
+          <ul class="intro_context_list">
+            <li>Từ tháng 8, ngoài ảnh hưởng từ truy cập thì số lượng bài viết của nhiều ban cũng giảm.</li>
+            <li>KPI mới được xây dựng dựa trên mức giảm số lượng bài của các ban, cùng với mức xét dựa trên truy cập như sau:
+              <div class="kpi_criteria_box">
+                <div class="criteria_item"><strong>• Tiêu chuẩn 1:</strong> (Z3-7k; Z4-10k) &gt; gồm các ban</div>
+                <div class="criteria_item"><strong>• Tiêu chuẩn 2:</strong> (Z3-5k, Z4-7k) &gt; gồm các nội dung về Xuất bản, Sách</div>
+                <div class="criteria_item criteria_ext"><strong># Tiêu chí mở rộng 1:</strong> tin bài biên tập, khai thác social (Z4-15k)</div>
+                <div class="criteria_item criteria_ext"><strong># Tiêu chí mở rộng 2 (Z3-5k):</strong> các bài đầu tư nhiều công sức, làm theo chỉ đạo của tòa soạn</div>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
-      <div class="dep_grid">
-        <div class="dep_card">
+      <div class="card">
+        <div class="dep_card_header">
           <div>
-            <div class="dep_card_header">
-              <div class="dep_name">Xã hội</div>
-              <div class="dep_tags">
-                <div class="dep_block_tag">Khối Uy tín</div>
-                <div class="badge_kpi badge_15">+15,0%</div>
-              </div>
-            </div>
-            <div class="dep_target_boxes">
-              <div class="target_box box_day">
-                <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">68.196</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">2,09M</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">6,27M</div>
-              </div>
-            </div>
-            <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong>1,78M</strong> • <strong>59.301</strong> lượt/ngày</div>
-              <div>Cả năm 2026: <strong>33,70M</strong> (<strong>-54,3%</strong> vs 2025)</div>
-            </div>
+            <h3>Bảng chỉ tiêu KPI Z (Z3 – Bài chất lượng & Z4 – Bài tốc độ)</h3>
           </div>
         </div>
-        <div class="dep_card">
-          <div>
-            <div class="dep_card_header">
-              <div class="dep_name">Pháp luật</div>
-              <div class="dep_tags">
-                <div class="dep_block_tag">Khối Uy tín</div>
-                <div class="badge_kpi badge_15">+15,0%</div>
-              </div>
-            </div>
-            <div class="dep_target_boxes">
-              <div class="target_box box_day">
-                <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">41.384</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">1,27M</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">3,81M</div>
-              </div>
-            </div>
-            <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong>1,08M</strong> • <strong>35.986</strong> lượt/ngày</div>
-              <div>Cả năm 2026: <strong>28,45M</strong> (<strong>-47,9%</strong> vs 2025)</div>
-            </div>
-          </div>
-        </div>
-        <div class="dep_card">
-          <div>
-            <div class="dep_card_header">
-              <div class="dep_name">Thế giới</div>
-              <div class="dep_tags">
-                <div class="dep_block_tag">Khối Uy tín</div>
-                <div class="badge_kpi badge_15">+15,0%</div>
-              </div>
-            </div>
-            <div class="dep_target_boxes">
-              <div class="target_box box_day">
-                <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">31.425</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">0,96M</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">2,89M</div>
-              </div>
-            </div>
-            <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong>0,82M</strong> • <strong>27.327</strong> lượt/ngày</div>
-              <div>Cả năm 2026: <strong>45,23M</strong> (<strong>+11,9%</strong> vs 2025)</div>
-            </div>
-          </div>
-        </div>
-        <div class="dep_card">
-          <div>
-            <div class="dep_card_header">
-              <div class="dep_name">Xuất bản</div>
-              <div class="dep_tags">
-                <div class="dep_block_tag">Khối Uy tín</div>
-                <div class="badge_kpi badge_15">+15,0%</div>
-              </div>
-            </div>
-            <div class="dep_target_boxes">
-              <div class="target_box box_day">
-                <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">39.798</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">1,22M</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">3,66M</div>
-              </div>
-            </div>
-            <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong>1,04M</strong> • <strong>34.607</strong> lượt/ngày</div>
-              <div>Cả năm 2026: <strong>13,52M</strong> (<strong>-2,5%</strong> vs 2025)</div>
-            </div>
-          </div>
-        </div>
-        <div class="dep_card">
-          <div>
-            <div class="dep_card_header">
-              <div class="dep_name">Kinh doanh</div>
-              <div class="dep_tags">
-                <div class="dep_block_tag">Khối Kinh doanh</div>
-                <div class="badge_kpi badge_15">+15,0%</div>
-              </div>
-            </div>
-            <div class="dep_target_boxes">
-              <div class="target_box box_day">
-                <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">129.056</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">3,96M</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">11,87M</div>
-              </div>
-            </div>
-            <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong>3,37M</strong> • <strong>112.223</strong> lượt/ngày</div>
-              <div>Cả năm 2026: <strong>54,46M</strong> (<strong>-27,0%</strong> vs 2025)</div>
-            </div>
-          </div>
-        </div>
-        <div class="dep_card">
-          <div>
-            <div class="dep_card_header">
-              <div class="dep_name">Công nghệ</div>
-              <div class="dep_tags">
-                <div class="dep_block_tag">Khối Kinh doanh</div>
-                <div class="badge_kpi badge_15">+15,0%</div>
-              </div>
-            </div>
-            <div class="dep_target_boxes">
-              <div class="target_box box_day">
-                <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">62.317</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">1,91M</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">5,73M</div>
-              </div>
-            </div>
-            <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong>1,63M</strong> • <strong>54.189</strong> lượt/ngày</div>
-              <div>Cả năm 2026: <strong>26,67M</strong> (<strong>-23,4%</strong> vs 2025)</div>
-            </div>
-          </div>
-        </div>
-        <div class="dep_card">
-          <div>
-            <div class="dep_card_header">
-              <div class="dep_name">Xe</div>
-              <div class="dep_tags">
-                <div class="dep_block_tag">Khối Kinh doanh</div>
-                <div class="badge_kpi badge_15">+15,0%</div>
-              </div>
-            </div>
-            <div class="dep_target_boxes">
-              <div class="target_box box_day">
-                <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">30.550</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">0,94M</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">2,81M</div>
-              </div>
-            </div>
-            <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong>0,80M</strong> • <strong>26.565</strong> lượt/ngày</div>
-              <div>Cả năm 2026: <strong>14,16M</strong> (<strong>-17,4%</strong> vs 2025)</div>
-            </div>
-          </div>
-        </div>
-        <div class="dep_card">
-          <div>
-            <div class="dep_card_header">
-              <div class="dep_name">Đời sống</div>
-              <div class="dep_tags">
-                <div class="dep_block_tag">Khối Lifestyle</div>
-                <div class="badge_kpi badge_15">+15,0%</div>
-              </div>
-            </div>
-            <div class="dep_target_boxes">
-              <div class="target_box box_day">
-                <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">65.173</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">2,00M</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">6,00M</div>
-              </div>
-            </div>
-            <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong>1,70M</strong> • <strong>56.672</strong> lượt/ngày</div>
-              <div>Cả năm 2026: <strong>52,73M</strong> (<strong>-20,5%</strong> vs 2025)</div>
-            </div>
-          </div>
-        </div>
-        <div class="dep_card">
-          <div>
-            <div class="dep_card_header">
-              <div class="dep_name">Lifestyle</div>
-              <div class="dep_tags">
-                <div class="dep_block_tag">Khối Lifestyle</div>
-                <div class="badge_kpi badge_15">+15,0%</div>
-              </div>
-            </div>
-            <div class="dep_target_boxes">
-              <div class="target_box box_day">
-                <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">20.605</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">0,63M</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">1,90M</div>
-              </div>
-            </div>
-            <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong>0,54M</strong> • <strong>17.917</strong> lượt/ngày</div>
-              <div>Cả năm 2026: <strong>12,26M</strong> (<strong>-27,1%</strong> vs 2025)</div>
-            </div>
-          </div>
-        </div>
-        <div class="dep_card">
-          <div>
-            <div class="dep_card_header">
-              <div class="dep_name">Sức khỏe</div>
-              <div class="dep_tags">
-                <div class="dep_block_tag">Khối Lifestyle</div>
-                <div class="badge_kpi badge_15">+15,0%</div>
-              </div>
-            </div>
-            <div class="dep_target_boxes">
-              <div class="target_box box_day">
-                <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">70.348</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">2,16M</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">6,47M</div>
-              </div>
-            </div>
-            <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong>1,84M</strong> • <strong>61.172</strong> lượt/ngày</div>
-              <div>Cả năm 2026: <strong>34,13M</strong> (<strong>-37,0%</strong> vs 2025)</div>
-            </div>
-          </div>
-        </div>
-        <div class="dep_card">
-          <div>
-            <div class="dep_card_header">
-              <div class="dep_name">Giáo dục</div>
-              <div class="dep_tags">
-                <div class="dep_block_tag">Khối Lifestyle</div>
-                <div class="badge_kpi badge_15">+15,0%</div>
-              </div>
-            </div>
-            <div class="dep_target_boxes">
-              <div class="target_box box_day">
-                <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">17.663</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">0,54M</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">1,62M</div>
-              </div>
-            </div>
-            <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong>0,46M</strong> • <strong>15.359</strong> lượt/ngày</div>
-              <div>Cả năm 2026: <strong>12,54M</strong> (<strong>-31,8%</strong> vs 2025)</div>
-            </div>
-          </div>
-        </div>
-        <div class="dep_card">
-          <div>
-            <div class="dep_card_header">
-              <div class="dep_name">Du lịch</div>
-              <div class="dep_tags">
-                <div class="dep_block_tag">Khối Lifestyle</div>
-                <div class="badge_kpi badge_15">+15,0%</div>
-              </div>
-            </div>
-            <div class="dep_target_boxes">
-              <div class="target_box box_day">
-                <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">33.794</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">1,04M</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">3,11M</div>
-              </div>
-            </div>
-            <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong>0,88M</strong> • <strong>29.386</strong> lượt/ngày</div>
-              <div>Cả năm 2026: <strong>20,16M</strong> (<strong>-18,7%</strong> vs 2025)</div>
-            </div>
-          </div>
-        </div>
-        <div class="dep_card">
-          <div>
-            <div class="dep_card_header">
-              <div class="dep_name">Thể thao</div>
-              <div class="dep_tags">
-                <div class="dep_block_tag">Khối Truy cập</div>
-                <div class="badge_kpi badge_15">+15,0%</div>
-              </div>
-            </div>
-            <div class="dep_target_boxes">
-              <div class="target_box box_day">
-                <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">240.110</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">7,36M</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">22,09M</div>
-              </div>
-            </div>
-            <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong>6,26M</strong> • <strong>208.791</strong> lượt/ngày</div>
-              <div>Cả năm 2026: <strong>172,47M</strong> (<strong>-19,1%</strong> vs 2025)</div>
-            </div>
-          </div>
-        </div>
-        <div class="dep_card">
-          <div>
-            <div class="dep_card_header">
-              <div class="dep_name">Giải trí</div>
-              <div class="dep_tags">
-                <div class="dep_block_tag">Khối Truy cập</div>
-                <div class="badge_kpi badge_15">+15,0%</div>
-              </div>
-            </div>
-            <div class="dep_target_boxes">
-              <div class="target_box box_day">
-                <div class="target_box_label">Mỗi ngày</div>
-                <div class="target_box_val">97.258</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Mỗi tháng</div>
-                <div class="target_box_val">2,98M</div>
-              </div>
-              <div class="target_box">
-                <div class="target_box_label">Cả quý 4</div>
-                <div class="target_box_val">8,95M</div>
-              </div>
-            </div>
-            <div class="dep_stat_row">
-              <div>Cơ sở T9: <strong>2,54M</strong> • <strong>84.572</strong> lượt/ngày</div>
-              <div>Cả năm 2026: <strong>63,17M</strong> (<strong>-34,7%</strong> vs 2025)</div>
-            </div>
-          </div>
+        <div class="table_responsive">
+          <table class="kpi_z_table">
+            <thead>
+              <tr>
+                <th rowspan="2" class="kpi_z_th_ban">Ban</th>
+                <th colspan="2" class="kpi_z_th_z3_group">Z3 – Bài chất lượng</th>
+                <th colspan="2" class="kpi_z_th_z4_group">Z4 – Bài tốc độ</th>
+              </tr>
+              <tr>
+                <th class="kpi_z_th_sub_z3">KPI cả năm (mới)</th>
+                <th class="kpi_z_th_sub_z3 kpi_z_th_sub_z3_sep">Mỗi tháng (T8–T12)</th>
+                <th class="kpi_z_th_sub_z4">KPI cả năm (mới)</th>
+                <th class="kpi_z_th_sub_z4">Mỗi tháng (T8–T12)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="">
+                <td class="kpi_z_td_ban">Thời sự</td>
+                <td class="kpi_z_td_z3_yr">66</td>
+                <td class="kpi_z_td_z3_mo">5</td>
+                <td class="kpi_z_td_z4_yr">37</td>
+                <td class="kpi_z_td_z4_mo">2</td>
+              </tr>
+              <tr class=" kpi_z_tr_alt">
+                <td class="kpi_z_td_ban">Pháp luật</td>
+                <td class="kpi_z_td_z3_yr">-</td>
+                <td class="kpi_z_td_z3_mo">-</td>
+                <td class="kpi_z_td_z4_yr">27</td>
+                <td class="kpi_z_td_z4_mo">2</td>
+              </tr>
+              <tr class="">
+                <td class="kpi_z_td_ban">Xuất bản</td>
+                <td class="kpi_z_td_z3_yr">40</td>
+                <td class="kpi_z_td_z3_mo">3</td>
+                <td class="kpi_z_td_z4_yr">-</td>
+                <td class="kpi_z_td_z4_mo">-</td>
+              </tr>
+              <tr class=" kpi_z_tr_alt">
+                <td class="kpi_z_td_ban">Thế giới</td>
+                <td class="kpi_z_td_z3_yr">100</td>
+                <td class="kpi_z_td_z3_mo">7</td>
+                <td class="kpi_z_td_z4_yr">91</td>
+                <td class="kpi_z_td_z4_mo">6</td>
+              </tr>
+              <tr class="">
+                <td class="kpi_z_td_ban">Kinh doanh</td>
+                <td class="kpi_z_td_z3_yr">146</td>
+                <td class="kpi_z_td_z3_mo">10</td>
+                <td class="kpi_z_td_z4_yr">100</td>
+                <td class="kpi_z_td_z4_mo">7</td>
+              </tr>
+              <tr class=" kpi_z_tr_alt">
+                <td class="kpi_z_td_ban">Công nghệ</td>
+                <td class="kpi_z_td_z3_yr">42</td>
+                <td class="kpi_z_td_z3_mo">3</td>
+                <td class="kpi_z_td_z4_yr">37</td>
+                <td class="kpi_z_td_z4_mo">2</td>
+              </tr>
+              <tr class="">
+                <td class="kpi_z_td_ban">Xe</td>
+                <td class="kpi_z_td_z3_yr">18</td>
+                <td class="kpi_z_td_z3_mo">1</td>
+                <td class="kpi_z_td_z4_yr">18</td>
+                <td class="kpi_z_td_z4_mo">1</td>
+              </tr>
+              <tr class=" kpi_z_tr_alt">
+                <td class="kpi_z_td_ban">Đời sống</td>
+                <td class="kpi_z_td_z3_yr">110</td>
+                <td class="kpi_z_td_z3_mo">8</td>
+                <td class="kpi_z_td_z4_yr">100</td>
+                <td class="kpi_z_td_z4_mo">7</td>
+              </tr>
+              <tr class="">
+                <td class="kpi_z_td_ban">Lifestyle</td>
+                <td class="kpi_z_td_z3_yr">46</td>
+                <td class="kpi_z_td_z3_mo">3</td>
+                <td class="kpi_z_td_z4_yr">18</td>
+                <td class="kpi_z_td_z4_mo">1</td>
+              </tr>
+              <tr class=" kpi_z_tr_alt">
+                <td class="kpi_z_td_ban">Giáo dục</td>
+                <td class="kpi_z_td_z3_yr">18</td>
+                <td class="kpi_z_td_z3_mo">1</td>
+                <td class="kpi_z_td_z4_yr">18</td>
+                <td class="kpi_z_td_z4_mo">1</td>
+              </tr>
+              <tr class="">
+                <td class="kpi_z_td_ban">Du lịch</td>
+                <td class="kpi_z_td_z3_yr">36</td>
+                <td class="kpi_z_td_z3_mo">2</td>
+                <td class="kpi_z_td_z4_yr">36</td>
+                <td class="kpi_z_td_z4_mo">2</td>
+              </tr>
+              <tr class=" kpi_z_tr_alt">
+                <td class="kpi_z_td_ban">Sức khỏe</td>
+                <td class="kpi_z_td_z3_yr">82</td>
+                <td class="kpi_z_td_z3_mo">6</td>
+                <td class="kpi_z_td_z4_yr">45</td>
+                <td class="kpi_z_td_z4_mo">3</td>
+              </tr>
+              <tr class="">
+                <td class="kpi_z_td_ban">Giải trí</td>
+                <td class="kpi_z_td_z3_yr">110</td>
+                <td class="kpi_z_td_z3_mo">8</td>
+                <td class="kpi_z_td_z4_yr">82</td>
+                <td class="kpi_z_td_z4_mo">6</td>
+              </tr>
+              <tr class=" kpi_z_tr_alt">
+                <td class="kpi_z_td_ban">Thể Thao</td>
+                <td class="kpi_z_td_z3_yr">64</td>
+                <td class="kpi_z_td_z3_mo">4</td>
+                <td class="kpi_z_td_z4_yr">119</td>
+                <td class="kpi_z_td_z4_mo">8</td>
+              </tr>
+              <tr class="kpi_z_tr_total">
+                <td class="kpi_z_td_ban">Tổng cộng (14 ban)</td>
+                <td class="kpi_z_td_z3_yr">850</td>
+                <td class="kpi_z_td_z3_mo">61</td>
+                <td class="kpi_z_td_z4_yr">728</td>
+                <td class="kpi_z_td_z4_mo">48</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
     <footer class="page_footer">
       <div>Bản quyền Tạp chí điện tử Tri thức - Znews • Lưu hành nội bộ Ban biên tập</div>
-      <div>Dữ liệu đề xuất KPI Quý 4/2026</div>
+      <div>Dữ liệu đề xuất KPI Quý 4/2026 & Chỉ tiêu KPI Z</div>
     </footer>
   </div>
 </article>
+<script>
+(function() {
+  function switchTab(tabId) {
+    document.querySelectorAll('.internal_tab_btn').forEach(function(b) {
+      if (b.getAttribute('data-tab') === tabId) b.classList.add('active');
+      else b.classList.remove('active');
+    });
+    document.querySelectorAll('.tab_pane').forEach(function(p) {
+      if (p.id === tabId) p.classList.add('active');
+      else p.classList.remove('active');
+    });
+  }
+
+  document.querySelectorAll('.internal_tab_btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var target = this.getAttribute('data-tab');
+      switchTab(target);
+      if (history.replaceState) {
+        history.replaceState(null, null, target === 'tab_kpiz' ? '#kpiz' : '#traffic');
+      }
+    });
+  });
+
+  if (window.location.hash === '#kpiz' || window.location.hash === '#tab_kpiz') {
+    switchTab('tab_kpiz');
+  }
+})();
+</script>
 </body>
 </html>
