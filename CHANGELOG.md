@@ -9,6 +9,7 @@ Tài liệu này ghi lại toàn bộ lịch sử các lần cập nhật, sửa
 
 | Phiên bản | Thời gian | Mã Commit | Nội dung cập nhật chính | Người thực hiện |
 | :--- | :--- | :--- | :--- | :--- |
+| **v2.10**| 01/10/2026 13:45 | `836354d` | Bổ sung tab KPI Z (Bài viết chất lượng Z3 & tốc độ Z4), tích hợp box bối cảnh bài viết & bảng 14 ban chuẩn hình ảnh | Antigravity AI |
 | **v2.9** | 01/10/2026 12:45 | `ec28193` | Tạo trang mới riêng biệt (kpi_14_ban.html), link độc lập, không liên hệ tài liệu cũ, chỉ gồm box bối cảnh & 14 thẻ ban | Antigravity AI |
 | **v2.8** | 01/10/2026 12:15 | `4d81713` | Bổ sung số lượt truy cập theo ngày vào mục Cơ sở T9 của 14 thẻ ban biên tập (chia đúng 29 ngày) | Antigravity AI |
 | **v2.7** | 30/09/2026 23:38 | `19ae396` | Đồng bộ toàn bộ dòng tổng các khối về màu xanh trong Bảng tổng hợp; chạy code xác thực số liệu | Antigravity AI |
@@ -35,6 +36,38 @@ Tài liệu này ghi lại toàn bộ lịch sử các lần cập nhật, sửa
 ---
 
 ## 🔍 Chi Tiết Từng Lần Cập Nhật
+
+---
+
+### [Cập nhật #27] — Phiên bản v2.10 (01/10/2026 13:45:00)
+- **Mã Commit:** `836354d` (`main` và `gh-pages`)
+- **Yêu cầu từ người dùng:**
+  > *"Trong trang mới vừa tạo, tạo thêm một tab là KPI Z. Tạo bảng đúng như dữ liệu này như hình tôi gửi. Ngoài ra tạo thêm một phần context ở đầu với nội dung như sau:*
+  > *Bối cảnh và nguyên tắc đề xuất KPI mới:*
+  > *- Từ tháng 8, ngoài ảnh hưởng từ truy cập thì số lượng bài viết của nhiều ban cũng giảm.*
+  > *- KPI mới được xây dựng dựa trên mức giảm số lượng bài của các ban, cùng với mức xét dựa trên truy cập như sau:*
+  > *-Tiêu chuẩn 1: (Z3-7k; Z4-10k) > gồm các ban*
+  > *-Tiêu chuẩn 2: (Z3-5k, Z4-7k) > gồm các nội dung về Xuất bản, Sách*
+  > *#Tiêu chí mở rộng 1: tin bài biên tập, khai thác social (Z4-15k)*
+  > *#Tiêu chí mở rộng 2 (Z3-5k): các bài đầu tư nhiều công sức, làm theo chỉ đạo của tòa soạn"*
+- **Các thay đổi thực hiện:**
+  1. **Tích hợp thanh chuyển Tab nội bộ (Internal Tab System):**
+     - Bổ sung 2 tab chuyển đổi mượt mà ngay trên trang độc lập:
+       * **Tab 1: 🎯 Đề xuất KPI truy cập (14 ban)**
+       * **Tab 2: 📝 KPI Z (Bài viết chất lượng & tốc độ)**
+     - Cơ chế chuyển tab thuần JS/DOM, không phụ thuộc thư viện ngoài, hỗ trợ URL Hash (`#kpiz` / `#traffic`), tương thích 100% khi chạy trên SharePoint hoặc trình duyệt thông thường.
+  2. **Thêm phần bối cảnh & nguyên tắc cho KPI Z:**
+     - Thiết kế hộp ngữ cảnh trang nhã với nội dung chuẩn xác theo yêu cầu người dùng:
+       * Từ tháng 8, số lượng bài viết của nhiều ban cũng giảm cùng với truy cập.
+       * Phân định rõ Tiêu chuẩn 1 (Z3: 7k, Z4: 10k), Tiêu chuẩn 2 (Z3: 5k, Z4: 7k - Xuất bản/Sách), Tiêu chí mở rộng 1 (Z4: 15k - biên tập/social) và Tiêu chí mở rộng 2 (Z3: 5k - công sức/chỉ đạo).
+  3. **Tạo Bảng chỉ tiêu KPI Z đúng chuẩn hình ảnh cung cấp:**
+     - Tái hiện bảng dữ liệu gồm 14 ban biên tập:
+       * Nhóm **Z3 – Bài chất lượng**: KPI cả năm (mới) và Mỗi tháng (T8–T12).
+       * Nhóm **Z4 – Bài tốc độ**: KPI cả năm (mới) và Mỗi tháng (T8–T12).
+     - Định dạng màu sắc chuẩn xác: Tiêu đề Z3 màu xanh dương, Z4 màu xanh lá; số lượng cả năm xanh dương/xanh lá đậm, số lượng mỗi tháng màu đỏ đậm (`#dc2626`), các dấu `-` cho ban không giao chỉ tiêu tương ứng.
+     - Bổ sung hàng tổng cộng 14 ban: 850 bài Z3 (61 bài/tháng) và 728 bài Z4 (48 bài/tháng).
+  4. **Đồng bộ tự động ra file SharePoint:**
+     - Tự động xuất đồng thời sang `kpi_14_ban.html`, `kpi_14_ban.aspx`, `kpi_14_ban.apx`, `de_xuat_kpi_14_ban.html`, `de_xuat_kpi_14_ban.aspx`, `de_xuat_kpi_14_ban.apx` trong thư mục dự án và tự động cập nhật vào thư mục `~/Downloads` của máy tính.
 
 ---
 

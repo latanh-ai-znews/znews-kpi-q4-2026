@@ -3221,95 +3221,481 @@ def build_kpi_14_ban_html():
       {"id": "gt", "name": "Giải trí", "block": "Khối Truy cập", "base": 2537174.18, "base_day": 84572, "day": 97258, "th": 2982579, "q4": 8947736, "yr": 63169736, "pct": -34.7}
     ]
 
+    KPI_Z_ROWS = [
+      {"name": "Thời sự", "z3_yr": "66", "z3_mo": "5", "z4_yr": "37", "z4_mo": "2"},
+      {"name": "Pháp luật", "z3_yr": "-", "z3_mo": "-", "z4_yr": "27", "z4_mo": "2"},
+      {"name": "Xuất bản", "z3_yr": "40", "z3_mo": "3", "z4_yr": "-", "z4_mo": "-"},
+      {"name": "Thế giới", "z3_yr": "100", "z3_mo": "7", "z4_yr": "91", "z4_mo": "6"},
+      {"name": "Kinh doanh", "z3_yr": "146", "z3_mo": "10", "z4_yr": "100", "z4_mo": "7"},
+      {"name": "Công nghệ", "z3_yr": "42", "z3_mo": "3", "z4_yr": "37", "z4_mo": "2"},
+      {"name": "Xe", "z3_yr": "18", "z3_mo": "1", "z4_yr": "18", "z4_mo": "1"},
+      {"name": "Đời sống", "z3_yr": "110", "z3_mo": "8", "z4_yr": "100", "z4_mo": "7"},
+      {"name": "Lifestyle", "z3_yr": "46", "z3_mo": "3", "z4_yr": "18", "z4_mo": "1"},
+      {"name": "Giáo dục", "z3_yr": "18", "z3_mo": "1", "z4_yr": "18", "z4_mo": "1"},
+      {"name": "Du lịch", "z3_yr": "36", "z3_mo": "2", "z4_yr": "36", "z4_mo": "2"},
+      {"name": "Sức khỏe", "z3_yr": "82", "z3_mo": "6", "z4_yr": "45", "z4_mo": "3"},
+      {"name": "Giải trí", "z3_yr": "110", "z3_mo": "8", "z4_yr": "82", "z4_mo": "6"},
+      {"name": "Thể Thao", "z3_yr": "64", "z3_mo": "4", "z4_yr": "119", "z4_mo": "8"},
+    ]
+
+    kpi_z_extra_css = """
+/* Internal Tab Bar */
+.container_AI .page_internal_tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #cbd5e1;
+}
+
+.container_AI .internal_tab_btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 10px 10px 0 0;
+  font-size: 15px;
+  font-weight: 800;
+  color: #64748b;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-bottom: none;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  margin-bottom: -2px;
+}
+
+.container_AI .internal_tab_btn:hover {
+  color: #0f172a;
+  background: #e2e8f0;
+}
+
+.container_AI .internal_tab_btn.active {
+  color: #1d4ed8;
+  background: #ffffff;
+  border-color: #3b56e0;
+  border-bottom: 3px solid #ffffff;
+  box-shadow: 0 -3px 12px rgba(59, 86, 224, 0.08);
+}
+
+.container_AI .tab_pane {
+  display: none;
+}
+
+.container_AI .tab_pane.active {
+  display: block;
+}
+
+/* Criteria List in Context Box */
+.container_AI .kpi_criteria_box {
+  margin-top: 12px;
+  background: #ffffff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.container_AI .criteria_item {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1e3a8a;
+}
+
+.container_AI .criteria_item strong {
+  color: #0f172a;
+}
+
+.container_AI .criteria_ext {
+  color: #047857;
+}
+
+.container_AI .criteria_ext strong {
+  color: #065f46;
+}
+
+/* KPI Z Table Styles */
+.container_AI .kpi_z_table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: 'Manrope', -apple-system, sans-serif;
+  border: 1.5px solid #0f172a;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.container_AI .kpi_z_table th,
+.container_AI .kpi_z_table td {
+  padding: 12px 14px;
+  font-size: 14.5px;
+  border-right: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.container_AI .kpi_z_table th:last-child,
+.container_AI .kpi_z_table td:last-child {
+  border-right: none;
+}
+
+.container_AI .kpi_z_th_ban {
+  background: #172554;
+  color: #ffffff;
+  font-weight: 800;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 15px;
+  border-right: 1.5px solid #334155;
+  width: 22%;
+}
+
+.container_AI .kpi_z_th_z3_group {
+  background: #1d4ed8;
+  color: #ffffff;
+  font-weight: 800;
+  text-align: center;
+  font-size: 15px;
+  border-right: 2px solid #0f172a;
+  border-bottom: 1.5px solid #3b82f6;
+  width: 39%;
+}
+
+.container_AI .kpi_z_th_z4_group {
+  background: #15803d;
+  color: #ffffff;
+  font-weight: 800;
+  text-align: center;
+  font-size: 15px;
+  border-bottom: 1.5px solid #22c55e;
+  width: 39%;
+}
+
+.container_AI .kpi_z_th_sub_z3 {
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 700;
+  text-align: center;
+  font-size: 13.5px;
+  border-bottom: 2px solid #0f172a;
+}
+
+.container_AI .kpi_z_th_sub_z3_sep {
+  border-right: 2px solid #0f172a;
+}
+
+.container_AI .kpi_z_th_sub_z4 {
+  background: #16a34a;
+  color: #ffffff;
+  font-weight: 700;
+  text-align: center;
+  font-size: 13.5px;
+  border-bottom: 2px solid #0f172a;
+}
+
+.container_AI .kpi_z_td_ban {
+  font-weight: 800;
+  color: #0f172a;
+  text-align: left;
+  background: #ffffff;
+  border-right: 1.5px solid #cbd5e1;
+}
+
+.container_AI .kpi_z_tr_alt .kpi_z_td_ban {
+  background: #f8fafc;
+}
+
+.container_AI .kpi_z_td_z3_yr {
+  text-align: center;
+  font-weight: 800;
+  color: #1d4ed8;
+  background: #eff6ff;
+  font-size: 15px;
+}
+
+.container_AI .kpi_z_tr_alt .kpi_z_td_z3_yr {
+  background: #dbeafe;
+}
+
+.container_AI .kpi_z_td_z3_mo {
+  text-align: center;
+  font-weight: 800;
+  color: #dc2626;
+  background: #eff6ff;
+  font-size: 15px;
+  border-right: 2px solid #0f172a;
+}
+
+.container_AI .kpi_z_tr_alt .kpi_z_td_z3_mo {
+  background: #dbeafe;
+}
+
+.container_AI .kpi_z_td_z4_yr {
+  text-align: center;
+  font-weight: 800;
+  color: #15803d;
+  background: #f0fdf4;
+  font-size: 15px;
+}
+
+.container_AI .kpi_z_tr_alt .kpi_z_td_z4_yr {
+  background: #dcfce7;
+}
+
+.container_AI .kpi_z_td_z4_mo {
+  text-align: center;
+  font-weight: 800;
+  color: #dc2626;
+  background: #f0fdf4;
+  font-size: 15px;
+}
+
+.container_AI .kpi_z_tr_alt .kpi_z_td_z4_mo {
+  background: #dcfce7;
+}
+
+.container_AI .kpi_z_tr_total td {
+  font-weight: 900;
+  border-top: 2.5px solid #0f172a;
+  border-bottom: 2.5px solid #0f172a;
+  font-size: 15px;
+}
+
+.container_AI .kpi_z_tr_total .kpi_z_td_ban {
+  background: #e2e8f0;
+}
+
+.container_AI .kpi_z_tr_total .kpi_z_td_z3_yr {
+  background: #bfdbfe;
+  color: #1e40af;
+}
+
+.container_AI .kpi_z_tr_total .kpi_z_td_z3_mo {
+  background: #bfdbfe;
+  color: #b91c1c;
+}
+
+.container_AI .kpi_z_tr_total .kpi_z_td_z4_yr {
+  background: #bbf7d0;
+  color: #14532d;
+}
+
+.container_AI .kpi_z_tr_total .kpi_z_td_z4_mo {
+  background: #bbf7d0;
+  color: #b91c1c;
+}
+"""
+
     html = []
     html.append('<!DOCTYPE html>')
     html.append('<html lang="vi">')
     html.append('<head>')
     html.append('  <meta charset="UTF-8">')
     html.append('  <meta name="viewport" content="width=device-width, initial-scale=1.0">')
-    html.append('  <title>Đề xuất KPI Quý 4/2026 (14 ban) — Tạp chí điện tử Tri thức - Znews</title>')
-    html.append(f'  <style>{css_scoped}</style>')
+    html.append('  <title>Đề xuất KPI Quý 4/2026 & KPI Z (14 ban) — Tạp chí điện tử Tri thức - Znews</title>')
+    html.append(f'  <style>{css_scoped}\n{kpi_z_extra_css}</style>')
     html.append('</head>')
     html.append('<body>')
     html.append('<article class="container_AI">')
     html.append('  <div class="wrap">')
 
-    # Brand Area (No navigation bar, no links to old documents)
+    # Brand Area (No navigation bar to old external pages)
     html.append('    <header class="top_header">')
     html.append('      <div class="brand_area">')
     html.append('        <div class="brand_kicker">Tạp chí điện tử Tri thức - Znews • Ban biên tập</div>')
     html.append('        <div class="brand_title">Đề xuất KPI Quý 4/2026 (14 ban)</div>')
-    html.append('        <div class="brand_sub">Cơ sở tính toán theo mức trung bình tháng 9/2026 • Giảm trừ 5% ảnh hưởng Zalo • Mức tăng trưởng đề xuất +15%</div>')
+    html.append('        <div class="brand_sub">Chỉ tiêu đề xuất lượt truy cập Quý 4/2026 & Chỉ tiêu bài viết KPI Z (Z3 – Chất lượng & Z4 – Tốc độ)</div>')
     html.append('      </div>')
     html.append('    </header>')
 
-    # 1. Bối cảnh và nguyên tắc đề xuất KPI mới:
-    html.append('    <div class="intro_context_card">')
-    html.append('      <div class="intro_context_header">')
-    html.append('        <div class="intro_context_icon">📌</div>')
-    html.append('        <div class="intro_context_title">Bối cảnh và nguyên tắc đề xuất KPI mới:</div>')
-    html.append('      </div>')
-    html.append('      <div class="intro_context_body">')
-    html.append('        <ul class="intro_context_list">')
-    html.append('          <li>Từ tháng 8, việc thay đổi tên miền khiến truy cập giảm mạnh. Mức giảm trung bình là <strong>58%</strong>, nhưng có những ban giảm tới <strong>70%</strong>. Tòa soạn cần đề xuất KPI mới vừa phản ánh được mặt bằng truy cập mới, vừa là con số để các ban phấn đấu.</li>')
-    html.append('          <li>KPI mới được xây dựng dựa trên mức trung bình truy cập của tháng 9, đồng thời giảm trừ khoảng <strong>5%</strong> ảnh hưởng truy cập từ Zalo, yếu tố hiện tại tòa soạn chưa chủ động kiểm soát.</li>')
-    html.append('          <li>Cụ thể, con số đề xuất cho toàn bộ Quý IV là <strong>tăng 15% so với mức trung bình</strong>.</li>')
-    html.append('        </ul>')
-    html.append('      </div>')
-    html.append('    </div>')
+    # Internal Page Tabs
+    html.append('    <nav class="page_internal_tabs">')
+    html.append('      <div class="internal_tab_btn active" data-tab="tab_traffic">🎯 Đề xuất KPI truy cập (14 ban)</div>')
+    html.append('      <div class="internal_tab_btn" data-tab="tab_kpiz">📝 KPI Z (Bài viết chất lượng & tốc độ)</div>')
+    html.append('    </nav>')
 
-    # 2. Đề xuất KPI từng ban (14 ban)
-    html.append('    <div class="card">')
-    html.append('      <div class="dep_card_header">')
-    html.append('        <div>')
-    html.append('          <h3>Đề xuất KPI từng ban (14 ban)</h3>')
+    # =========================================================================
+    # TAB 1: TRAFFIC PROPOSAL (KPI TRUY CẬP 14 BAN)
+    # =========================================================================
+    html.append('    <div id="tab_traffic" class="tab_pane active">')
+
+    # 1. Bối cảnh và nguyên tắc đề xuất KPI mới (Truy cập)
+    html.append('      <div class="intro_context_card">')
+    html.append('        <div class="intro_context_header">')
+    html.append('          <div class="intro_context_icon">📌</div>')
+    html.append('          <div class="intro_context_title">Bối cảnh và nguyên tắc đề xuất KPI mới:</div>')
+    html.append('        </div>')
+    html.append('        <div class="intro_context_body">')
+    html.append('          <ul class="intro_context_list">')
+    html.append('            <li>Từ tháng 8, việc thay đổi tên miền khiến truy cập giảm mạnh. Mức giảm trung bình là <strong>58%</strong>, nhưng có những ban giảm tới <strong>70%</strong>. Tòa soạn cần đề xuất KPI mới vừa phản ánh được mặt bằng truy cập mới, vừa là con số để các ban phấn đấu.</li>')
+    html.append('            <li>KPI mới được xây dựng dựa trên mức trung bình truy cập của tháng 9, đồng thời giảm trừ khoảng <strong>5%</strong> ảnh hưởng truy cập từ Zalo, yếu tố hiện tại tòa soạn chưa chủ động kiểm soát.</li>')
+    html.append('            <li>Cụ thể, con số đề xuất cho toàn bộ Quý IV là <strong>tăng 15% so với mức trung bình</strong>.</li>')
+    html.append('          </ul>')
     html.append('        </div>')
     html.append('      </div>')
-    html.append('      <div class="dep_grid">')
+
+    # 2. Đề xuất KPI từng ban (14 ban)
+    html.append('      <div class="card">')
+    html.append('        <div class="dep_card_header">')
+    html.append('          <div>')
+    html.append('            <h3>Đề xuất KPI từng ban (14 ban)</h3>')
+    html.append('          </div>')
+    html.append('        </div>')
+    html.append('        <div class="dep_grid">')
     for d in DEPS_INFO:
-        html.append('        <div class="dep_card">')
-        html.append('          <div>')
-        html.append('            <div class="dep_card_header">')
-        html.append(f'              <div class="dep_name">{d["name"]}</div>')
-        html.append('              <div class="dep_tags">')
-        html.append(f'                <div class="dep_block_tag">{d["block"]}</div>')
-        html.append('                <div class="badge_kpi badge_15">+15,0%</div>')
+        html.append('          <div class="dep_card">')
+        html.append('            <div>')
+        html.append('              <div class="dep_card_header">')
+        html.append(f'                <div class="dep_name">{d["name"]}</div>')
+        html.append('                <div class="dep_tags">')
+        html.append(f'                  <div class="dep_block_tag">{d["block"]}</div>')
+        html.append('                  <div class="badge_kpi badge_15">+15,0%</div>')
+        html.append('                </div>')
         html.append('              </div>')
-        html.append('            </div>')
-        html.append('            <div class="dep_target_boxes">')
-        html.append('              <div class="target_box box_day">')
-        html.append('                <div class="target_box_label">Mỗi ngày</div>')
-        html.append(f'                <div class="target_box_val">{fmt_day(d["day"])}</div>')
+        html.append('              <div class="dep_target_boxes">')
+        html.append('                <div class="target_box box_day">')
+        html.append('                  <div class="target_box_label">Mỗi ngày</div>')
+        html.append(f'                  <div class="target_box_val">{fmt_day(d["day"])}</div>')
+        html.append('                </div>')
+        html.append('                <div class="target_box">')
+        html.append('                  <div class="target_box_label">Mỗi tháng</div>')
+        html.append(f'                  <div class="target_box_val">{fmt_m(d["th"], 2)}</div>')
+        html.append('                </div>')
+        html.append('                <div class="target_box">')
+        html.append('                  <div class="target_box_label">Cả quý 4</div>')
+        html.append(f'                  <div class="target_box_val">{fmt_m(d["q4"], 2)}</div>')
+        html.append('                </div>')
         html.append('              </div>')
-        html.append('              <div class="target_box">')
-        html.append('                <div class="target_box_label">Mỗi tháng</div>')
-        html.append(f'                <div class="target_box_val">{fmt_m(d["th"], 2)}</div>')
+        html.append('              <div class="dep_stat_row">')
+        html.append(f'                <div>Cơ sở T9: <strong>{fmt_m(d["base"], 2)}</strong> • <strong>{fmt_day(d["base_day"])}</strong> lượt/ngày</div>')
+        html.append(f'                <div>Cả năm 2026: <strong>{fmt_m(d["yr"], 2)}</strong> (<strong>{fmt_pct(d["pct"], 1)}</strong> vs 2025)</div>')
         html.append('              </div>')
-        html.append('              <div class="target_box">')
-        html.append('                <div class="target_box_label">Cả quý 4</div>')
-        html.append(f'                <div class="target_box_val">{fmt_m(d["q4"], 2)}</div>')
-        html.append('              </div>')
-        html.append('            </div>')
-        html.append('            <div class="dep_stat_row">')
-        html.append(f'              <div>Cơ sở T9: <strong>{fmt_m(d["base"], 2)}</strong> • <strong>{fmt_day(d["base_day"])}</strong> lượt/ngày</div>')
-        html.append(f'              <div>Cả năm 2026: <strong>{fmt_m(d["yr"], 2)}</strong> (<strong>{fmt_pct(d["pct"], 1)}</strong> vs 2025)</div>')
         html.append('            </div>')
         html.append('          </div>')
-        html.append('        </div>')
+    html.append('        </div>')
     html.append('      </div>')
-    html.append('    </div>')
+    html.append('    </div>') # end tab_traffic
+
+    # =========================================================================
+    # TAB 2: KPI Z (BÀI VIẾT CHẤT LƯỢNG & TỐC ĐỘ)
+    # =========================================================================
+    html.append('    <div id="tab_kpiz" class="tab_pane">')
+
+    # Context box for KPI Z
+    html.append('      <div class="intro_context_card">')
+    html.append('        <div class="intro_context_header">')
+    html.append('          <div class="intro_context_icon">📌</div>')
+    html.append('          <div class="intro_context_title">Bối cảnh và nguyên tắc đề xuất KPI mới:</div>')
+    html.append('        </div>')
+    html.append('        <div class="intro_context_body">')
+    html.append('          <ul class="intro_context_list">')
+    html.append('            <li>Từ tháng 8, ngoài ảnh hưởng từ truy cập thì số lượng bài viết của nhiều ban cũng giảm.</li>')
+    html.append('            <li>KPI mới được xây dựng dựa trên mức giảm số lượng bài của các ban, cùng với mức xét dựa trên truy cập như sau:')
+    html.append('              <div class="kpi_criteria_box">')
+    html.append('                <div class="criteria_item"><strong>• Tiêu chuẩn 1:</strong> (Z3-7k; Z4-10k) &gt; gồm các ban</div>')
+    html.append('                <div class="criteria_item"><strong>• Tiêu chuẩn 2:</strong> (Z3-5k, Z4-7k) &gt; gồm các nội dung về Xuất bản, Sách</div>')
+    html.append('                <div class="criteria_item criteria_ext"><strong># Tiêu chí mở rộng 1:</strong> tin bài biên tập, khai thác social (Z4-15k)</div>')
+    html.append('                <div class="criteria_item criteria_ext"><strong># Tiêu chí mở rộng 2 (Z3-5k):</strong> các bài đầu tư nhiều công sức, làm theo chỉ đạo của tòa soạn</div>')
+    html.append('              </div>')
+    html.append('            </li>')
+    html.append('          </ul>')
+    html.append('        </div>')
+    html.append('      </div>')
+
+    # KPI Z Data Table Card
+    html.append('      <div class="card">')
+    html.append('        <div class="dep_card_header">')
+    html.append('          <div>')
+    html.append('            <h3>Bảng chỉ tiêu KPI Z (Z3 – Bài chất lượng & Z4 – Bài tốc độ)</h3>')
+    html.append('          </div>')
+    html.append('        </div>')
+    html.append('        <div class="table_responsive">')
+    html.append('          <table class="kpi_z_table">')
+    html.append('            <thead>')
+    html.append('              <tr>')
+    html.append('                <th rowspan="2" class="kpi_z_th_ban">Ban</th>')
+    html.append('                <th colspan="2" class="kpi_z_th_z3_group">Z3 – Bài chất lượng</th>')
+    html.append('                <th colspan="2" class="kpi_z_th_z4_group">Z4 – Bài tốc độ</th>')
+    html.append('              </tr>')
+    html.append('              <tr>')
+    html.append('                <th class="kpi_z_th_sub_z3">KPI cả năm (mới)</th>')
+    html.append('                <th class="kpi_z_th_sub_z3 kpi_z_th_sub_z3_sep">Mỗi tháng (T8–T12)</th>')
+    html.append('                <th class="kpi_z_th_sub_z4">KPI cả năm (mới)</th>')
+    html.append('                <th class="kpi_z_th_sub_z4">Mỗi tháng (T8–T12)</th>')
+    html.append('              </tr>')
+    html.append('            </thead>')
+    html.append('            <tbody>')
+
+    for i, row in enumerate(KPI_Z_ROWS):
+        alt_cls = ' kpi_z_tr_alt' if (i % 2 == 1) else ''
+        html.append(f'              <tr class="{alt_cls}">')
+        html.append(f'                <td class="kpi_z_td_ban">{row["name"]}</td>')
+        html.append(f'                <td class="kpi_z_td_z3_yr">{row["z3_yr"]}</td>')
+        html.append(f'                <td class="kpi_z_td_z3_mo">{row["z3_mo"]}</td>')
+        html.append(f'                <td class="kpi_z_td_z4_yr">{row["z4_yr"]}</td>')
+        html.append(f'                <td class="kpi_z_td_z4_mo">{row["z4_mo"]}</td>')
+        html.append('              </tr>')
+
+    # Total Row
+    html.append('              <tr class="kpi_z_tr_total">')
+    html.append('                <td class="kpi_z_td_ban">Tổng cộng (14 ban)</td>')
+    html.append('                <td class="kpi_z_td_z3_yr">850</td>')
+    html.append('                <td class="kpi_z_td_z3_mo">61</td>')
+    html.append('                <td class="kpi_z_td_z4_yr">728</td>')
+    html.append('                <td class="kpi_z_td_z4_mo">48</td>')
+    html.append('              </tr>')
+
+    html.append('            </tbody>')
+    html.append('          </table>')
+    html.append('        </div>')
+    html.append('      </div>')
+    html.append('    </div>') # end tab_kpiz
 
     # Footer - NO external links
     html.append('    <footer class="page_footer">')
     html.append('      <div>Bản quyền Tạp chí điện tử Tri thức - Znews • Lưu hành nội bộ Ban biên tập</div>')
-    html.append('      <div>Dữ liệu đề xuất KPI Quý 4/2026</div>')
+    html.append('      <div>Dữ liệu đề xuất KPI Quý 4/2026 & Chỉ tiêu KPI Z</div>')
     html.append('    </footer>')
 
     html.append('  </div>') # end wrap
     html.append('</article>')
+
+    # Reactive Tab Switching Script
+    tab_js = """
+(function() {
+  function switchTab(tabId) {
+    document.querySelectorAll('.internal_tab_btn').forEach(function(b) {
+      if (b.getAttribute('data-tab') === tabId) b.classList.add('active');
+      else b.classList.remove('active');
+    });
+    document.querySelectorAll('.tab_pane').forEach(function(p) {
+      if (p.id === tabId) p.classList.add('active');
+      else p.classList.remove('active');
+    });
+  }
+
+  document.querySelectorAll('.internal_tab_btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var target = this.getAttribute('data-tab');
+      switchTab(target);
+      if (history.replaceState) {
+        history.replaceState(null, null, target === 'tab_kpiz' ? '#kpiz' : '#traffic');
+      }
+    });
+  });
+
+  if (window.location.hash === '#kpiz' || window.location.hash === '#tab_kpiz') {
+    switchTab('tab_kpiz');
+  }
+})();
+"""
+    html.append(f'<script>{tab_js}</script>')
     html.append('</body>')
     html.append('</html>')
     return "\n".join(html)
+
 
 
 
