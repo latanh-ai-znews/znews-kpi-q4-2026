@@ -3198,6 +3198,120 @@ def build_interactive_t9_index_html():
 
 
 
+def build_kpi_14_ban_html():
+    def fmt_m(n, dec=2):
+        v = n / 1000000.0
+        return f"{v:,.{dec}f}".replace(",", "X").replace(".", ",").replace("X", ".") + "M"
+
+    DEPS_INFO = [
+      {"id": "xh", "name": "Xã hội", "block": "Khối Uy tín", "base": 1779032.90, "base_day": 59301, "day": 68196, "th": 2091344, "q4": 6274032, "yr": 33701032, "pct": -54.3},
+      {"id": "pl", "name": "Pháp luật", "block": "Khối Uy tín", "base": 1079570.18, "base_day": 35986, "day": 41384, "th": 1269109, "q4": 3807328, "yr": 28450328, "pct": -47.9},
+      {"id": "tg", "name": "Thế giới", "block": "Khối Uy tín", "base": 819795.62, "base_day": 27327, "day": 31425, "th": 963700, "q4": 2891100, "yr": 45233100, "pct": 11.9},
+      {"id": "xb", "name": "Xuất bản", "block": "Khối Uy tín", "base": 1038208.81, "base_day": 34607, "day": 39798, "th": 1220472, "q4": 3661416, "yr": 13522416, "pct": -2.5},
+      {"id": "kd", "name": "Kinh doanh", "block": "Khối Kinh doanh", "base": 3366681.41, "base_day": 112223, "day": 129056, "th": 3957717, "q4": 11873152, "yr": 54455152, "pct": -27.0},
+      {"id": "cn", "name": "Công nghệ", "block": "Khối Kinh doanh", "base": 1625664.57, "base_day": 54189, "day": 62317, "th": 1911055, "q4": 5733164, "yr": 26670164, "pct": -23.4},
+      {"id": "xe", "name": "Xe", "block": "Khối Kinh doanh", "base": 796944.52, "base_day": 26565, "day": 30550, "th": 936867, "q4": 2810600, "yr": 14156600, "pct": -17.4},
+      {"id": "ds", "name": "Đời sống", "block": "Khối Lifestyle", "base": 1700154.72, "base_day": 56672, "day": 65173, "th": 1998639, "q4": 5995916, "yr": 52726916, "pct": -20.5},
+      {"id": "ls", "name": "Lifestyle", "block": "Khối Lifestyle", "base": 537516.88, "base_day": 17917, "day": 20605, "th": 631887, "q4": 1895660, "yr": 12262327, "pct": -27.1},
+      {"id": "sk", "name": "Sức khỏe", "block": "Khối Lifestyle", "base": 1835174.95, "base_day": 61172, "day": 70348, "th": 2157339, "q4": 6472016, "yr": 34131016, "pct": -37.0},
+      {"id": "gd", "name": "Giáo dục", "block": "Khối Lifestyle", "base": 460763.43, "base_day": 15359, "day": 17663, "th": 541665, "q4": 1624996, "yr": 12541996, "pct": -31.8},
+      {"id": "dl", "name": "Du lịch", "block": "Khối Lifestyle", "base": 881589.52, "base_day": 29386, "day": 33794, "th": 1036349, "q4": 3109048, "yr": 20155048, "pct": -18.7},
+      {"id": "tt", "name": "Thể thao", "block": "Khối Truy cập", "base": 6263736.88, "base_day": 208791, "day": 240110, "th": 7363373, "q4": 22090120, "yr": 172474120, "pct": -19.1},
+      {"id": "gt", "name": "Giải trí", "block": "Khối Truy cập", "base": 2537174.18, "base_day": 84572, "day": 97258, "th": 2982579, "q4": 8947736, "yr": 63169736, "pct": -34.7}
+    ]
+
+    html = []
+    html.append('<!DOCTYPE html>')
+    html.append('<html lang="vi">')
+    html.append('<head>')
+    html.append('  <meta charset="UTF-8">')
+    html.append('  <meta name="viewport" content="width=device-width, initial-scale=1.0">')
+    html.append('  <title>Đề xuất KPI Quý 4/2026 (14 ban) — Tạp chí điện tử Tri thức - Znews</title>')
+    html.append(f'  <style>{css_scoped}</style>')
+    html.append('</head>')
+    html.append('<body>')
+    html.append('<article class="container_AI">')
+    html.append('  <div class="wrap">')
+
+    # Brand Area (No navigation bar, no links to old documents)
+    html.append('    <header class="top_header">')
+    html.append('      <div class="brand_area">')
+    html.append('        <div class="brand_kicker">Tạp chí điện tử Tri thức - Znews • Ban biên tập</div>')
+    html.append('        <div class="brand_title">Đề xuất KPI Quý 4/2026 (14 ban)</div>')
+    html.append('        <div class="brand_sub">Cơ sở tính toán theo mức trung bình tháng 9/2026 • Giảm trừ 5% ảnh hưởng Zalo • Mức tăng trưởng đề xuất +15%</div>')
+    html.append('      </div>')
+    html.append('    </header>')
+
+    # 1. Bối cảnh và nguyên tắc đề xuất KPI mới:
+    html.append('    <div class="intro_context_card">')
+    html.append('      <div class="intro_context_header">')
+    html.append('        <div class="intro_context_icon">📌</div>')
+    html.append('        <div class="intro_context_title">Bối cảnh và nguyên tắc đề xuất KPI mới:</div>')
+    html.append('      </div>')
+    html.append('      <div class="intro_context_body">')
+    html.append('        <ul class="intro_context_list">')
+    html.append('          <li>Từ tháng 8, việc thay đổi tên miền khiến truy cập giảm mạnh. Mức giảm trung bình là <strong>58%</strong>, nhưng có những ban giảm tới <strong>70%</strong>. Tòa soạn cần đề xuất KPI mới vừa phản ánh được mặt bằng truy cập mới, vừa là con số để các ban phấn đấu.</li>')
+    html.append('          <li>KPI mới được xây dựng dựa trên mức trung bình truy cập của tháng 9, đồng thời giảm trừ khoảng <strong>5%</strong> ảnh hưởng truy cập từ Zalo, yếu tố hiện tại tòa soạn chưa chủ động kiểm soát.</li>')
+    html.append('          <li>Cụ thể, con số đề xuất cho toàn bộ Quý IV là <strong>tăng 15% so với mức trung bình</strong>.</li>')
+    html.append('        </ul>')
+    html.append('      </div>')
+    html.append('    </div>')
+
+    # 2. Đề xuất KPI từng ban (14 ban)
+    html.append('    <div class="card">')
+    html.append('      <div class="dep_card_header">')
+    html.append('        <div>')
+    html.append('          <h3>Đề xuất KPI từng ban (14 ban)</h3>')
+    html.append('        </div>')
+    html.append('      </div>')
+    html.append('      <div class="dep_grid">')
+    for d in DEPS_INFO:
+        html.append('        <div class="dep_card">')
+        html.append('          <div>')
+        html.append('            <div class="dep_card_header">')
+        html.append(f'              <div class="dep_name">{d["name"]}</div>')
+        html.append('              <div class="dep_tags">')
+        html.append(f'                <div class="dep_block_tag">{d["block"]}</div>')
+        html.append('                <div class="badge_kpi badge_15">+15,0%</div>')
+        html.append('              </div>')
+        html.append('            </div>')
+        html.append('            <div class="dep_target_boxes">')
+        html.append('              <div class="target_box box_day">')
+        html.append('                <div class="target_box_label">Mỗi ngày</div>')
+        html.append(f'                <div class="target_box_val">{fmt_day(d["day"])}</div>')
+        html.append('              </div>')
+        html.append('              <div class="target_box">')
+        html.append('                <div class="target_box_label">Mỗi tháng</div>')
+        html.append(f'                <div class="target_box_val">{fmt_m(d["th"], 2)}</div>')
+        html.append('              </div>')
+        html.append('              <div class="target_box">')
+        html.append('                <div class="target_box_label">Cả quý 4</div>')
+        html.append(f'                <div class="target_box_val">{fmt_m(d["q4"], 2)}</div>')
+        html.append('              </div>')
+        html.append('            </div>')
+        html.append('            <div class="dep_stat_row">')
+        html.append(f'              <div>Cơ sở T9: <strong>{fmt_m(d["base"], 2)}</strong> • <strong>{fmt_day(d["base_day"])}</strong> lượt/ngày</div>')
+        html.append(f'              <div>Cả năm 2026: <strong>{fmt_m(d["yr"], 2)}</strong> (<strong>{fmt_pct(d["pct"], 1)}</strong> vs 2025)</div>')
+        html.append('            </div>')
+        html.append('          </div>')
+        html.append('        </div>')
+    html.append('      </div>')
+    html.append('    </div>')
+
+    # Footer - NO external links
+    html.append('    <footer class="page_footer">')
+    html.append('      <div>Bản quyền Tạp chí điện tử Tri thức - Znews • Lưu hành nội bộ Ban biên tập</div>')
+    html.append('      <div>Dữ liệu đề xuất KPI Quý 4/2026</div>')
+    html.append('    </footer>')
+
+    html.append('  </div>') # end wrap
+    html.append('</article>')
+    html.append('</body>')
+    html.append('</html>')
+    return "\n".join(html)
+
+
+
 def build_kpi_phe_duyet_html():
     html = []
     html.append('<!DOCTYPE html>')
@@ -4389,9 +4503,13 @@ kpi_phe_duyet_html = build_kpi_phe_duyet_html()
 print("Generating detail.html (Full Explanatory Report)...")
 detail_html = build_detail_html()
 
+print("Generating kpi_14_ban.html & de_xuat_kpi_14_ban.html (Standalone 14 Departments Proposal)...")
+kpi_14_ban_html = build_kpi_14_ban_html()
+
 validate_html(index_html, "index.html")
 validate_html(kpi_phe_duyet_html, "kpi_phe_duyet.html")
 validate_html(detail_html, "detail.html")
+validate_html(kpi_14_ban_html, "kpi_14_ban.html")
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(index_html)
@@ -4402,4 +4520,11 @@ with open("kpi_phe_duyet.html", "w", encoding="utf-8") as f:
 with open("detail.html", "w", encoding="utf-8") as f:
     f.write(detail_html)
 
-print("SUCCESS: All 3 pages (index.html, kpi_phe_duyet.html, detail.html) generated and saved successfully!")
+with open("kpi_14_ban.html", "w", encoding="utf-8") as f:
+    f.write(kpi_14_ban_html)
+
+with open("de_xuat_kpi_14_ban.html", "w", encoding="utf-8") as f:
+    f.write(kpi_14_ban_html)
+
+print("SUCCESS: All pages (index.html, kpi_phe_duyet.html, detail.html, kpi_14_ban.html, de_xuat_kpi_14_ban.html) generated and saved successfully!")
+
