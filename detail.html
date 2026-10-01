@@ -801,10 +801,19 @@ html {
 }
 
 .container_AI .dep_stat_row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
   margin-bottom: 12px;
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.container_AI .dep_stat_row strong {
+  color: #1e293b;
 }
 
 .container_AI .stat_box {

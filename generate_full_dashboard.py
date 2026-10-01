@@ -1612,10 +1612,19 @@ html {
 }
 
 .container_AI .dep_stat_row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
   margin-bottom: 12px;
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.container_AI .dep_stat_row strong {
+  color: #1e293b;
 }
 
 .container_AI .stat_box {
@@ -2484,20 +2493,20 @@ def build_interactive_t9_index_html():
 
     # Pre-render initial data
     DEPS_INFO = [
-      {"id": "xh", "name": "Xã hội", "block": "Khối Uy tín", "base": 1779032.90, "day": 68196, "th": 2091344, "q4": 6274032, "yr": 33701032, "pct": -54.3},
-      {"id": "pl", "name": "Pháp luật", "block": "Khối Uy tín", "base": 1079570.18, "day": 41384, "th": 1269109, "q4": 3807328, "yr": 28450328, "pct": -47.9},
-      {"id": "tg", "name": "Thế giới", "block": "Khối Uy tín", "base": 819795.62, "day": 31425, "th": 963700, "q4": 2891100, "yr": 45233100, "pct": 11.9},
-      {"id": "xb", "name": "Xuất bản", "block": "Khối Uy tín", "base": 1038208.81, "day": 39798, "th": 1220472, "q4": 3661416, "yr": 13522416, "pct": -2.5},
-      {"id": "kd", "name": "Kinh doanh", "block": "Khối Kinh doanh", "base": 3366681.41, "day": 129056, "th": 3957717, "q4": 11873152, "yr": 54455152, "pct": -27.0},
-      {"id": "cn", "name": "Công nghệ", "block": "Khối Kinh doanh", "base": 1625664.57, "day": 62317, "th": 1911055, "q4": 5733164, "yr": 26670164, "pct": -23.4},
-      {"id": "xe", "name": "Xe", "block": "Khối Kinh doanh", "base": 796944.52, "day": 30550, "th": 936867, "q4": 2810600, "yr": 14156600, "pct": -17.4},
-      {"id": "ds", "name": "Đời sống", "block": "Khối Lifestyle", "base": 1700154.72, "day": 65173, "th": 1998639, "q4": 5995916, "yr": 52726916, "pct": -20.5},
-      {"id": "ls", "name": "Lifestyle", "block": "Khối Lifestyle", "base": 537516.88, "day": 20605, "th": 631887, "q4": 1895660, "yr": 12262327, "pct": -27.1},
-      {"id": "sk", "name": "Sức khỏe", "block": "Khối Lifestyle", "base": 1835174.95, "day": 70348, "th": 2157339, "q4": 6472016, "yr": 34131016, "pct": -37.0},
-      {"id": "gd", "name": "Giáo dục", "block": "Khối Lifestyle", "base": 460763.43, "day": 17663, "th": 541665, "q4": 1624996, "yr": 12541996, "pct": -31.8},
-      {"id": "dl", "name": "Du lịch", "block": "Khối Lifestyle", "base": 881589.52, "day": 33794, "th": 1036349, "q4": 3109048, "yr": 20155048, "pct": -18.7},
-      {"id": "tt", "name": "Thể thao", "block": "Khối Truy cập", "base": 6263736.88, "day": 240110, "th": 7363373, "q4": 22090120, "yr": 172474120, "pct": -19.1},
-      {"id": "gt", "name": "Giải trí", "block": "Khối Truy cập", "base": 2537174.18, "day": 97258, "th": 2982579, "q4": 8947736, "yr": 63169736, "pct": -34.7}
+      {"id": "xh", "name": "Xã hội", "block": "Khối Uy tín", "base": 1779032.90, "base_day": 59301, "day": 68196, "th": 2091344, "q4": 6274032, "yr": 33701032, "pct": -54.3},
+      {"id": "pl", "name": "Pháp luật", "block": "Khối Uy tín", "base": 1079570.18, "base_day": 35986, "day": 41384, "th": 1269109, "q4": 3807328, "yr": 28450328, "pct": -47.9},
+      {"id": "tg", "name": "Thế giới", "block": "Khối Uy tín", "base": 819795.62, "base_day": 27327, "day": 31425, "th": 963700, "q4": 2891100, "yr": 45233100, "pct": 11.9},
+      {"id": "xb", "name": "Xuất bản", "block": "Khối Uy tín", "base": 1038208.81, "base_day": 34607, "day": 39798, "th": 1220472, "q4": 3661416, "yr": 13522416, "pct": -2.5},
+      {"id": "kd", "name": "Kinh doanh", "block": "Khối Kinh doanh", "base": 3366681.41, "base_day": 112223, "day": 129056, "th": 3957717, "q4": 11873152, "yr": 54455152, "pct": -27.0},
+      {"id": "cn", "name": "Công nghệ", "block": "Khối Kinh doanh", "base": 1625664.57, "base_day": 54189, "day": 62317, "th": 1911055, "q4": 5733164, "yr": 26670164, "pct": -23.4},
+      {"id": "xe", "name": "Xe", "block": "Khối Kinh doanh", "base": 796944.52, "base_day": 26565, "day": 30550, "th": 936867, "q4": 2810600, "yr": 14156600, "pct": -17.4},
+      {"id": "ds", "name": "Đời sống", "block": "Khối Lifestyle", "base": 1700154.72, "base_day": 56672, "day": 65173, "th": 1998639, "q4": 5995916, "yr": 52726916, "pct": -20.5},
+      {"id": "ls", "name": "Lifestyle", "block": "Khối Lifestyle", "base": 537516.88, "base_day": 17917, "day": 20605, "th": 631887, "q4": 1895660, "yr": 12262327, "pct": -27.1},
+      {"id": "sk", "name": "Sức khỏe", "block": "Khối Lifestyle", "base": 1835174.95, "base_day": 61172, "day": 70348, "th": 2157339, "q4": 6472016, "yr": 34131016, "pct": -37.0},
+      {"id": "gd", "name": "Giáo dục", "block": "Khối Lifestyle", "base": 460763.43, "base_day": 15359, "day": 17663, "th": 541665, "q4": 1624996, "yr": 12541996, "pct": -31.8},
+      {"id": "dl", "name": "Du lịch", "block": "Khối Lifestyle", "base": 881589.52, "base_day": 29386, "day": 33794, "th": 1036349, "q4": 3109048, "yr": 20155048, "pct": -18.7},
+      {"id": "tt", "name": "Thể thao", "block": "Khối Truy cập", "base": 6263736.88, "base_day": 208791, "day": 240110, "th": 7363373, "q4": 22090120, "yr": 172474120, "pct": -19.1},
+      {"id": "gt", "name": "Giải trí", "block": "Khối Truy cập", "base": 2537174.18, "base_day": 84572, "day": 97258, "th": 2982579, "q4": 8947736, "yr": 63169736, "pct": -34.7}
     ]
 
     BLOCKS_INFO = [
@@ -2559,7 +2568,7 @@ def build_interactive_t9_index_html():
         html.append('              </div>')
         html.append('            </div>')
         html.append('            <div class="dep_stat_row">')
-        html.append(f'              <div>Cơ sở T9: <strong id="card_base_{d["id"]}">{fmt_m(d["base"], 2)}</strong></div>')
+        html.append(f'              <div>Cơ sở T9: <strong id="card_base_{d["id"]}">{fmt_m(d["base"], 2)}</strong> • <strong id="card_base_day_{d["id"]}">{fmt_day(d["base_day"])}</strong> lượt/ngày</div>')
         html.append(f'              <div>Cả năm 2026: <strong id="card_yr_{d["id"]}">{fmt_m(d["yr"], 2)}</strong> (<strong id="card_pct_{d["id"]}">{fmt_pct(d["pct"], 1)}</strong> vs 2025)</div>')
         html.append('            </div>')
         html.append('          </div>')
@@ -2822,6 +2831,7 @@ def build_interactive_t9_index_html():
 
     DEPARTMENTS.forEach(d => {
       let base = d.t9_scaled * (1.0 - state.zaloRate / 100.0);
+      let base_day = base / 30.0;
 
       let rate = state.rateMode === 'all' ? state.globalRate : (state.depRates[d.id] !== undefined ? state.depRates[d.id] : 15.0);
       let day = (base / 30.0) * (1.0 + rate / 100.0);
@@ -2830,7 +2840,7 @@ def build_interactive_t9_index_html():
       let yr_26 = d.lk_9t + q4;
       let pct_25 = ((yr_26 - d.yr_2025) / d.yr_2025) * 100.0;
 
-      depRes[d.id] = { base, rate, day, th, q4, yr_26, pct_25 };
+      depRes[d.id] = { base, base_day, rate, day, th, q4, yr_26, pct_25 };
 
       // Sum to block
       let blk = blkRes[d.block];
@@ -2975,6 +2985,7 @@ def build_interactive_t9_index_html():
       const cTh = document.getElementById('card_th_' + d.id);
       const cQ4 = document.getElementById('card_q4_' + d.id);
       const cBase = document.getElementById('card_base_' + d.id);
+      const cBaseDay = document.getElementById('card_base_day_' + d.id);
       const cYr = document.getElementById('card_yr_' + d.id);
       const cPct = document.getElementById('card_pct_' + d.id);
       const cBadge = document.getElementById('card_badge_' + d.id);
@@ -2984,6 +2995,7 @@ def build_interactive_t9_index_html():
       if (cTh) cTh.textContent = fmtTr(res.th, 2);
       if (cQ4) cQ4.textContent = fmtTr(res.q4, 2);
       if (cBase) cBase.textContent = fmtTr(res.base, 2);
+      if (cBaseDay) cBaseDay.textContent = fmtDay(res.base_day);
       if (cYr) cYr.textContent = fmtTr(res.yr_26, 2);
       if (cPct) cPct.textContent = fmtPct(res.pct_25, 1);
 
